@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Manchester Jobs Directory</title>
+<style>
+  :root{
+    --bg:#0b0f1a; --bg2:#0e1426; --card:#141b2e; --card2:#1a2138;
+    --ink:#eef2ff; --mut:#9aa6c4; --line:rgba(255,255,255,.08);
+    --acc:#6c8cff; --acc2:#a855f7;
+    --live:#22c55e; --blocked:#f59e0b; --down:#ef4444;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, #1b2350 0%, transparent 55%),
+      radial-gradient(900px 500px at -10% 10%, #2a1640 0%, transparent 50%),
+      var(--bg);
+    color:var(--ink); min-height:100vh;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 16px 60px}
+
+  /* ── Header ── */
+  .hero{
+    position:relative; overflow:hidden;
+    background:linear-gradient(135deg,#161d35,#10152a);
+    border:1px solid var(--line); border-radius:20px;
+    padding:26px 26px 24px; margin-bottom:18px;
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+  }
+  .hero::after{content:"";position:absolute;inset:0;
+    background:radial-gradient(600px 200px at 90% 0%, rgba(108,140,255,.25), transparent 60%);
+    pointer-events:none}
+  .hero h1{margin:0;font-size:28px;font-weight:800;letter-spacing:-.5px;
+    background:linear-gradient(90deg,#fff,#aab6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{margin:8px 0 0;color:var(--mut);font-size:13.5px}
+  .loc-badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px;position:relative;z-index:1}
+  .loc-pill{font-size:11px;font-weight:700;color:#fff;padding:4px 11px;border-radius:30px;opacity:.95}
+
+  /* ── Scan bar ── */
+  .scanbar{
+    display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+    background:linear-gradient(135deg,rgba(108,140,255,.12),rgba(168,85,247,.10));
+    border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:16px;
+  }
+  .scan-btn{
+    border:0;cursor:pointer;font-size:14.5px;font-weight:800;color:#fff;
+    padding:13px 22px;border-radius:12px;letter-spacing:.2px;white-space:nowrap;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));
+    box-shadow:0 8px 24px rgba(108,140,255,.35);transition:transform .12s, box-shadow .12s, filter .12s;
+  }
+  .scan-btn:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(108,140,255,.5)}
+  .scan-btn:active{transform:translateY(0)}
+  .scan-btn:disabled{filter:grayscale(.5) brightness(.8);cursor:wait;box-shadow:none}
+  .scan-sub{color:var(--mut);font-size:12.5px;line-height:1.5;flex:1 1 240px;min-width:220px}
+  .scan-sub b{color:var(--ink)}
+  .toggle{display:inline-flex;align-items:center;gap:7px;color:var(--mut);font-size:12.5px;cursor:pointer;user-select:none}
+  .toggle input{accent-color:var(--acc);width:15px;height:15px}
+
+  /* progress + summary */
+  .progress{height:8px;border-radius:8px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:14px;display:none}
+  .progress > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .2s}
+  .summary{display:none;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .stat{font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:30px;border:1px solid var(--line);background:var(--card)}
+  .stat .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:middle}
+
+  /* ── Filters ── */
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .filters input,.filters select{
+    padding:11px 14px;border-radius:11px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink);font-size:13.5px;outline:none;
+  }
+  .filters input{flex:2 1 240px}
+  .filters select{flex:1 1 160px;cursor:pointer}
+  .filters input:focus,.filters select:focus{border-color:var(--acc)}
+  .count{font-size:12.5px;color:var(--mut);margin:2px 2px 14px}
+  .count b{color:var(--ink)}
+
+  /* ── Grid ── */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:13px}
+  .card{
+    background:linear-gradient(180deg,var(--card),var(--card2));
+    border:1px solid var(--line);border-radius:15px;padding:15px 16px;
+    display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;
+    transition:transform .12s, border-color .12s, box-shadow .12s;
+  }
+  .card:hover{transform:translateY(-2px);border-color:rgba(108,140,255,.45);box-shadow:0 14px 30px rgba(0,0,0,.35)}
+  .card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .card .name{font-weight:750;font-size:14.5px;line-height:1.3}
+  .cat-tag{font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:30px;white-space:nowrap;flex-shrink:0;color:#0b0f1a}
+  .locs{display:flex;flex-wrap:wrap;gap:5px}
+  .loc{font-size:9.5px;font-weight:700;color:#fff;padding:3px 8px;border-radius:30px;opacity:.92}
+  .apply{
+    margin-top:auto;display:block;text-align:center;text-decoration:none;
+    background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink);
+    padding:9px 12px;border-radius:10px;font-size:12.5px;font-weight:700;transition:background .12s,border-color .12s;
+  }
+  .apply:hover{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent}
+
+  /* status ribbon (after scan) */
+  .status{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700}
+  .status .dot{width:9px;height:9px;border-radius:50%}
+  .status .ms{color:var(--mut);font-weight:600;margin-left:auto;font-size:10.5px}
+  .roles{display:flex;flex-direction:column;gap:5px;border-top:1px dashed var(--line);padding-top:9px}
+  .role{font-size:11.5px;text-decoration:none;color:var(--ink);background:rgba(108,140,255,.12);
+    border:1px solid rgba(108,140,255,.25);border-radius:8px;padding:6px 9px;line-height:1.3;display:block}
+  .role:hover{background:rgba(108,140,255,.24)}
+  .role .loc-txt{color:var(--mut);font-size:10px}
+  .hintline{font-size:11px;color:var(--mut);line-height:1.5}
+  .hintline .chip{display:inline-block;background:rgba(255,255,255,.06);border:1px solid var(--line);
+    border-radius:20px;padding:1px 8px;margin:2px 3px 0 0;font-size:10px;color:var(--ink)}
+  .note{font-size:10.5px;color:var(--mut);font-style:italic}
+
+  .empty{text-align:center;padding:54px;color:var(--mut)}
+  .foot{text-align:center;color:var(--mut);opacity:.7;font-size:11px;margin-top:30px;line-height:1.7}
+  /* dim cards not in scan filter */
+  .hidden{display:none !important}
+  @media (max-width:560px){ .hero h1{font-size:22px} .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>🛍️ Manchester Jobs Directory</h1>
+    <p id="subtitle">Loading brands…</p>
+    <div class="loc-badges" id="locBadges"></div>
+  </div>
+
+  <div class="scanbar">
+    <button class="scan-btn" id="scanBtn">⚡ Scan for live job listings</button>
+    <div class="scan-sub">
+      Checks every careers site <b>live, right now</b> — who's online, and detects the
+      <b>entry-level roles</b> each page is advertising (sales assistant, barista, team member, apprentice…).
+    </div>
+    <label class="toggle"><input type="checkbox" id="onlyHiring" /> Show only hiring after scan</label>
+    <div class="progress" id="progress"><i id="progressBar"></i></div>
+    <div class="summary" id="summary"></div>
+  </div>
+
+  <div class="filters">
+    <input id="search" placeholder="🔍 Search brand or category…" />
+    <select id="category"></select>
+    <select id="location"></select>
+  </div>
+
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty hidden" id="empty">No results. Try clearing a filter.</div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script>
+const CAT_COLORS = {
+  "Fashion":"#90caf9","Sports":"#a5d6a7","Beauty & Health":"#f48fb1","Department Store":"#ffcc80",
+  "Tech & Mobile":"#b39ddb","Footwear":"#e6ee9c","Jewellery & Watches":"#ffe082","Food & Drink":"#ffab91",
+  "Homeware":"#80cbc4","Books & Gifts":"#ce93d8","Accessories":"#fff59d","Banking & Services":"#9fa8da",
+  "Health & Fitness":"#81d4fa","Leisure":"#f8bbd0"
+};
+const LOC_COLORS = {
+  "Trafford Centre":"#2563eb","Arndale":"#dc2626","Market Street":"#16a34a",
+  "Piccadilly":"#9333ea","Altrincham":"#ea580c","Manchester Airport":"#0d9488"
+};
+const STATUS_COLOR = { live:"var(--live)", blocked:"var(--blocked)", down:"var(--down)", unknown:"#64748b" };
+const STATUS_LABEL = { live:"Live", blocked:"Open to verify", down:"Domain down", unknown:"—" };
+
+let STORES = [];
+let SCAN = {};          // name -> result
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c)=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c]));
+
+async function init(){
+  try{
+    const res = await fetch("/api/stores");
+    STORES = await res.json();
+  }catch(e){
+    $("subtitle").textContent = "⚠ Couldn't reach the local server. Run start.bat (or: node server.mjs) and open http://localhost:5173";
+    $("scanBtn").disabled = true;
+    return;
+  }
+  const cats = ["All", ...[...new Set(STORES.map(s=>s.category))].sort()];
+  const locs = ["All","Trafford Centre","Arndale","Market Street","Piccadilly","Altrincham","Manchester Airport"];
+  $("category").innerHTML = cats.map(c=>`<option>${esc(c)}</option>`).join("");
+  $("location").innerHTML = locs.map(l=>`<option>${esc(l)}</option>`).join("");
+  $("subtitle").innerHTML = `Live careers links for <b>${STORES.length}</b> brands across 6 Greater Manchester locations`;
+  $("locBadges").innerHTML = Object.entries(LOC_COLORS)
+    .map(([l,c])=>`<span class="loc-pill" style="background:${c}">${esc(l)}</span>`).join("");
+  $("foot").innerHTML = "Scanning checks live HTTP status server-side. <b style='color:#9aa6c4'>Open to verify</b> (amber) = the checker couldn't confirm automatically (anti-bot, 403/404, timeout) but the page usually works in your browser. <b style='color:#9aa6c4'>Domain down</b> (red) = the address didn't resolve at all. Always click through to confirm and apply.";
+  render();
+  ["search","category","location"].forEach(id=>$(id).addEventListener("input", render));
+  $("onlyHiring").addEventListener("change", render);
+  $("scanBtn").addEventListener("click", runScan);
+}
+
+function passesFilter(s){
+  const q = $("search").value.toLowerCase();
+  const cat = $("category").value, loc = $("location").value;
+  const matchQ = s.name.toLowerCase().includes(q) || s.category.toLowerCase().includes(q);
+  const matchC = cat==="All" || s.category===cat;
+  const matchL = loc==="All" || s.locations.includes(loc);
+  let matchHiring = true;
+  if ($("onlyHiring").checked){
+    const r = SCAN[s.name];
+    matchHiring = r && (r.roles?.length || r.hints?.length);
+  }
+  return matchQ && matchC && matchL && matchHiring;
+}
+
+function render(){
+  const list = STORES.filter(passesFilter);
+  $("count").innerHTML = `Showing <b>${list.length}</b> of <b>${STORES.length}</b> brands`;
+  $("empty").classList.toggle("hidden", list.length>0);
+  $("grid").innerHTML = list.map(cardHTML).join("");
+}
+
+function cardHTML(s){
+  const cc = CAT_COLORS[s.category] || "#ccc";
+  const locs = s.locations.map(l=>`<span class="loc" style="background:${LOC_COLORS[l]||'#555'}">${esc(l)}</span>`).join("");
+  const r = SCAN[s.name];
+  let scanBlock = "";
+  if (r){
+    const col = STATUS_COLOR[r.status]||"#64748b";
+    scanBlock += `<div class="status"><span class="dot" style="background:${col}"></span>`+
+      `<span style="color:${col}">${STATUS_LABEL[r.status]||"—"}</span>`+
+      `${r.platform?` · ${esc(r.platform)}`:""}`+
+      `<span class="ms">${r.ms!=null?Math.round(r.ms)+"ms":""}</span></div>`;
+    if (r.roles && r.roles.length){
+      scanBlock += `<div class="roles">`+ r.roles.map(j=>
+        `<a class="role" href="${esc(j.url)}" target="_blank" rel="noopener">▸ ${esc(j.title)}`+
+        `${j.location?`<span class="loc-txt"> — ${esc(j.location)}</span>`:""}</a>`).join("") +`</div>`;
+    } else if (r.hints && r.hints.length){
+      scanBlock += `<div class="hintline">Page mentions: ${r.hints.map(h=>`<span class="chip">${esc(h)}</span>`).join("")}</div>`;
+    }
+    if (r.note) scanBlock += `<div class="note">${esc(r.note)}</div>`;
+  }
+  return `<div class="card">
+    <div class="top">
+      <span class="name">${esc(s.name)}</span>
+      <span class="cat-tag" style="background:${cc}">${esc(s.category)}</span>
+    </div>
+    <div class="locs">${locs}</div>
+    ${scanBlock}
+    <a class="apply" href="${esc(s.careers)}" target="_blank" rel="noopener">Apply / View Jobs →</a>
+  </div>`;
+}
+
+async function runScan(){
+  const btn = $("scanBtn");
+  btn.disabled = true; btn.textContent = "⏳ Scanning…";
+  SCAN = {};
+  $("progress").style.display = "block";
+  $("summary").style.display = "flex";
+  $("summary").innerHTML = "";
+  let total = STORES.length, done = 0, live=0, blocked=0, down=0, hiring=0;
+
+  const paint = () => {
+    $("progressBar").style.width = (total? (done/total*100):0) + "%";
+    $("summary").innerHTML =
+      `<span class="stat">${done}/${total} scanned</span>`+
+      `<span class="stat"><span class="dot" style="background:var(--live)"></span>${live} live</span>`+
+      `<span class="stat"><span class="dot" style="background:var(--blocked)"></span>${blocked} to verify</span>`+
+      `<span class="stat"><span class="dot" style="background:var(--down)"></span>${down} down</span>`+
+      `<span class="stat">💼 ${hiring} advertising roles</span>`;
+  };
+  paint();
+
+  try{
+    const res = await fetch("/api/scan");
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = "";
+    while(true){
+      const {value, done:fin} = await reader.read();
+      if (fin) break;
+      buf += dec.decode(value, {stream:true});
+      let nl;
+      while((nl = buf.indexOf("\n")) >= 0){
+        const line = buf.slice(0,nl); buf = buf.slice(nl+1);
+        if (!line.trim()) continue;
+        let msg; try{ msg = JSON.parse(line); }catch{ continue; }
+        if (msg.type === "meta"){ total = msg.total; paint(); }
+        else if (msg.type === "result"){
+          SCAN[msg.name] = msg;
+          done++;
+          if (msg.status==="live") live++;
+          else if (msg.status==="blocked") blocked++;
+          else if (msg.status==="down") down++;
+          if ((msg.roles&&msg.roles.length)||(msg.hints&&msg.hints.length)) hiring++;
+          paint();
+          render();
+        }
+      }
+    }
+  }catch(e){
+    $("summary").innerHTML += `<span class="stat" style="color:var(--down)">Scan error — is the server running?</span>`;
+  }
+  btn.disabled = false; btn.textContent = "⚡ Re-scan";
+}
+
+init();
+</script>
+</body>
+</html>

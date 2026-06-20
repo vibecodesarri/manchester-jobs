@@ -1,0 +1,13 @@
+{
+  "name": "manchester-jobs-directory",
+  "version": "1.0.0",
+  "description": "Live directory of Greater Manchester retail/hospitality jobs with a server-side careers scanner.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

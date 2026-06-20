@@ -1,0 +1,10 @@
+# Render Blueprint — lets you deploy with one click ("New + → Blueprint").
+# Free plan: the service sleeps after 15 min idle and takes ~50s to wake. No card required.
+services:
+  - type: web
+    name: manchester-jobs
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
