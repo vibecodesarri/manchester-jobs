@@ -236,6 +236,53 @@ const GM_RE = new RegExp(
   "\\b(" + GM_LIST.map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")\\b", "i");
 const inGM = (city, loc) => GM_RE.test((city || "") + " " + (loc || ""));
 
+// ── Greater Manchester borough resolution (relevant-area filtering + clean labels) ──
+const BOROUGH_TOWNS = {
+  Manchester: ["manchester","deansgate","ancoats","northern quarter","spinningfields","castlefield","piccadilly","hulme","didsbury","chorlton","withington","fallowfield","rusholme","levenshulme","burnage","gorton","openshaw","harpurhey","moston","blackley","crumpsall","cheetham","ardwick","longsight","wythenshawe","northenden","baguley","newton heath","clayton","beswick","miles platting","whalley range","old moat"],
+  Salford: ["salford","eccles","swinton","worsley","walkden","irlam","cadishead","pendlebury","mediacity","media city","ordsall","pendleton","broughton","kersal","weaste"],
+  Trafford: ["trafford","stretford","urmston","sale","altrincham","hale","bowdon","timperley","old trafford","davyhulme","flixton","partington","carrington","gorse hill"],
+  Stockport: ["stockport","cheadle","gatley","bramhall","hazel grove","marple","romiley","bredbury","reddish","heald green","poynton","wilmslow","alderley edge","handforth","woodley","offerton"],
+  Tameside: ["ashton","hyde","denton","stalybridge","droylsden","dukinfield","audenshaw","mossley","hattersley"],
+  Oldham: ["oldham","chadderton","royton","shaw","failsworth","lees","saddleworth","uppermill","greenfield"],
+  Rochdale: ["rochdale","heywood","middleton","littleborough","milnrow","wardle","norden"],
+  Bury: ["bury","prestwich","whitefield","radcliffe","ramsbottom","tottington","unsworth"],
+  Bolton: ["bolton","farnworth","horwich","westhoughton","kearsley","little lever","blackrod","egerton","breightmet"],
+  Wigan: ["wigan","leigh","atherton","tyldesley","hindley","golborne","standish","orrell","ince","ashton-in-makerfield","platt bridge"],
+};
+const mDistrictBorough = (n) => {
+  if ([5, 6, 7, 27, 28, 30, 38, 44, 50].includes(n)) return "Salford";
+  if ([16, 17, 31, 32, 33, 41].includes(n)) return "Trafford";
+  if ([34, 43].includes(n)) return "Tameside";
+  if (n === 24) return "Rochdale";
+  if ([25, 26, 45].includes(n)) return "Bury";
+  if (n === 46) return "Wigan";
+  return "Manchester";
+};
+const BOROUGH_RE = Object.fromEntries(Object.entries(BOROUGH_TOWNS).map(([b, toks]) =>
+  [b, new RegExp("\\b(" + toks.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")\\b", "i")]));
+function boroughOf(loc) {
+  // Strip the county phrase first: "Bolton, Greater Manchester" must map to Bolton, not Manchester.
+  const s = (loc || "").toLowerCase().replace(/\bgreater manchester\b|\bunited kingdom\b|\bengland\b/g, " ");
+  for (const [b, re] of Object.entries(BOROUGH_RE)) if (re.test(s)) return b; // word-boundary: "Glazebury" ≠ Bury
+  const pc = s.match(/\b([a-z]{1,2})(\d{1,2})[a-z]?\s*\d?[a-z]{0,2}\b/i);
+  if (pc) {
+    const area = pc[1].toLowerCase(), num = +pc[2];
+    if (area === "bl") return "Bolton";
+    if (area === "wn") return "Wigan";
+    if (area === "sk") return "Stockport";
+    if (area === "ol") return [11, 12, 16].includes(num) ? "Rochdale" : "Oldham";
+    if (area === "wa" && [13, 14, 15].includes(num)) return "Trafford";
+    if (area === "m" && num <= 99) return mDistrictBorough(num);
+  }
+  return null; // not Greater Manchester
+}
+function displayLoc(loc, borough) {
+  let s = String(loc || "").replace(/,?\s*(greater manchester|united kingdom|england|uk)\b/ig, "").trim();
+  s = s.replace(/,?\s*[a-z]{1,2}\d{1,2}[a-z]?(\s*\d[a-z]{2})?\s*$/i, "").replace(/[,\s]+$/, "").trim();
+  if (!s || /^\d/.test(s)) return borough || "Manchester area";
+  return s;
+}
+
 // Entry-level vs senior heuristics.
 const STRONG_SENIOR = /\b(senior|snr\.?|principal|director|head of|vice[- ]president|vp|chief|c[etf]o|architect)\b/i;
 const MID_SENIOR = /\b(manager|supervisor|lead|consultant|specialist|controller|expert|partner)\b/i;
@@ -528,7 +575,6 @@ async function* aggregateJobs(concurrency = 8) {
       for (const j of jobs) {
         if (!j || !j.title || !j.url) continue;
         if (!passEntry(j.title)) continue;
-        if (j.source === "Workable" && !inGM(j.city, j.location)) continue;
         if (j.source === "Jooble" && !looksUK(j.location)) continue;
         const dkey = (j.title + "|" + j.company).toLowerCase().replace(/\s+/g, " ").trim();
         if (seen.has(dkey)) continue;
@@ -536,6 +582,8 @@ async function* aggregateJobs(concurrency = 8) {
         const c = classify(j.title);
         j.func = c.func;
         j.level = c.level;
+        j.borough = boroughOf(j.location);   // null = outside Greater Manchester
+        j.location = displayLoc(j.location, j.borough);
         fresh.push(j);
       }
       yield {
