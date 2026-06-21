@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root{
     --bg:#f4f2ee; --card:#fff; --ink:#1d2226; --mut:#5b6b7b;
@@ -23,7 +24,7 @@
   .wrap{max-width:1140px;margin:0 auto;padding:18px 16px 64px}
 
   .top{display:flex;align-items:center;gap:13px;margin-bottom:16px}
-  .mark{width:42px;height:42px;border-radius:11px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .mark{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#0a66c2,#0a8fd6 60%,#15b8a6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;box-shadow:0 4px 12px rgba(10,102,194,.3)}
   .top h1{margin:0;font-size:19px;font-weight:750;letter-spacing:-.2px}
   .top p{margin:1px 0 0;font-size:12.5px;color:var(--mut)}
 
@@ -142,6 +143,25 @@
   .marker-cluster{background:rgba(10,102,194,.25)}
   .marker-cluster div{background:rgba(10,102,194,.85);color:#fff;font-weight:700}
 
+  /* Cover letter */
+  .clwrap{display:grid;grid-template-columns:minmax(300px,420px) 1fr;gap:16px;align-items:start}
+  .clform{display:flex;flex-direction:column;gap:11px;padding:18px 18px}
+  .clform label{font-size:11.5px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.4px;margin-bottom:-5px}
+  .clform input,.clform select,.clform textarea{width:100%;font-family:inherit;font-size:13.5px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;background:var(--card);color:var(--ink)}
+  .clform textarea{resize:vertical;min-height:74px;line-height:1.5}
+  .clform .row{display:flex;gap:10px}.clform .row>*{flex:1}
+  .clgen{margin-top:4px}
+  .clpreviewwrap{padding:18px 20px;min-height:300px}
+  .clpreview{white-space:pre-wrap;font-size:13.5px;line-height:1.7;color:#2a3744;border:1px solid var(--line);border-radius:9px;padding:18px 20px;min-height:260px;background:#fcfcfb;font-family:Georgia,'Times New Roman',serif}
+  .clbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+  .clstatus{font-size:12.5px;color:var(--mut)}
+  .btn2{cursor:pointer;font-weight:700;font-size:13.5px;color:var(--accent);background:var(--card);border:1.5px solid var(--accent);border-radius:22px;padding:9px 18px;transition:all .12s}
+  .btn2:hover{background:var(--accent);color:#fff}
+  .btn2:disabled{opacity:.5;cursor:not-allowed}
+  .clbtn{margin-top:10px;width:100%}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid #cbd5e1;border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-right:7px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
   @media (max-width:880px){
     .layout{grid-template-columns:1fr}.joblist{max-height:none}
     .jobdetail{position:fixed;inset:0;z-index:50;border-radius:0;max-height:none;border:0;display:none}
@@ -164,6 +184,7 @@
     <button class="tab" data-tab="board">🔎 Job Search</button>
     <button class="tab" data-tab="map">🗺️ Map</button>
     <button class="tab" data-tab="all">🌐 Everything</button>
+    <button class="tab" data-tab="cover">✍️ Cover Letter</button>
   </div>
 
   <!-- TAB 1: STORE DIRECTORY -->
@@ -223,6 +244,39 @@
     </div>
     <div id="map"></div>
     <div class="foot">Entry-level roles across Greater Manchester, plotted by area. Click a cluster to zoom in, a dot for details. Needs an internet connection for map tiles.</div>
+  </section>
+
+  <!-- TAB: COVER LETTER -->
+  <section id="tab-cover" class="hidden">
+    <div class="clwrap">
+      <div class="clform panel">
+        <div class="row"><div><label>Your name</label><input id="clName" placeholder="Sarri Munem" /></div></div>
+        <div class="row">
+          <div><label>Email</label><input id="clEmail" placeholder="you@email.com" /></div>
+          <div><label>Phone</label><input id="clPhone" placeholder="07…" /></div>
+        </div>
+        <div class="row">
+          <div><label>Job title</label><input id="clRole" placeholder="Sales Assistant" /></div>
+          <div><label>Company</label><input id="clCompany" placeholder="JD Sports" /></div>
+        </div>
+        <div><label>Your experience &amp; skills</label><textarea id="clExp" placeholder="e.g. Part-time retail experience, great with customers, reliable, available weekends…"></textarea></div>
+        <div><label>Why you want this role (optional)</label><textarea id="clWhy" placeholder="e.g. I love the brand and want to build a career in retail…"></textarea></div>
+        <div class="row">
+          <div><label>Tone</label><select id="clTone"><option>Professional &amp; warm</option><option>Enthusiastic</option><option>Confident</option><option>Concise &amp; formal</option></select></div>
+        </div>
+        <button class="btn clgen" id="clGenBtn">✨ Generate with AI</button>
+      </div>
+
+      <div class="clpreviewwrap panel">
+        <div class="clbar">
+          <button class="btn2" id="clPdfBtn" disabled>⬇ Download PDF</button>
+          <button class="btn2" id="clCopyBtn" disabled>Copy text</button>
+          <span class="clstatus" id="clStatus">Fill in the form and hit Generate. You can edit the result before downloading.</span>
+        </div>
+        <div class="clpreview" id="clOutput" contenteditable="true" spellcheck="true"></div>
+      </div>
+    </div>
+    <div class="foot">Letters are drafted by Google Gemini from the details you enter — always read and tweak before sending. The PDF uses your name, email and phone as the letterhead.</div>
   </section>
 
   <!-- TAB 3: EVERYTHING -->
@@ -288,8 +342,10 @@ async function init(){
     $("tab-board").classList.toggle("hidden",t!=="board");
     $("tab-map").classList.toggle("hidden",t!=="map");
     $("tab-all").classList.toggle("hidden",t!=="all");
+    $("tab-cover").classList.toggle("hidden",t!=="cover");
     if(t==="board"){activeBoardTab="jobs";renderJobs();} if(t==="all"){activeBoardTab="all";renderAll();}
     if(t==="map"){activeBoardTab="map";buildMap();}
+    if(t==="cover"){activeBoardTab="cover";}
   }));
   try{ STORES=await (await fetch("/api/stores")).json(); }
   catch{ $("subtitle").textContent="⚠ Run start.bat (node server.mjs) then open http://localhost:5173"; ["scanBtn","boardBtn","allBtn"].forEach(i=>$(i).disabled=true); return; }
@@ -310,6 +366,11 @@ async function init(){
   $("boardBtn").addEventListener("click",runBoardScan);
   $("allBtn").addEventListener("click",runBoardScan);
   $("mapBtn").addEventListener("click",runBoardScan);
+
+  $("clGenBtn").addEventListener("click",genCover);
+  $("clPdfBtn").addEventListener("click",coverPDF);
+  $("clCopyBtn").addEventListener("click",()=>{navigator.clipboard.writeText($("clOutput").innerText.trim());$("clStatus").textContent="Copied to clipboard.";});
+  $("clOutput").addEventListener("input",()=>{const has=$("clOutput").innerText.trim().length>0;$("clPdfBtn").disabled=!has;$("clCopyBtn").disabled=!has;});
   ["boardSearch","typeSel","srcSel","sortSel"].forEach(id=>$(id).addEventListener("input",renderJobs));
   ["allSearch","allSrcSel","allSortSel"].forEach(id=>$(id).addEventListener("input",renderAll));
   $("expSeg").addEventListener("click",e=>{if(e.target.dataset.exp){expFilter=e.target.dataset.exp;[...$("expSeg").children].forEach(b=>b.classList.toggle("on",b.dataset.exp===expFilter));renderJobs();}});
@@ -399,6 +460,7 @@ function detailHTML(j){
     <div class="dloc">📍 ${esc(j.location||"Manchester")}</div>
     <div class="dmeta">${pills.join("")}</div>
     <a class="btn dapply" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener">Apply on ${esc(j.source)} →</a>
+    <button class="btn2 clbtn" data-cl="${esc(j.id)}">✍️ Draft a cover letter for this job</button>
     <div class="ddesc">${j.description?esc(j.description):"No preview available — click Apply to read the full advert."}</div>
     <div class="dfoot">Sourced live from ${esc(j.source)}. Confirm details on the advert before applying.</div>`;
 }
@@ -409,6 +471,7 @@ function selectJob(mode,id,keepScroll){
   const j=JOBMAP[id]; if(!j)return;
   $(detId).innerHTML=detailHTML(j);
   $(detId).querySelector("[data-close]")?.addEventListener("click",()=>$(detId).classList.remove("open"));
+  $(detId).querySelector(".clbtn")?.addEventListener("click",()=>coverFor(id));
   if(window.innerWidth<=880&&!keepScroll)$(detId).classList.add("open");
 }
 function paintList(list,mode){
@@ -511,6 +574,50 @@ async function streamNDJSON(res,onMsg){
   const rd=res.body.getReader(),dec=new TextDecoder();let buf="";
   while(true){const{value,done}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});
     let nl;while((nl=buf.indexOf("\n"))>=0){const line=buf.slice(0,nl);buf=buf.slice(nl+1);if(line.trim()){try{onMsg(JSON.parse(line));}catch{}}}}
+}
+
+/* Cover letter */
+async function genCover(){
+  const btn=$("clGenBtn");
+  const payload={name:$("clName").value,email:$("clEmail").value,phone:$("clPhone").value,role:$("clRole").value,company:$("clCompany").value,experience:$("clExp").value,why:$("clWhy").value,tone:$("clTone").value};
+  if(!payload.role&&!payload.company&&!payload.experience){$("clStatus").textContent="Add at least a job title or some experience first.";return;}
+  btn.disabled=true;btn.textContent="✨ Generating…";$("clStatus").innerHTML='<span class="spin"></span>Drafting your letter with Gemini…';
+  try{
+    const res=await fetch("/api/cover-letter",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok)throw new Error(data.error||("error "+res.status));
+    $("clOutput").innerText=data.letter;
+    $("clPdfBtn").disabled=false;$("clCopyBtn").disabled=false;
+    $("clStatus").textContent="Draft ready — edit it directly below, then download the PDF.";
+  }catch(e){$("clStatus").textContent="Couldn't generate: "+e.message;}
+  btn.disabled=false;btn.textContent="✨ Generate with AI";
+}
+function coverPDF(){
+  const body=$("clOutput").innerText.trim();
+  if(!body){$("clStatus").textContent="Generate a letter first.";return;}
+  const jsPDF=window.jspdf&&window.jspdf.jsPDF;
+  if(!jsPDF){$("clStatus").textContent="PDF library failed to load (needs internet).";return;}
+  const doc=new jsPDF({unit:"mm",format:"a4"});
+  const left=22,wmax=166;let y=24;
+  const name=$("clName").value.trim(),contact=[$("clEmail").value.trim(),$("clPhone").value.trim()].filter(Boolean).join("   ·   ");
+  if(name){doc.setFont("helvetica","bold");doc.setFontSize(18);doc.text(name,left,y);y+=7;}
+  if(contact){doc.setFont("helvetica","normal");doc.setFontSize(10);doc.setTextColor(110);doc.text(contact,left,y);y+=6;}
+  doc.setDrawColor(210);doc.line(left,y,left+wmax,y);y+=8;
+  doc.setTextColor(110);doc.setFontSize(10);
+  doc.text(new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}),left,y);y+=9;
+  doc.setTextColor(30);doc.setFont("helvetica","normal");doc.setFontSize(11);
+  for(const ln of doc.splitTextToSize(body,wmax)){ if(y>282){doc.addPage();y=24;} doc.text(ln,left,y); y+=(ln.trim()===""?3.5:6); }
+  const co=$("clCompany").value.trim().replace(/[^\w \-]/g,"");
+  doc.save("Cover Letter"+(co?" - "+co:"")+".pdf");
+  $("clStatus").textContent="PDF downloaded.";
+}
+function coverFor(id){
+  const j=JOBMAP[id]; if(!j)return;
+  document.querySelector('.tab[data-tab="cover"]').click();
+  if(j.title)$("clRole").value=j.title;
+  if(j.company)$("clCompany").value=j.company;
+  $("clStatus").textContent="Prefilled from this job — add your details and hit Generate.";
+  window.scrollTo(0,0);
 }
 init();
 </script>

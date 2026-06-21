@@ -596,6 +596,59 @@ async function* aggregateJobs(concurrency = 8) {
   yield { type: "done", total: seen.size };
 }
 
+// ════════════════════════════════════════════════════════════════════════
+//  COVER LETTER GENERATOR (Google Gemini)
+// ════════════════════════════════════════════════════════════════════════
+const GEMINI_MODEL = "gemini-2.5-flash";
+
+function buildCoverPrompt(d) {
+  const f = (v) => (v || "").toString().trim();
+  return [
+    "Write a cover letter for a UK job application. Use British English.",
+    `Applicant name: ${f(d.name) || "the applicant"}`,
+    d.role ? `Role applied for: ${f(d.role)}` : "",
+    d.company ? `Company: ${f(d.company)}` : "",
+    d.experience ? `Relevant experience and skills: ${f(d.experience)}` : "",
+    d.why ? `Why they want this role / company: ${f(d.why)}` : "",
+    `Tone: ${f(d.tone) || "professional and warm"}.`,
+    "",
+    "Rules:",
+    "- Start directly with the salutation (e.g. 'Dear Hiring Manager,' if no name is given).",
+    "- 3 to 4 concise paragraphs, tailored to the role; no clichés or filler.",
+    "- Do NOT include the sender's address, the company's address, or the date (those are added separately).",
+    "- End with 'Yours sincerely,' on its own line, then the applicant's name.",
+    "- Output ONLY the letter text — no preamble, notes, or markdown.",
+  ].filter(Boolean).join("\n");
+}
+
+async function generateCoverLetter(d) {
+  const key = process.env.GEMINI_API_KEY;
+  if (!key) { const e = new Error("Cover letters need a Gemini API key — set GEMINI_API_KEY (locally in .env, on Render in Environment)."); e.status = 503; throw e; }
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+  const res = await timedFetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: buildCoverPrompt(d) }] }],
+      generationConfig: { temperature: 0.7, maxOutputTokens: 1400 },
+    }),
+  }, 30000);
+  if (!res.ok) { const t = await res.text(); const e = new Error("Gemini error " + res.status + ": " + t.slice(0, 160)); e.status = 502; throw e; }
+  const j = await res.json();
+  const text = (j.candidates?.[0]?.content?.parts || []).map((p) => p.text).join("").trim();
+  if (!text) throw Object.assign(new Error("Gemini returned no text"), { status: 502 });
+  return text;
+}
+
+function readJsonBody(req, limit = 100000) {
+  return new Promise((resolve, reject) => {
+    let body = "";
+    req.on("data", (c) => { body += c; if (body.length > limit) { reject(new Error("body too large")); req.destroy(); } });
+    req.on("end", () => { try { resolve(JSON.parse(body || "{}")); } catch { reject(new Error("invalid JSON")); } });
+    req.on("error", reject);
+  });
+}
+
 // ── HTTP server ───────────────────────────────────────────────────────────
 const MIME = { ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript",
   ".css": "text/css", ".json": "application/json", ".ico": "image/x-icon", ".svg": "image/svg+xml" };
@@ -642,6 +695,24 @@ const server = createServer(async (req, res) => {
       res.write(JSON.stringify({ type: "error", message: String(e) }) + "\n");
     }
     res.end();
+    return;
+  }
+
+  if (url.pathname === "/api/cover-letter" && req.method === "POST") {
+    try {
+      const data = await readJsonBody(req);
+      const letter = await generateCoverLetter(data);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ letter }));
+    } catch (e) {
+      res.writeHead(e.status || 500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: String(e.message || e) }));
+    }
+    return;
+  }
+  if (url.pathname === "/api/config") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ coverLetters: !!process.env.GEMINI_API_KEY, sources: activeSources() }));
     return;
   }
 
