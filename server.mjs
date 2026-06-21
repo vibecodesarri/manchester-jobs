@@ -12,10 +12,23 @@
 
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
+import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Load .env for local dev (on Render, set these in the dashboard env vars instead).
+try {
+  const envPath = join(__dirname, ".env");
+  if (existsSync(envPath)) {
+    for (const line of readFileSync(envPath, "utf8").split(/\r?\n/)) {
+      const m = line.match(/^\s*([A-Za-z0-9_]+)\s*=\s*(.*)\s*$/);
+      if (m && !process.env[m[1]]) process.env[m[1]] = m[2].replace(/^['"]|['"]$/g, "").trim();
+    }
+  }
+} catch { /* no .env — fine */ }
+
 const PORT = Number(process.env.PORT) || 5173;
 const stores = JSON.parse(await readFile(join(__dirname, "stores.json"), "utf8"));
 
@@ -236,16 +249,46 @@ const passEntry = (t) => {
   return true;
 };
 
+// Classify a role into a job function + experience level (used by the UI filters).
+const ENTRY_SIGNAL = /\b(assistant|trainee|apprentice|apprenticeship|graduate|junior|jr\.?|entry[- ]?level|intern|internship|no experience|crew|team member|school leaver|work experience|level [12]|kitchen porter|healthcare assistant|support worker|domestic|labourer|new to)\b/i;
+const CASUAL_SIGNAL = /\b(part[- ]?time|weekend|seasonal|temporary|temp\b|casual|christmas|holiday|bank staff|zero hour)\b/i;
+function classify(title) {
+  const t = (title || "").toLowerCase();
+  let func = "Other";
+  if (/\b(driver|driving|hgv|lgv|delivery|courier|chauffeur|van driver|cdl)\b/.test(t)) func = "Driving";
+  else if (/\b(warehouse|picker|packer|operative|forklift|fork lift|stockroom|loader|fulfil?ment|goods in)\b/.test(t)) func = "Warehouse";
+  else if (/\b(care|carer|caring|support worker|healthcare assistant|nurs|domiciliary|caregiver|home care)\b/.test(t)) func = "Care & Health";
+  else if (/\b(barista|waiter|waitress|kitchen|chef|cook|hospitality|bar staff|bartender|bar back|host|hostess|catering|food|restaurant|cafe|coffee|front of house|crew member|team member)\b/.test(t)) func = "Hospitality";
+  else if (/\b(sales assistant|retail|store|shop|merchandiser|cashier|sales advisor|sales adviser|fashion|stylist|keyholder|key holder|shop floor|concession)\b/.test(t)) func = "Retail";
+  else if (/\b(customer service|customer assistant|customer advisor|customer adviser|call centre|call center|contact centre|customer support|service desk|helpdesk|help desk)\b/.test(t)) func = "Customer Service";
+  else if (/\b(admin|administrat|receptionist|clerk|clerical|data entry|office|secretary|coordinator|typist|ward clerk|scheduler|front desk)\b/.test(t)) func = "Admin & Office";
+  else if (/\b(cleaner|cleaning|housekeep|domestic|janitor|caretaker)\b/.test(t)) func = "Cleaning";
+  else if (/\b(apprentice|apprenticeship|trainee|graduate|intern)\b/.test(t)) func = "Apprentice/Trainee";
+  const level = (ENTRY_SIGNAL.test(t) || CASUAL_SIGNAL.test(t)) ? "entry" : "other";
+  return { func, level };
+}
+
+// Guard against non-UK results (Jooble is global and will match "Manchester, NH" etc.).
+// Match a US state only in the ", XX" suffix position so UK strings aren't clipped.
+const US_RE = /,\s*(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])\b|\b(USA|United States)\b/;
+const looksUK = (loc) => !US_RE.test(loc || "");
+
 const WORKABLE_QUERIES = [
   "", "entry level", "trainee", "apprentice", "junior", "graduate",
   "sales assistant", "customer assistant", "customer service", "team member",
   "crew", "barista", "kitchen", "warehouse operative", "cleaner", "receptionist",
   "care assistant", "support worker", "administrator", "retail", "part time",
-  "call centre", "hospitality", "no experience", "weekend",
+  "call centre", "hospitality", "no experience", "weekend", "bartender",
+  "waiter", "host", "stock assistant", "data entry", "office junior",
 ];
 const KEYED_QUERIES = [
-  "entry level", "apprentice", "trainee", "sales assistant",
-  "customer service", "warehouse", "care assistant", "cleaner",
+  "entry level", "apprentice", "trainee", "graduate", "sales assistant",
+  "customer service", "warehouse", "care assistant", "cleaner", "receptionist",
+  "hospitality", "admin assistant",
+];
+const JOOBLE_QUERIES = [
+  "entry level", "apprentice", "trainee", "assistant", "customer service",
+  "warehouse", "care assistant", "hospitality",
 ];
 // NHS entry-level role keywords (avoid the blank query so we skip consultants/qualified nurses).
 const NHS_QUERIES = [
@@ -255,6 +298,10 @@ const NHS_QUERIES = [
 ];
 
 const stripTags = (s) => (s || "").replace(/<[^>]+>/g, "").trim();
+const snippet = (s, n = 380) => {
+  const t = stripTags(String(s || "")).replace(/&amp;/g, "&").replace(/&#39;|&rsquo;/g, "'").replace(/\s+/g, " ").trim();
+  return t.length > n ? t.slice(0, n).trim() + "…" : t;
+};
 
 // Minimal XML helpers (zero-dependency) for the NHS feed.
 const xmlField = (block, tag) => {
@@ -268,6 +315,16 @@ const prettySalary = (s) => {
   const fmt = (n) => hourly ? `£${(+n.toFixed(2)).toString()}` : (n >= 1000 ? `£${Math.round(n / 1000)}k` : `£${Math.round(n)}`);
   const body = nums.length > 1 ? `${fmt(nums[0])}–${fmt(nums[1])}` : fmt(nums[0]);
   return hourly ? body + "/hr" : body;
+};
+// Format a salary range, handling hourly rates and empty/zero values.
+const money = (min, max) => {
+  min = +min || 0; max = +max || 0;
+  if (!min && !max) return "";
+  const hourly = (min && min < 200) || (max && max < 200);
+  const f = (n) => hourly ? `£${+n.toFixed(2)}` : `£${Math.round(n / 1000)}k`;
+  if (min && max && max > min) return hourly ? `${f(min)}–${f(max)}/hr` : `${f(min)}–${f(max)}`;
+  const v = min || max;
+  return hourly ? `${f(v)}/hr` : f(v);
 };
 // NHS location fields sometimes carry placeholder text; clean to a usable town/postcode.
 const cleanLoc = (loc) =>
@@ -294,6 +351,7 @@ async function workableSearch(query) {
     type: [j.workplace, j.employmentType].filter(Boolean).join(" · "),
     remote: (j.workplace || "").toLowerCase().includes("remote"),
     salary: "",
+    description: snippet(j.description),
   }));
 }
 
@@ -302,7 +360,7 @@ async function adzunaSearch(query) {
   const id = process.env.ADZUNA_APP_ID, key = process.env.ADZUNA_APP_KEY;
   if (!id || !key) return [];
   const url = `https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=${id}&app_key=${key}` +
-    `&where=manchester&distance=15&results_per_page=50&max_days_old=40&what=${encodeURIComponent(query)}`;
+    `&where=manchester&distance=20&results_per_page=50&max_days_old=45&what=${encodeURIComponent(query)}`;
   const res = await timedFetch(url, { headers: { Accept: "application/json" } }, 12000);
   if (!res.ok) throw new Error("Adzuna HTTP " + res.status);
   const data = await res.json();
@@ -317,9 +375,8 @@ async function adzunaSearch(query) {
     posted: j.created || null,
     type: j.contract_time || j.contract_type || "",
     remote: false,
-    salary: j.salary_min
-      ? `£${Math.round(j.salary_min / 1000)}k${j.salary_max ? `–£${Math.round(j.salary_max / 1000)}k` : ""}`
-      : "",
+    salary: money(j.salary_min, j.salary_max),
+    description: snippet(j.description),
   }));
 }
 
@@ -328,7 +385,7 @@ async function reedSearch(query) {
   const rk = process.env.REED_API_KEY;
   if (!rk) return [];
   const url = `https://www.reed.co.uk/api/1.0/search?keywords=${encodeURIComponent(query)}` +
-    `&locationName=Manchester&distanceFromLocation=10&resultsToTake=100`;
+    `&locationName=Manchester&distanceFromLocation=15&resultsToTake=100`;
   const auth = "Basic " + Buffer.from(rk + ":").toString("base64");
   const res = await timedFetch(url, { headers: { Authorization: auth, Accept: "application/json" } }, 12000);
   if (!res.ok) throw new Error("Reed HTTP " + res.status);
@@ -344,7 +401,8 @@ async function reedSearch(query) {
     posted: j.date || null,
     type: j.jobType || "",
     remote: false,
-    salary: j.minimumSalary ? `£${Math.round(j.minimumSalary / 1000)}k${j.maximumSalary ? `–£${Math.round(j.maximumSalary / 1000)}k` : ""}` : "",
+    salary: money(j.minimumSalary, j.maximumSalary),
+    description: snippet(j.jobDescription),
   }));
 }
 
@@ -355,23 +413,29 @@ async function joobleSearch(query) {
   const res = await timedFetch(`https://jooble.org/api/${jk}`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({ keywords: query, location: "Manchester", page: "1" }),
+    body: JSON.stringify({ keywords: query, location: "Manchester, United Kingdom", page: "1" }),
   }, 12000);
   if (!res.ok) throw new Error("Jooble HTTP " + res.status);
   const data = await res.json();
-  return (data.jobs || []).map((j) => ({
-    id: "jb_" + (j.id || j.link),
-    title: stripTags(j.title),
-    company: j.company || "",
-    location: j.location || "Manchester",
-    city: (j.location || "").toLowerCase(),
-    url: j.link,
-    source: "Jooble",
-    posted: j.updated || null,
-    type: j.type || "",
-    remote: false,
-    salary: j.salary || "",
-  }));
+  return (data.jobs || [])
+    .filter((j) => looksUK(j.location))                 // drop "Manchester, NH" etc.
+    .map((j) => {
+      const loc = (j.location || "").trim();
+      return {
+        id: "jb_" + (j.id || j.link),
+        title: stripTags(j.title),
+        company: j.company || "",
+        location: (!loc || /^united kingdom$/i.test(loc)) ? "Manchester area" : loc,
+        city: loc.toLowerCase(),
+        url: j.link,
+        source: "Jooble",
+        posted: j.updated || null,
+        type: j.type || "",
+        remote: /remote/i.test(j.title + " " + (j.snippet || "")),
+        salary: (j.salary || "").trim(),
+        description: snippet(j.snippet),
+      };
+    });
 }
 
 // ── Source: NHS Jobs national feed (no key, XML) ──────────────────────────
@@ -396,6 +460,7 @@ async function nhsSearch(query) {
       type: xmlField(b, "type") || "",
       remote: false,
       salary: prettySalary(xmlField(b, "salary")),
+      description: snippet(xmlField(b, "description")),
     };
   });
 }
@@ -408,16 +473,30 @@ function activeSources() {
   return s;
 }
 
+// Retry on rate-limit (429) with backoff — Adzuna/Jooble free tiers throttle bursts.
+async function withRetry(fn, tries = 3) {
+  for (let i = 0; i < tries; i++) {
+    try { return await fn(); }
+    catch (e) {
+      if (/HTTP 429|HTTP 503/.test(e.message) && i < tries - 1) {
+        await new Promise((r) => setTimeout(r, 1300 * (i + 1)));
+        continue;
+      }
+      throw e;
+    }
+  }
+}
+
 function buildJobTasks() {
   const tasks = [];
   for (const q of WORKABLE_QUERIES) tasks.push({ source: "Workable", q, fn: () => workableSearch(q) });
-  for (const q of NHS_QUERIES) tasks.push({ source: "NHS Jobs", q, fn: () => nhsSearch(q) });
+  for (const q of NHS_QUERIES) tasks.push({ source: "NHS Jobs", q, fn: () => withRetry(() => nhsSearch(q)) });
   if (process.env.ADZUNA_APP_ID && process.env.ADZUNA_APP_KEY)
-    for (const q of KEYED_QUERIES) tasks.push({ source: "Adzuna", q, fn: () => adzunaSearch(q) });
+    for (const q of KEYED_QUERIES) tasks.push({ source: "Adzuna", q, fn: () => withRetry(() => adzunaSearch(q)) });
   if (process.env.REED_API_KEY)
-    for (const q of KEYED_QUERIES) tasks.push({ source: "Reed", q, fn: () => reedSearch(q) });
+    for (const q of KEYED_QUERIES) tasks.push({ source: "Reed", q, fn: () => withRetry(() => reedSearch(q)) });
   if (process.env.JOOBLE_KEY)
-    for (const q of KEYED_QUERIES) tasks.push({ source: "Jooble", q, fn: () => joobleSearch(q) });
+    for (const q of JOOBLE_QUERIES) tasks.push({ source: "Jooble", q, fn: () => withRetry(() => joobleSearch(q)) });
   return tasks;
 }
 
@@ -450,9 +529,13 @@ async function* aggregateJobs(concurrency = 8) {
         if (!j || !j.title || !j.url) continue;
         if (!passEntry(j.title)) continue;
         if (j.source === "Workable" && !inGM(j.city, j.location)) continue;
+        if (j.source === "Jooble" && !looksUK(j.location)) continue;
         const dkey = (j.title + "|" + j.company).toLowerCase().replace(/\s+/g, " ").trim();
         if (seen.has(dkey)) continue;
         seen.add(dkey);
+        const c = classify(j.title);
+        j.func = c.func;
+        j.level = c.level;
         fresh.push(j);
       }
       yield {
