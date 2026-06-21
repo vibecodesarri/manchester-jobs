@@ -12,10 +12,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root{
-    --bg:#f4f2ee; --card:#fff; --ink:#1d2226; --mut:#5b6b7b;
-    --faint:#8a97a6; --line:#e4e2dd; --line2:#eeece7; --accent:#0a66c2; --accent-dk:#004182;
-    --green:#0a7c42; --chip:#eef2f6; --hover:#f4f7fa;
-    --shadow:0 1px 2px rgba(0,0,0,.05),0 1px 6px rgba(0,0,0,.04);
+    --bg:#eef1f5; --card:#fff; --ink:#16202c; --mut:#566472;
+    --faint:#8a98a8; --line:#dde3ea; --line2:#eef1f4; --accent:#0a66c2; --accent-dk:#0c3d7a;
+    --navy:#0f2942; --navy2:#163d61;
+    --green:#0a7c42; --chip:#eef3f8; --hover:#f3f6fa;
+    --shadow:0 1px 2px rgba(16,41,66,.06),0 2px 8px rgba(16,41,66,.05);
   }
   *{box-sizing:border-box}
   html,body{margin:0}
@@ -23,16 +24,18 @@
   a{color:inherit}
   .wrap{max-width:1140px;margin:0 auto;padding:18px 16px 64px}
 
-  .top{display:flex;align-items:center;gap:13px;margin-bottom:16px}
-  .mark{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#0a66c2,#0a8fd6 60%,#15b8a6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;box-shadow:0 4px 12px rgba(10,102,194,.3)}
-  .top h1{margin:0;font-size:19px;font-weight:750;letter-spacing:-.2px}
-  .top p{margin:1px 0 0;font-size:12.5px;color:var(--mut)}
-
-  .tabs{display:flex;gap:7px;margin-bottom:18px}
-  .tab{flex:1;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--mut);
-    padding:11px 14px;border-radius:10px;font-size:14px;font-weight:650;transition:all .12s;box-shadow:var(--shadow)}
-  .tab:hover{color:var(--ink);background:var(--hover)}
-  .tab.active{color:#fff;background:var(--accent);border-color:var(--accent)}
+  /* Corporate header + nav */
+  .topbar{background:linear-gradient(105deg,var(--navy),var(--navy2));border-bottom:3px solid var(--accent)}
+  .bar-inner{max-width:1140px;margin:0 auto;padding:0 16px}
+  .topbar .bar-inner{display:flex;align-items:center;gap:14px;padding-top:17px;padding-bottom:17px}
+  .brandmark{width:46px;height:46px;border-radius:9px;border:1.6px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;letter-spacing:1px;color:#fff;flex-shrink:0}
+  .brandtext h1{margin:0;font-size:21px;font-weight:700;letter-spacing:.4px;color:#fff}
+  .brandtext p{margin:2px 0 0;font-size:12.5px;color:#a9bdd2}
+  .navbar{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;box-shadow:0 1px 3px rgba(16,41,66,.05)}
+  .navbar .tabs{display:flex;gap:2px;overflow-x:auto}
+  .tab{border:0;background:none;color:var(--mut);padding:15px 18px;font-size:13.5px;font-weight:650;letter-spacing:.2px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .12s,border-color .12s}
+  .tab:hover{color:var(--ink)}
+  .tab.active{color:var(--accent-dk);border-bottom-color:var(--accent)}
 
   .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
   input,select{font-family:inherit;font-size:14px;color:var(--ink);background:var(--card);
@@ -172,25 +175,24 @@
 </style>
 </head>
 <body>
+<header class="topbar"><div class="bar-inner">
+  <div class="brandmark">MJ</div>
+  <div class="brandtext"><h1>Manchester Jobs</h1><p id="subtitle">Loading…</p></div>
+</div></header>
+<nav class="navbar"><div class="bar-inner tabs">
+  <button class="tab active" data-tab="directory">Store Directory</button>
+  <button class="tab" data-tab="board">Job Search</button>
+  <button class="tab" data-tab="map">Map</button>
+  <button class="tab" data-tab="all">All Jobs</button>
+  <button class="tab" data-tab="cover">Cover Letter</button>
+</div></nav>
+
 <div class="wrap">
-
-  <div class="top">
-    <div class="mark">💼</div>
-    <div><h1>Manchester Jobs</h1><p id="subtitle">Loading…</p></div>
-  </div>
-
-  <div class="tabs">
-    <button class="tab active" data-tab="directory">🏬 Store Directory</button>
-    <button class="tab" data-tab="board">🔎 Job Search</button>
-    <button class="tab" data-tab="map">🗺️ Map</button>
-    <button class="tab" data-tab="all">🌐 Everything</button>
-    <button class="tab" data-tab="cover">✍️ Cover Letter</button>
-  </div>
 
   <!-- TAB 1: STORE DIRECTORY -->
   <section id="tab-directory">
     <div class="scanrow panel">
-      <button class="btn" id="scanBtn">⚡ Scan careers sites</button>
+      <button class="btn" id="scanBtn">Scan careers sites</button>
       <div class="sub">Check which of the <b id="brandcount"></b> brands are hiring and what <b>entry-level roles</b> they advertise — apply to the store directly.</div>
       <label class="toggle"><input type="checkbox" id="onlyHiring" /> Only show hiring</label>
       <div class="progress" id="progress"><i id="progressBar"></i></div>
@@ -210,7 +212,7 @@
   <!-- TAB 2: JOB SEARCH (relevant) -->
   <section id="tab-board" class="hidden">
     <div class="searchrow panel">
-      <button class="btn" id="boardBtn">🔎 Search Manchester jobs</button>
+      <button class="btn" id="boardBtn">Search Manchester jobs</button>
       <input id="boardSearch" placeholder="Filter by job title or company…" />
       <div class="progress" id="boardProgress"><i id="boardBar"></i></div>
       <div class="summary" id="boardSummary"></div>
@@ -238,7 +240,7 @@
   <!-- TAB: MAP -->
   <section id="tab-map" class="hidden">
     <div class="maptools panel">
-      <button class="btn" id="mapBtn">🔎 Load jobs onto map</button>
+      <button class="btn" id="mapBtn">Load jobs onto map</button>
       <span id="mapCount" style="font-size:13px;color:var(--mut)"></span>
       <div class="legend" id="mapLegend"></div>
     </div>
@@ -264,12 +266,12 @@
         <div class="row">
           <div><label>Tone</label><select id="clTone"><option>Professional &amp; warm</option><option>Enthusiastic</option><option>Confident</option><option>Concise &amp; formal</option></select></div>
         </div>
-        <button class="btn clgen" id="clGenBtn">✨ Generate with AI</button>
+        <button class="btn clgen" id="clGenBtn">Generate cover letter</button>
       </div>
 
       <div class="clpreviewwrap panel">
         <div class="clbar">
-          <button class="btn2" id="clPdfBtn" disabled>⬇ Download PDF</button>
+          <button class="btn2" id="clPdfBtn" disabled>Download PDF</button>
           <button class="btn2" id="clCopyBtn" disabled>Copy text</button>
           <span class="clstatus" id="clStatus">Fill in the form and hit Generate. You can edit the result before downloading.</span>
         </div>
@@ -281,9 +283,9 @@
 
   <!-- TAB 3: EVERYTHING -->
   <section id="tab-all" class="hidden">
-    <div class="infobar">🌐 <b>Everything</b> — every job found across all sources and all areas (including outside Greater Manchester and roles the Job Search tab filters out). Use search to dig in.</div>
+    <div class="infobar"><b>All Jobs</b> — every listing found across all sources and all areas (including outside Greater Manchester and roles the Job Search tab filters out). Use search to dig in.</div>
     <div class="searchrow panel">
-      <button class="btn" id="allBtn">🔎 Search all jobs</button>
+      <button class="btn" id="allBtn">Search all jobs</button>
       <input id="allSearch" placeholder="Search any title, company or place…" />
       <select id="allSrcSel"><option value="">All sources</option></select>
       <select id="allSortSel"><option value="new">Newest first</option><option value="sal">Highest pay</option><option value="az">Title A–Z</option></select>
@@ -411,7 +413,7 @@ function scardHTML(s){
   return `<div class="scard"><div class="h"><span class="nm">${esc(s.name)}</span><span class="cat" style="background:${cc}">${esc(s.category)}</span></div><div class="locs">${locs}</div>${sb}<a class="applybtn" href="${esc(safeUrl(s.careers))}" target="_blank" rel="noopener">Apply / View Jobs →</a></div>`;
 }
 async function runScan(){
-  const btn=$("scanBtn");btn.disabled=true;btn.textContent="⏳ Scanning…";SCAN={};
+  const btn=$("scanBtn");btn.disabled=true;btn.textContent="Scanning…";SCAN={};
   $("progress").style.display="block";$("summary").style.display="flex";$("summary").innerHTML="";
   let total=STORES.length,done=0,live=0,blocked=0,down=0,hiring=0;
   const paint=()=>{$("progressBar").style.width=(total?done/total*100:0)+"%";$("summary").innerHTML=`<span class="stat">${done}/${total} scanned</span><span class="stat"><span class="dot" style="background:#0a7c42"></span>${live} live</span><span class="stat"><span class="dot" style="background:#b45309"></span>${blocked} to verify</span><span class="stat"><span class="dot" style="background:#b91c1c"></span>${down} down</span><span class="stat">💼 ${hiring} hiring</span>`;};
@@ -420,7 +422,7 @@ async function runScan(){
     if(m.type==="meta"){total=m.total;paint();}
     else if(m.type==="result"){SCAN[m.name]=m;done++;if(m.status==="live")live++;else if(m.status==="blocked")blocked++;else if(m.status==="down")down++;if(m.roles?.length||m.hints?.length)hiring++;paint();renderDir();}});
   }catch{$("summary").innerHTML+=`<span class="stat" style="color:#b91c1c">Error — server running?</span>`;}
-  btn.disabled=false;btn.textContent="⚡ Re-scan careers sites";
+  btn.disabled=false;btn.textContent="Re-scan careers sites";
 }
 
 /* Job board shared helpers */
@@ -460,7 +462,7 @@ function detailHTML(j){
     <div class="dloc">📍 ${esc(j.location||"Manchester")}</div>
     <div class="dmeta">${pills.join("")}</div>
     <a class="btn dapply" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener">Apply on ${esc(j.source)} →</a>
-    <button class="btn2 clbtn" data-cl="${esc(j.id)}">✍️ Draft a cover letter for this job</button>
+    <button class="btn2 clbtn" data-cl="${esc(j.id)}">Draft a cover letter for this job</button>
     <div class="ddesc">${j.description?esc(j.description):"No preview available — click Apply to read the full advert."}</div>
     <div class="dfoot">Sourced live from ${esc(j.source)}. Confirm details on the advert before applying.</div>`;
 }
@@ -544,7 +546,7 @@ let renderTimer=null;
 const scheduleRender=()=>{if(renderTimer)return;renderTimer=setTimeout(()=>{renderTimer=null;activeBoardTab==="all"?renderAll():renderJobs();},250);};
 
 async function runBoardScan(){
-  ["boardBtn","allBtn","mapBtn"].forEach(i=>{$(i).disabled=true;$(i).textContent="⏳ Searching…";});
+  ["boardBtn","allBtn","mapBtn"].forEach(i=>{$(i).disabled=true;$(i).textContent="Searching…";});
   JOBS=[];JOBMAP={};sel={jobs:null,all:null};
   ["joblist","allList"].forEach(i=>$(i).innerHTML="");
   ["jobdetail","allDetail"].forEach(i=>$(i).innerHTML='<div class="dempty">Select a job to see details.</div>');
@@ -565,9 +567,9 @@ async function runBoardScan(){
   }catch{paint("Search error — is the server running?");}
   renderJobs();renderAll();if(mapObj)buildMap();
   if(JOBS.length===0){["boardEmpty","allEmpty"].forEach(i=>{$(i).textContent="No jobs found right now — try again later.";$(i).classList.remove("hidden");});}
-  $("boardBtn").disabled=false;$("boardBtn").textContent="🔄 Refresh jobs";
-  $("allBtn").disabled=false;$("allBtn").textContent="🔄 Refresh";
-  $("mapBtn").disabled=false;$("mapBtn").textContent="🔄 Refresh map";
+  $("boardBtn").disabled=false;$("boardBtn").textContent="Refresh jobs";
+  $("allBtn").disabled=false;$("allBtn").textContent="Refresh";
+  $("mapBtn").disabled=false;$("mapBtn").textContent="Refresh map";
 }
 async function streamNDJSON(res,onMsg){
   if(!res.ok||!res.body)throw new Error("Bad response "+res.status);
@@ -581,7 +583,7 @@ async function genCover(){
   const btn=$("clGenBtn");
   const payload={name:$("clName").value,email:$("clEmail").value,phone:$("clPhone").value,role:$("clRole").value,company:$("clCompany").value,experience:$("clExp").value,why:$("clWhy").value,tone:$("clTone").value};
   if(!payload.role&&!payload.company&&!payload.experience){$("clStatus").textContent="Add at least a job title or some experience first.";return;}
-  btn.disabled=true;btn.textContent="✨ Generating…";$("clStatus").innerHTML='<span class="spin"></span>Drafting your letter with Gemini…';
+  btn.disabled=true;btn.textContent="Generating…";$("clStatus").innerHTML='<span class="spin"></span>Drafting your letter with Gemini…';
   try{
     const res=await fetch("/api/cover-letter",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
     const data=await res.json().catch(()=>({}));
@@ -590,7 +592,7 @@ async function genCover(){
     $("clPdfBtn").disabled=false;$("clCopyBtn").disabled=false;
     $("clStatus").textContent="Draft ready — edit it directly below, then download the PDF.";
   }catch(e){$("clStatus").textContent="Couldn't generate: "+e.message;}
-  btn.disabled=false;btn.textContent="✨ Generate with AI";
+  btn.disabled=false;btn.textContent="Generate cover letter";
 }
 function coverPDF(){
   const body=$("clOutput").innerText.trim();
