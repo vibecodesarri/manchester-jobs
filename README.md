@@ -45,10 +45,16 @@ Always-on, **no API key needed**:
 - **Workable** public board (`jobs.workable.com`) — multi-employer, multi-keyword search
 - **NHS Jobs** national XML feed — healthcare assistants, admin, apprentices, domestics, etc.
 
-Optional — set these environment variables to widen coverage (each is a free key):
+Optional — set these environment variables to unlock more (each is a free key):
 - `ADZUNA_APP_ID` + `ADZUNA_APP_KEY` — free at https://developer.adzuna.com (best UK coverage)
 - `REED_API_KEY` — free at https://www.reed.co.uk/developers
 - `JOOBLE_KEY` — free at https://jooble.org/api/about
+- `GEMINI_API_KEY` — Google AI Studio key; powers the **Cover Letter** generator
+
+## Other tabs
+- **🗺️ Map** — every entry-level job plotted across Greater Manchester (Leaflet + clustering).
+- **✍️ Cover Letter** — enter your details, Gemini drafts a tailored UK cover letter, edit it,
+  and export a formatted PDF. Needs `GEMINI_API_KEY`.
 
 On Render, add these under **Environment → Environment Variables** and redeploy.
 Locally: `set ADZUNA_APP_ID=... ` (PowerShell: `$env:ADZUNA_APP_ID="..."`) before `node server.mjs`.
