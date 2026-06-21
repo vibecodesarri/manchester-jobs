@@ -35,9 +35,29 @@ runs **server-side** in `server.mjs`. For every brand it:
 - Other live pages are sniffed for **entry-level keywords** (barista, sales assistant, team member,
   apprentice…) shown as hints — always click through to confirm and apply.
 
+## Live Job Board (second tab)
+
+The **Live Job Board** tab searches job boards live for **entry-level openings across
+Greater Manchester** and lists them with apply links. It runs server-side (no browser
+CORS limits), filters to Greater Manchester + entry-level roles, and de-duplicates.
+
+Always-on, **no API key needed**:
+- **Workable** public board (`jobs.workable.com`) — multi-employer, multi-keyword search
+- **NHS Jobs** national XML feed — healthcare assistants, admin, apprentices, domestics, etc.
+
+Optional — set these environment variables to widen coverage (each is a free key):
+- `ADZUNA_APP_ID` + `ADZUNA_APP_KEY` — free at https://developer.adzuna.com (best UK coverage)
+- `REED_API_KEY` — free at https://www.reed.co.uk/developers
+- `JOOBLE_KEY` — free at https://jooble.org/api/about
+
+On Render, add these under **Environment → Environment Variables** and redeploy.
+Locally: `set ADZUNA_APP_ID=... ` (PowerShell: `$env:ADZUNA_APP_ID="..."`) before `node server.mjs`.
+
 ## Files
 
-- `index.html` — the website (UI, filters, scan view)
-- `server.mjs` — zero-dependency Node server + scanner
+- `index.html` — the website (Store Directory + Live Job Board tabs)
+- `server.mjs` — zero-dependency Node server: careers scanner + job-board aggregator
 - `stores.json` — the brand directory (edit to add/remove brands)
+- `render.yaml` — one-click Render deploy blueprint
 - `start.bat` — double-click launcher
+- `DEPLOY.md` — full deployment guide

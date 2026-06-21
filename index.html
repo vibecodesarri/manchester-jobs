@@ -28,7 +28,7 @@
     position:relative; overflow:hidden;
     background:linear-gradient(135deg,#161d35,#10152a);
     border:1px solid var(--line); border-radius:20px;
-    padding:26px 26px 24px; margin-bottom:18px;
+    padding:26px 26px 24px; margin-bottom:16px;
     box-shadow:0 20px 60px rgba(0,0,0,.4);
   }
   .hero::after{content:"";position:absolute;inset:0;
@@ -40,7 +40,21 @@
   .loc-badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px;position:relative;z-index:1}
   .loc-pill{font-size:11px;font-weight:700;color:#fff;padding:4px 11px;border-radius:30px;opacity:.95}
 
-  /* ── Scan bar ── */
+  /* ── Tabs ── */
+  .tabs{display:flex;gap:8px;margin-bottom:16px}
+  .tab{
+    flex:1;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--mut);
+    padding:13px 16px;border-radius:13px;font-size:14.5px;font-weight:750;letter-spacing:.2px;
+    transition:all .14s;
+  }
+  .tab:hover{color:var(--ink);border-color:rgba(108,140,255,.4)}
+  .tab.active{
+    color:#fff;border-color:transparent;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));
+    box-shadow:0 8px 22px rgba(108,140,255,.32);
+  }
+
+  /* ── Scan bar (shared) ── */
   .scanbar{
     display:flex;gap:12px;align-items:center;flex-wrap:wrap;
     background:linear-gradient(135deg,rgba(108,140,255,.12),rgba(168,85,247,.10));
@@ -60,10 +74,9 @@
   .toggle{display:inline-flex;align-items:center;gap:7px;color:var(--mut);font-size:12.5px;cursor:pointer;user-select:none}
   .toggle input{accent-color:var(--acc);width:15px;height:15px}
 
-  /* progress + summary */
-  .progress{height:8px;border-radius:8px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:14px;display:none}
+  .progress{height:8px;border-radius:8px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:14px;display:none;flex-basis:100%}
   .progress > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .2s}
-  .summary{display:none;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .summary{display:none;gap:8px;flex-wrap:wrap;margin-top:14px;flex-basis:100%}
   .stat{font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:30px;border:1px solid var(--line);background:var(--card)}
   .stat .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:middle}
 
@@ -79,7 +92,7 @@
   .count{font-size:12.5px;color:var(--mut);margin:2px 2px 14px}
   .count b{color:var(--ink)}
 
-  /* ── Grid ── */
+  /* ── Directory grid ── */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:13px}
   .card{
     background:linear-gradient(180deg,var(--card),var(--card2));
@@ -100,7 +113,6 @@
   }
   .apply:hover{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent}
 
-  /* status ribbon (after scan) */
   .status{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700}
   .status .dot{width:9px;height:9px;border-radius:50%}
   .status .ms{color:var(--mut);font-weight:600;margin-left:auto;font-size:10.5px}
@@ -114,11 +126,32 @@
     border-radius:20px;padding:1px 8px;margin:2px 3px 0 0;font-size:10px;color:var(--ink)}
   .note{font-size:10.5px;color:var(--mut);font-style:italic}
 
-  .empty{text-align:center;padding:54px;color:var(--mut)}
+  /* ── Job board list ── */
+  .joblist{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:13px}
+  .jobcard{
+    background:linear-gradient(180deg,var(--card),var(--card2));
+    border:1px solid var(--line);border-radius:15px;padding:15px 16px;
+    display:flex;flex-direction:column;gap:9px;
+    transition:transform .12s, border-color .12s, box-shadow .12s;
+    animation:fadein .25s ease;
+  }
+  @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .jobcard:hover{transform:translateY(-2px);border-color:rgba(108,140,255,.45);box-shadow:0 14px 30px rgba(0,0,0,.35)}
+  .jobtop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .jobtitle{font-weight:750;font-size:14.5px;line-height:1.32}
+  .src{font-size:9.5px;font-weight:800;padding:3px 9px;border-radius:30px;white-space:nowrap;flex-shrink:0;color:#0b0f1a}
+  .jobmeta{font-size:12.5px;color:var(--mut)}
+  .jobmeta b{color:var(--ink);font-weight:650}
+  .jobpills{display:flex;flex-wrap:wrap;gap:5px}
+  .pill{font-size:10px;font-weight:650;color:var(--ink);background:rgba(255,255,255,.06);
+    border:1px solid var(--line);border-radius:30px;padding:2px 9px;text-transform:capitalize}
+  .pill.sal{color:#bbf7d0;border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.12);text-transform:none}
+  .pill.ago{color:var(--mut)}
+
+  .empty{text-align:center;padding:48px;color:var(--mut)}
   .foot{text-align:center;color:var(--mut);opacity:.7;font-size:11px;margin-top:30px;line-height:1.7}
-  /* dim cards not in scan filter */
   .hidden{display:none !important}
-  @media (max-width:560px){ .hero h1{font-size:22px} .grid{grid-template-columns:1fr} }
+  @media (max-width:560px){ .hero h1{font-size:22px} .grid,.joblist{grid-template-columns:1fr} .tab{font-size:13px;padding:11px} }
 </style>
 </head>
 <body>
@@ -126,32 +159,70 @@
 
   <div class="hero">
     <h1>🛍️ Manchester Jobs Directory</h1>
-    <p id="subtitle">Loading brands…</p>
+    <p id="subtitle">Loading…</p>
     <div class="loc-badges" id="locBadges"></div>
   </div>
 
-  <div class="scanbar">
-    <button class="scan-btn" id="scanBtn">⚡ Scan for live job listings</button>
-    <div class="scan-sub">
-      Checks every careers site <b>live, right now</b> — who's online, and detects the
-      <b>entry-level roles</b> each page is advertising (sales assistant, barista, team member, apprentice…).
+  <div class="tabs">
+    <button class="tab active" data-tab="directory">🛍️ Store Directory</button>
+    <button class="tab" data-tab="board">📋 Live Job Board</button>
+  </div>
+
+  <!-- ════════ TAB 1: STORE DIRECTORY ════════ -->
+  <section id="tab-directory">
+    <div class="scanbar">
+      <button class="scan-btn" id="scanBtn">⚡ Scan careers sites</button>
+      <div class="scan-sub">
+        Checks every brand's careers site <b>live</b> — who's online, and the
+        <b>entry-level roles</b> each page is advertising.
+      </div>
+      <label class="toggle"><input type="checkbox" id="onlyHiring" /> Show only hiring after scan</label>
+      <div class="progress" id="progress"><i id="progressBar"></i></div>
+      <div class="summary" id="summary"></div>
     </div>
-    <label class="toggle"><input type="checkbox" id="onlyHiring" /> Show only hiring after scan</label>
-    <div class="progress" id="progress"><i id="progressBar"></i></div>
-    <div class="summary" id="summary"></div>
-  </div>
 
-  <div class="filters">
-    <input id="search" placeholder="🔍 Search brand or category…" />
-    <select id="category"></select>
-    <select id="location"></select>
-  </div>
+    <div class="filters">
+      <input id="search" placeholder="🔍 Search brand or category…" />
+      <select id="category"></select>
+      <select id="location"></select>
+    </div>
 
-  <div class="count" id="count"></div>
-  <div class="grid" id="grid"></div>
-  <div class="empty hidden" id="empty">No results. Try clearing a filter.</div>
+    <div class="count" id="count"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty hidden" id="empty">No results. Try clearing a filter.</div>
+    <div class="foot" id="foot"></div>
+  </section>
 
-  <div class="foot" id="foot"></div>
+  <!-- ════════ TAB 2: LIVE JOB BOARD ════════ -->
+  <section id="tab-board" class="hidden">
+    <div class="scanbar">
+      <button class="scan-btn" id="boardBtn">⚡ Find live entry-level jobs</button>
+      <div class="scan-sub">
+        Searches <b>job boards live</b> for <b>entry-level openings across Greater Manchester</b>
+        — trainee, assistant, apprentice, crew, warehouse, customer service & more. Real listings with apply links.
+      </div>
+      <div class="progress" id="boardProgress"><i id="boardBar"></i></div>
+      <div class="summary" id="boardSummary"></div>
+    </div>
+
+    <div class="filters">
+      <input id="boardSearch" placeholder="🔍 Filter by job title or company…" />
+      <select id="boardSource"><option>All sources</option></select>
+      <select id="boardSort">
+        <option value="new">Newest first</option>
+        <option value="az">Title A–Z</option>
+        <option value="co">Company A–Z</option>
+      </select>
+    </div>
+
+    <div class="count" id="boardCount">Hit <b>“Find live entry-level jobs”</b> to pull current openings.</div>
+    <div class="joblist" id="joblist"></div>
+    <div class="empty hidden" id="boardEmpty">No jobs match your filter.</div>
+    <div class="foot">
+      Listings are fetched live from public job boards (Workable today; add free Adzuna/Reed/Jooble keys to widen
+      coverage — see README). Always click through to confirm details and apply.
+    </div>
+  </section>
 </div>
 
 <script>
@@ -167,35 +238,52 @@ const LOC_COLORS = {
 };
 const STATUS_COLOR = { live:"var(--live)", blocked:"var(--blocked)", down:"var(--down)", unknown:"#64748b" };
 const STATUS_LABEL = { live:"Live", blocked:"Open to verify", down:"Domain down", unknown:"—" };
+const SRC_COLORS = { Workable:"#9db4ff", "NHS Jobs":"#7dd3fc", Adzuna:"#86efac", Reed:"#fcd34d", Jooble:"#d8b4fe" };
 
 let STORES = [];
-let SCAN = {};          // name -> result
+let SCAN = {};        // brand name -> scan result
+let JOBS = [];        // aggregated board jobs
 const $ = (id) => document.getElementById(id);
-const esc = (s) => String(s).replace(/[&<>"]/g, (c)=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c]));
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c)=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c]));
+// Only allow http(s) links in Apply buttons — blocks javascript:/data: schemes from feeds.
+const safeUrl = (u) => /^https?:\/\//i.test(u || "") ? u : "#";
 
 async function init(){
+  // tab switching
+  document.querySelectorAll(".tab").forEach(btn => btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const t = btn.dataset.tab;
+    $("tab-directory").classList.toggle("hidden", t !== "directory");
+    $("tab-board").classList.toggle("hidden", t !== "board");
+  }));
+
   try{
-    const res = await fetch("/api/stores");
-    STORES = await res.json();
+    STORES = await (await fetch("/api/stores")).json();
   }catch(e){
-    $("subtitle").textContent = "⚠ Couldn't reach the local server. Run start.bat (or: node server.mjs) and open http://localhost:5173";
-    $("scanBtn").disabled = true;
+    $("subtitle").textContent = "⚠ Couldn't reach the local server. Run start.bat (node server.mjs) and open http://localhost:5173";
+    $("scanBtn").disabled = true; $("boardBtn").disabled = true;
     return;
   }
   const cats = ["All", ...[...new Set(STORES.map(s=>s.category))].sort()];
   const locs = ["All","Trafford Centre","Arndale","Market Street","Piccadilly","Altrincham","Manchester Airport"];
   $("category").innerHTML = cats.map(c=>`<option>${esc(c)}</option>`).join("");
   $("location").innerHTML = locs.map(l=>`<option>${esc(l)}</option>`).join("");
-  $("subtitle").innerHTML = `Live careers links for <b>${STORES.length}</b> brands across 6 Greater Manchester locations`;
+  $("subtitle").innerHTML = `<b>${STORES.length}</b> brands to apply to directly · plus a live job-board search for entry-level roles across Greater Manchester`;
   $("locBadges").innerHTML = Object.entries(LOC_COLORS)
     .map(([l,c])=>`<span class="loc-pill" style="background:${c}">${esc(l)}</span>`).join("");
-  $("foot").innerHTML = "Scanning checks live HTTP status server-side. <b style='color:#9aa6c4'>Open to verify</b> (amber) = the checker couldn't confirm automatically (anti-bot, 403/404, timeout) but the page usually works in your browser. <b style='color:#9aa6c4'>Domain down</b> (red) = the address didn't resolve at all. Always click through to confirm and apply.";
-  render();
-  ["search","category","location"].forEach(id=>$(id).addEventListener("input", render));
-  $("onlyHiring").addEventListener("change", render);
+  $("foot").innerHTML = "Scanning checks live HTTP status server-side. <b style='color:#9aa6c4'>Open to verify</b> (amber) = the checker couldn't confirm automatically (anti-bot, 403/404, timeout) but the page usually works in your browser. <b style='color:#9aa6c4'>Domain down</b> (red) = the address didn't resolve. Always click through to apply.";
+
+  renderDir();
+  ["search","category","location"].forEach(id=>$(id).addEventListener("input", renderDir));
+  $("onlyHiring").addEventListener("change", renderDir);
   $("scanBtn").addEventListener("click", runScan);
+
+  ["boardSearch","boardSource","boardSort"].forEach(id=>$(id).addEventListener("input", renderBoard));
+  $("boardBtn").addEventListener("click", runBoardScan);
 }
 
+/* ───────── Directory ───────── */
 function passesFilter(s){
   const q = $("search").value.toLowerCase();
   const cat = $("category").value, loc = $("location").value;
@@ -209,14 +297,12 @@ function passesFilter(s){
   }
   return matchQ && matchC && matchL && matchHiring;
 }
-
-function render(){
+function renderDir(){
   const list = STORES.filter(passesFilter);
   $("count").innerHTML = `Showing <b>${list.length}</b> of <b>${STORES.length}</b> brands`;
   $("empty").classList.toggle("hidden", list.length>0);
   $("grid").innerHTML = list.map(cardHTML).join("");
 }
-
 function cardHTML(s){
   const cc = CAT_COLORS[s.category] || "#ccc";
   const locs = s.locations.map(l=>`<span class="loc" style="background:${LOC_COLORS[l]||'#555'}">${esc(l)}</span>`).join("");
@@ -230,7 +316,7 @@ function cardHTML(s){
       `<span class="ms">${r.ms!=null?Math.round(r.ms)+"ms":""}</span></div>`;
     if (r.roles && r.roles.length){
       scanBlock += `<div class="roles">`+ r.roles.map(j=>
-        `<a class="role" href="${esc(j.url)}" target="_blank" rel="noopener">▸ ${esc(j.title)}`+
+        `<a class="role" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener">▸ ${esc(j.title)}`+
         `${j.location?`<span class="loc-txt"> — ${esc(j.location)}</span>`:""}</a>`).join("") +`</div>`;
     } else if (r.hints && r.hints.length){
       scanBlock += `<div class="hintline">Page mentions: ${r.hints.map(h=>`<span class="chip">${esc(h)}</span>`).join("")}</div>`;
@@ -247,7 +333,6 @@ function cardHTML(s){
     <a class="apply" href="${esc(s.careers)}" target="_blank" rel="noopener">Apply / View Jobs →</a>
   </div>`;
 }
-
 async function runScan(){
   const btn = $("scanBtn");
   btn.disabled = true; btn.textContent = "⏳ Scanning…";
@@ -256,7 +341,6 @@ async function runScan(){
   $("summary").style.display = "flex";
   $("summary").innerHTML = "";
   let total = STORES.length, done = 0, live=0, blocked=0, down=0, hiring=0;
-
   const paint = () => {
     $("progressBar").style.width = (total? (done/total*100):0) + "%";
     $("summary").innerHTML =
@@ -267,38 +351,134 @@ async function runScan(){
       `<span class="stat">💼 ${hiring} advertising roles</span>`;
   };
   paint();
-
   try{
     const res = await fetch("/api/scan");
-    const reader = res.body.getReader();
-    const dec = new TextDecoder();
-    let buf = "";
-    while(true){
-      const {value, done:fin} = await reader.read();
-      if (fin) break;
-      buf += dec.decode(value, {stream:true});
-      let nl;
-      while((nl = buf.indexOf("\n")) >= 0){
-        const line = buf.slice(0,nl); buf = buf.slice(nl+1);
-        if (!line.trim()) continue;
-        let msg; try{ msg = JSON.parse(line); }catch{ continue; }
-        if (msg.type === "meta"){ total = msg.total; paint(); }
-        else if (msg.type === "result"){
-          SCAN[msg.name] = msg;
-          done++;
-          if (msg.status==="live") live++;
-          else if (msg.status==="blocked") blocked++;
-          else if (msg.status==="down") down++;
-          if ((msg.roles&&msg.roles.length)||(msg.hints&&msg.hints.length)) hiring++;
-          paint();
-          render();
-        }
+    await streamNDJSON(res, (msg)=>{
+      if (msg.type === "meta"){ total = msg.total; paint(); }
+      else if (msg.type === "result"){
+        SCAN[msg.name] = msg; done++;
+        if (msg.status==="live") live++; else if (msg.status==="blocked") blocked++; else if (msg.status==="down") down++;
+        if ((msg.roles&&msg.roles.length)||(msg.hints&&msg.hints.length)) hiring++;
+        paint(); renderDir();
       }
-    }
+    });
   }catch(e){
     $("summary").innerHTML += `<span class="stat" style="color:var(--down)">Scan error — is the server running?</span>`;
   }
-  btn.disabled = false; btn.textContent = "⚡ Re-scan";
+  btn.disabled = false; btn.textContent = "⚡ Re-scan careers sites";
+}
+
+/* ───────── Job board ───────── */
+function parseDate(d){
+  if (!d) return 0;
+  let t = Date.parse(d);
+  if (!isNaN(t)) return t;
+  const m = String(d).match(/^(\d{2})\/(\d{2})\/(\d{4})$/); // dd/MM/yyyy (Reed)
+  if (m) return Date.parse(`${m[3]}-${m[2]}-${m[1]}`);
+  return 0;
+}
+function relTime(d){
+  const t = parseDate(d); if (!t) return "";
+  const days = Math.floor((Date.now()-t)/86400000);
+  if (days <= 0) return "today";
+  if (days === 1) return "yesterday";
+  if (days < 30) return days+"d ago";
+  return Math.floor(days/30)+"mo ago";
+}
+function renderBoard(){
+  const q = $("boardSearch").value.toLowerCase();
+  const src = $("boardSource").value;
+  const sort = $("boardSort").value;
+  let list = JOBS.filter(j =>
+    (src==="All sources" || j.source===src) &&
+    (!q || (j.title||"").toLowerCase().includes(q) || (j.company||"").toLowerCase().includes(q))
+  );
+  if (sort==="az") list.sort((a,b)=>(a.title||"").localeCompare(b.title||""));
+  else if (sort==="co") list.sort((a,b)=>(a.company||"").localeCompare(b.company||""));
+  else list.sort((a,b)=>parseDate(b.posted)-parseDate(a.posted));
+
+  $("boardEmpty").classList.toggle("hidden", list.length>0 || JOBS.length===0);
+  if (JOBS.length===0) { $("joblist").innerHTML=""; return; }
+  $("boardCount").innerHTML = `Showing <b>${list.length}</b> of <b>${JOBS.length}</b> entry-level jobs`;
+  $("joblist").innerHTML = list.map(jobCardHTML).join("");
+}
+function jobCardHTML(j){
+  const col = SRC_COLORS[j.source] || "#cbd5e1";
+  const pills = [];
+  const typ = (j.type || "").replace(/_/g, " ").trim();
+  if (typ) pills.push(`<span class="pill">${esc(typ)}</span>`);
+  if (j.salary) pills.push(`<span class="pill sal">${esc(j.salary)}</span>`);
+  const ago = relTime(j.posted); if (ago) pills.push(`<span class="pill ago">${esc(ago)}</span>`);
+  return `<div class="jobcard">
+    <div class="jobtop">
+      <span class="jobtitle">${esc(j.title)}</span>
+      <span class="src" style="background:${col}">${esc(j.source)}</span>
+    </div>
+    <div class="jobmeta">${j.company?`<b>${esc(j.company)}</b> · `:""}${esc(j.location||"Manchester")}</div>
+    ${pills.length?`<div class="jobpills">${pills.join("")}</div>`:""}
+    <a class="apply" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener">Apply →</a>
+  </div>`;
+}
+async function runBoardScan(){
+  const btn = $("boardBtn");
+  btn.disabled = true; btn.textContent = "⏳ Searching job boards…";
+  JOBS = [];
+  $("boardProgress").style.display = "block";
+  $("boardSummary").style.display = "flex";
+  $("boardEmpty").classList.add("hidden");
+  let total = 1, done = 0, found = 0, sources = [];
+  const paint = (note) => {
+    $("boardBar").style.width = (total? (done/total*100):0) + "%";
+    $("boardSummary").innerHTML =
+      `<span class="stat">${done}/${total} searches</span>`+
+      `<span class="stat">💼 ${found} jobs found</span>`+
+      (sources.length?`<span class="stat">via ${sources.map(esc).join(", ")}</span>`:"")+
+      (note?`<span class="stat" style="color:var(--down)">${esc(note)}</span>`:"");
+  };
+  paint();
+  try{
+    const res = await fetch("/api/board-jobs");
+    const seen = new Set();
+    await streamNDJSON(res, (msg)=>{
+      if (msg.type === "meta"){ total = msg.total; sources = msg.sources||[]; paint(); }
+      else if (msg.type === "batch"){
+        done = msg.completed; found = msg.totalFound;
+        for (const j of (msg.jobs||[])){
+          const k = (j.title+"|"+j.company).toLowerCase();
+          if (!seen.has(k)){ seen.add(k); JOBS.push(j); }
+        }
+        // keep source dropdown in sync
+        const opts = ["All sources", ...sources];
+        if ($("boardSource").options.length !== opts.length)
+          $("boardSource").innerHTML = opts.map(o=>`<option>${esc(o)}</option>`).join("");
+        paint(); renderBoard();
+      } else if (msg.type === "done"){ done = total; paint(); }
+      else if (msg.type === "error"){ paint(msg.message); }
+    });
+  }catch(e){
+    paint("Search error — is the server running?");
+  }
+  if (JOBS.length===0){ $("boardEmpty").textContent = "No live entry-level jobs found right now. Try again later."; $("boardEmpty").classList.remove("hidden"); }
+  btn.disabled = false; btn.textContent = "⚡ Re-search job boards";
+}
+
+/* ───────── shared NDJSON stream reader ───────── */
+async function streamNDJSON(res, onMsg){
+  const reader = res.body.getReader();
+  const dec = new TextDecoder();
+  let buf = "";
+  while(true){
+    const {value, done} = await reader.read();
+    if (done) break;
+    buf += dec.decode(value, {stream:true});
+    let nl;
+    while((nl = buf.indexOf("\n")) >= 0){
+      const line = buf.slice(0,nl); buf = buf.slice(nl+1);
+      if (!line.trim()) continue;
+      let msg; try{ msg = JSON.parse(line); }catch{ continue; }
+      onMsg(msg);
+    }
+  }
 }
 
 init();

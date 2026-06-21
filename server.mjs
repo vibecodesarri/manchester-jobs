@@ -8,6 +8,7 @@
 //   GET /api/stores       -> the brand directory (stores.json)
 //   GET /api/scan         -> streams one NDJSON line per brand as it's checked
 //   GET /api/scan?only=Workable  (optional) limit to brands on the Workable platform
+//   GET /api/board-jobs   -> streams live entry-level jobs aggregated across job boards
 
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
@@ -194,6 +195,276 @@ async function* scanAll(list, concurrency = 8) {
   }
 }
 
+// ════════════════════════════════════════════════════════════════════════
+//  JOB-BOARD AGGREGATOR  — live entry-level jobs across Greater Manchester
+//  Primary source: Workable's public board (keyless, multi-employer search).
+//  Optional (set env vars): Adzuna, Reed, Jooble — free API keys widen coverage.
+// ════════════════════════════════════════════════════════════════════════
+
+// Greater Manchester + immediate commuter towns (lower-case substring match).
+const GM_LIST = [
+  "manchester", "salford", "trafford", "stockport", "bolton", "bury", "oldham",
+  "rochdale", "tameside", "wigan", "altrincham", "sale", "stretford", "urmston",
+  "eccles", "swinton", "worsley", "walkden", "irlam", "partington", "timperley",
+  "hale", "bowdon", "didsbury", "chorlton", "withington", "fallowfield", "rusholme",
+  "levenshulme", "burnage", "gorton", "openshaw", "harpurhey", "moston", "blackley",
+  "crumpsall", "cheetham", "hulme", "ardwick", "longsight", "wythenshawe", "northenden",
+  "cheadle", "gatley", "heald green", "bramhall", "marple", "romiley", "bredbury",
+  "hazel grove", "reddish", "denton", "audenshaw", "droylsden", "failsworth",
+  "ashton-under-lyne", "ashton under lyne", "hyde", "dukinfield", "stalybridge",
+  "mossley", "chadderton", "royton", "shaw", "middleton", "heywood", "littleborough",
+  "milnrow", "prestwich", "whitefield", "radcliffe", "ramsbottom", "tottington",
+  "farnworth", "kearsley", "little lever", "westhoughton", "horwich", "blackrod",
+  "atherton", "leigh", "tyldesley", "hindley", "golborne", "standish", "orrell",
+  "poynton", "wilmslow", "alderley edge", "knutsford", "macclesfield", "glossop",
+];
+// Word-boundary match so "Glazebury" doesn't match "bury", "Sales" doesn't match "Sale".
+const GM_RE = new RegExp(
+  "\\b(" + GM_LIST.map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")\\b", "i");
+const inGM = (city, loc) => GM_RE.test((city || "") + " " + (loc || ""));
+
+// Entry-level vs senior heuristics.
+const STRONG_SENIOR = /\b(senior|snr\.?|principal|director|head of|vice[- ]president|vp|chief|c[etf]o|architect)\b/i;
+const MID_SENIOR = /\b(manager|supervisor|lead|consultant|specialist|controller|expert|partner)\b/i;
+// Words that mark a role as junior even if it also contains "manager" etc.
+const ENTRY_OVERRIDE = /\b(assistant|trainee|graduate|apprentice|apprenticeship|junior|jr\.?|intern|entry[- ]?level|no experience|school leaver)\b/i;
+// Drop strong-senior titles always; drop manager/supervisor titles unless explicitly junior.
+const passEntry = (t) => {
+  t = t || "";
+  if (STRONG_SENIOR.test(t)) return false;
+  if (MID_SENIOR.test(t) && !ENTRY_OVERRIDE.test(t)) return false;
+  return true;
+};
+
+const WORKABLE_QUERIES = [
+  "", "entry level", "trainee", "apprentice", "junior", "graduate",
+  "sales assistant", "customer assistant", "customer service", "team member",
+  "crew", "barista", "kitchen", "warehouse operative", "cleaner", "receptionist",
+  "care assistant", "support worker", "administrator", "retail", "part time",
+  "call centre", "hospitality", "no experience", "weekend",
+];
+const KEYED_QUERIES = [
+  "entry level", "apprentice", "trainee", "sales assistant",
+  "customer service", "warehouse", "care assistant", "cleaner",
+];
+// NHS entry-level role keywords (avoid the blank query so we skip consultants/qualified nurses).
+const NHS_QUERIES = [
+  "healthcare assistant", "support worker", "apprentice", "administrator",
+  "receptionist", "domestic", "porter", "catering assistant", "clerical",
+  "trainee", "nursing assistant", "ward clerk",
+];
+
+const stripTags = (s) => (s || "").replace(/<[^>]+>/g, "").trim();
+
+// Minimal XML helpers (zero-dependency) for the NHS feed.
+const xmlField = (block, tag) => {
+  const m = block.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`));
+  return m ? m[1].replace(/<!\[CDATA\[|\]\]>/g, "").trim() : "";
+};
+const prettySalary = (s) => {
+  const nums = (s.match(/[\d.]+/g) || []).map(Number).filter((n) => n > 0);
+  if (!nums.length) return "";
+  const hourly = nums.every((n) => n < 100); // sub-£100 figures are hourly rates
+  const fmt = (n) => hourly ? `£${(+n.toFixed(2)).toString()}` : (n >= 1000 ? `£${Math.round(n / 1000)}k` : `£${Math.round(n)}`);
+  const body = nums.length > 1 ? `${fmt(nums[0])}–${fmt(nums[1])}` : fmt(nums[0]);
+  return hourly ? body + "/hr" : body;
+};
+// NHS location fields sometimes carry placeholder text; clean to a usable town/postcode.
+const cleanLoc = (loc) =>
+  (loc || "").replace(/the area below is where the role is located:?/i, "")
+    .replace(/^[\s,]+|[\s,]+$/g, "").trim() || "Manchester area";
+
+// ── Source: Workable public board (no key) ────────────────────────────────
+async function workableSearch(query) {
+  const url = "https://jobs.workable.com/api/v1/jobs?location=" +
+    encodeURIComponent("Manchester, United Kingdom") +
+    (query ? "&query=" + encodeURIComponent(query) : "");
+  const res = await timedFetch(url, { headers: { Accept: "application/json" } }, 12000);
+  if (!res.ok) throw new Error("Workable HTTP " + res.status);
+  const data = await res.json();
+  return (data.jobs || []).map((j) => ({
+    id: "wk_" + (j.id || j.url),
+    title: j.title,
+    company: j.company?.title || j.company || "",
+    location: j.location?.city || j.location?.countryName || "Manchester area",
+    city: (j.location?.city || "").toLowerCase(),
+    url: j.url,
+    source: "Workable",
+    posted: j.created || j.published || null,
+    type: [j.workplace, j.employmentType].filter(Boolean).join(" · "),
+    remote: (j.workplace || "").toLowerCase().includes("remote"),
+    salary: "",
+  }));
+}
+
+// ── Source: Adzuna (free key: ADZUNA_APP_ID + ADZUNA_APP_KEY) ──────────────
+async function adzunaSearch(query) {
+  const id = process.env.ADZUNA_APP_ID, key = process.env.ADZUNA_APP_KEY;
+  if (!id || !key) return [];
+  const url = `https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=${id}&app_key=${key}` +
+    `&where=manchester&distance=15&results_per_page=50&max_days_old=40&what=${encodeURIComponent(query)}`;
+  const res = await timedFetch(url, { headers: { Accept: "application/json" } }, 12000);
+  if (!res.ok) throw new Error("Adzuna HTTP " + res.status);
+  const data = await res.json();
+  return (data.results || []).map((j) => ({
+    id: "az_" + j.id,
+    title: stripTags(j.title),
+    company: j.company?.display_name || "",
+    location: j.location?.display_name || "Manchester",
+    city: (j.location?.area?.slice(-1)[0] || "").toLowerCase(),
+    url: j.redirect_url,
+    source: "Adzuna",
+    posted: j.created || null,
+    type: j.contract_time || j.contract_type || "",
+    remote: false,
+    salary: j.salary_min
+      ? `£${Math.round(j.salary_min / 1000)}k${j.salary_max ? `–£${Math.round(j.salary_max / 1000)}k` : ""}`
+      : "",
+  }));
+}
+
+// ── Source: Reed Jobseeker API (free key: REED_API_KEY) ────────────────────
+async function reedSearch(query) {
+  const rk = process.env.REED_API_KEY;
+  if (!rk) return [];
+  const url = `https://www.reed.co.uk/api/1.0/search?keywords=${encodeURIComponent(query)}` +
+    `&locationName=Manchester&distanceFromLocation=10&resultsToTake=100`;
+  const auth = "Basic " + Buffer.from(rk + ":").toString("base64");
+  const res = await timedFetch(url, { headers: { Authorization: auth, Accept: "application/json" } }, 12000);
+  if (!res.ok) throw new Error("Reed HTTP " + res.status);
+  const data = await res.json();
+  return (data.results || []).map((j) => ({
+    id: "rd_" + j.jobId,
+    title: j.jobTitle,
+    company: j.employerName || "",
+    location: j.locationName || "Manchester",
+    city: (j.locationName || "").toLowerCase(),
+    url: j.jobUrl,
+    source: "Reed",
+    posted: j.date || null,
+    type: j.jobType || "",
+    remote: false,
+    salary: j.minimumSalary ? `£${Math.round(j.minimumSalary / 1000)}k${j.maximumSalary ? `–£${Math.round(j.maximumSalary / 1000)}k` : ""}` : "",
+  }));
+}
+
+// ── Source: Jooble (free key: JOOBLE_KEY) ──────────────────────────────────
+async function joobleSearch(query) {
+  const jk = process.env.JOOBLE_KEY;
+  if (!jk) return [];
+  const res = await timedFetch(`https://jooble.org/api/${jk}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({ keywords: query, location: "Manchester", page: "1" }),
+  }, 12000);
+  if (!res.ok) throw new Error("Jooble HTTP " + res.status);
+  const data = await res.json();
+  return (data.jobs || []).map((j) => ({
+    id: "jb_" + (j.id || j.link),
+    title: stripTags(j.title),
+    company: j.company || "",
+    location: j.location || "Manchester",
+    city: (j.location || "").toLowerCase(),
+    url: j.link,
+    source: "Jooble",
+    posted: j.updated || null,
+    type: j.type || "",
+    remote: false,
+    salary: j.salary || "",
+  }));
+}
+
+// ── Source: NHS Jobs national feed (no key, XML) ──────────────────────────
+async function nhsSearch(query) {
+  const url = `https://www.jobs.nhs.uk/api/v1/search_xml?keyword=${encodeURIComponent(query)}` +
+    `&location=Manchester&distance=12`;
+  const res = await timedFetch(url, { headers: { Accept: "application/xml,text/xml,*/*" } }, 12000);
+  if (!res.ok) throw new Error("NHS HTTP " + res.status);
+  const xml = await res.text();
+  const blocks = xml.match(/<vacancyDetails>[\s\S]*?<\/vacancyDetails>/g) || [];
+  return blocks.map((b) => {
+    const loc = cleanLoc(xmlField(b, "location"));
+    return {
+      id: "nhs_" + (xmlField(b, "reference") || xmlField(b, "id")),
+      title: xmlField(b, "title"),
+      company: xmlField(b, "employer") || "NHS",
+      location: loc,
+      city: loc.toLowerCase(),
+      url: xmlField(b, "url"),
+      source: "NHS Jobs",
+      posted: xmlField(b, "postDate") || null,
+      type: xmlField(b, "type") || "",
+      remote: false,
+      salary: prettySalary(xmlField(b, "salary")),
+    };
+  });
+}
+
+function activeSources() {
+  const s = ["Workable", "NHS Jobs"];
+  if (process.env.ADZUNA_APP_ID && process.env.ADZUNA_APP_KEY) s.push("Adzuna");
+  if (process.env.REED_API_KEY) s.push("Reed");
+  if (process.env.JOOBLE_KEY) s.push("Jooble");
+  return s;
+}
+
+function buildJobTasks() {
+  const tasks = [];
+  for (const q of WORKABLE_QUERIES) tasks.push({ source: "Workable", q, fn: () => workableSearch(q) });
+  for (const q of NHS_QUERIES) tasks.push({ source: "NHS Jobs", q, fn: () => nhsSearch(q) });
+  if (process.env.ADZUNA_APP_ID && process.env.ADZUNA_APP_KEY)
+    for (const q of KEYED_QUERIES) tasks.push({ source: "Adzuna", q, fn: () => adzunaSearch(q) });
+  if (process.env.REED_API_KEY)
+    for (const q of KEYED_QUERIES) tasks.push({ source: "Reed", q, fn: () => reedSearch(q) });
+  if (process.env.JOOBLE_KEY)
+    for (const q of KEYED_QUERIES) tasks.push({ source: "Jooble", q, fn: () => joobleSearch(q) });
+  return tasks;
+}
+
+// Stream aggregated, deduped, entry-level, Greater-Manchester jobs as batches.
+async function* aggregateJobs(concurrency = 8) {
+  const tasks = buildJobTasks();
+  yield { type: "meta", total: tasks.length, sources: activeSources() };
+
+  const seen = new Set();
+  let next = 0, pending = 0, resolveOne;
+  const ready = [];
+  const wake = () => { if (resolveOne) { const r = resolveOne; resolveOne = null; r(); } };
+  const launch = () => {
+    while (pending < concurrency && next < tasks.length) {
+      const t = tasks[next++]; pending++;
+      Promise.resolve().then(t.fn)
+        .then((jobs) => { ready.push({ t, jobs }); pending--; wake(); launch(); })
+        .catch((err) => { ready.push({ t, jobs: [], error: String(err.message || err) }); pending--; wake(); launch(); });
+    }
+  };
+  launch();
+
+  let done = 0;
+  while (done < tasks.length) {
+    if (ready.length === 0) await new Promise((r) => (resolveOne = r));
+    while (ready.length) {
+      const { t, jobs, error } = ready.shift(); done++;
+      const fresh = [];
+      for (const j of jobs) {
+        if (!j || !j.title || !j.url) continue;
+        if (!passEntry(j.title)) continue;
+        if (j.source === "Workable" && !inGM(j.city, j.location)) continue;
+        const dkey = (j.title + "|" + j.company).toLowerCase().replace(/\s+/g, " ").trim();
+        if (seen.has(dkey)) continue;
+        seen.add(dkey);
+        fresh.push(j);
+      }
+      yield {
+        type: "batch", source: t.source, query: t.q,
+        completed: done, total: tasks.length,
+        added: fresh.length, totalFound: seen.size, jobs: fresh, error: error || null,
+      };
+    }
+  }
+  yield { type: "done", total: seen.size };
+}
+
 // ── HTTP server ───────────────────────────────────────────────────────────
 const MIME = { ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript",
   ".css": "text/css", ".json": "application/json", ".ico": "image/x-icon", ".svg": "image/svg+xml" };
@@ -222,6 +493,20 @@ const server = createServer(async (req, res) => {
         res.write(JSON.stringify({ type: "result", ...r }) + "\n");
       }
       res.write(JSON.stringify({ type: "done" }) + "\n");
+    } catch (e) {
+      res.write(JSON.stringify({ type: "error", message: String(e) }) + "\n");
+    }
+    res.end();
+    return;
+  }
+
+  if (url.pathname === "/api/board-jobs") {
+    res.writeHead(200, {
+      "Content-Type": "application/x-ndjson; charset=utf-8",
+      "Cache-Control": "no-cache",
+    });
+    try {
+      for await (const m of aggregateJobs(8)) res.write(JSON.stringify(m) + "\n");
     } catch (e) {
       res.write(JSON.stringify({ type: "error", message: String(e) }) + "\n");
     }
