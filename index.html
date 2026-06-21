@@ -4,6 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Manchester Jobs</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <style>
   :root{
     --bg:#f4f2ee; --card:#fff; --ink:#1d2226; --mut:#5b6b7b;
@@ -123,6 +128,20 @@
   .foot{text-align:center;color:var(--faint);font-size:11.5px;margin-top:26px;line-height:1.7}
   .hidden{display:none !important}
 
+  /* Map */
+  .maptools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:13px 16px;margin-bottom:12px}
+  .maptools .legend{display:flex;gap:12px;flex-wrap:wrap;margin-left:auto;font-size:11.5px;color:var(--mut)}
+  .maptools .legend span{display:inline-flex;align-items:center;gap:5px}
+  .maptools .legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+  #map{height:74vh;min-height:440px;border-radius:12px;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden;z-index:0}
+  .leaflet-popup-content{font-family:inherit;font-size:13px;margin:11px 13px;line-height:1.45}
+  .leaflet-popup-content .pt{font-weight:700;color:var(--accent-dk);font-size:13.5px}
+  .leaflet-popup-content .pc{color:var(--ink)}
+  .leaflet-popup-content .pl{color:var(--mut);font-size:12px}
+  .leaflet-popup-content a{display:inline-block;margin-top:7px;color:#fff;background:var(--accent);text-decoration:none;font-weight:700;padding:6px 12px;border-radius:16px;font-size:12px}
+  .marker-cluster{background:rgba(10,102,194,.25)}
+  .marker-cluster div{background:rgba(10,102,194,.85);color:#fff;font-weight:700}
+
   @media (max-width:880px){
     .layout{grid-template-columns:1fr}.joblist{max-height:none}
     .jobdetail{position:fixed;inset:0;z-index:50;border-radius:0;max-height:none;border:0;display:none}
@@ -143,6 +162,7 @@
   <div class="tabs">
     <button class="tab active" data-tab="directory">🏬 Store Directory</button>
     <button class="tab" data-tab="board">🔎 Job Search</button>
+    <button class="tab" data-tab="map">🗺️ Map</button>
     <button class="tab" data-tab="all">🌐 Everything</button>
   </div>
 
@@ -194,6 +214,17 @@
     <div class="foot">Realistic, local, entry-level roles only. Live from Workable, NHS Jobs, Adzuna, Reed &amp; Jooble. Always click <b>Apply</b> to apply on the source site.</div>
   </section>
 
+  <!-- TAB: MAP -->
+  <section id="tab-map" class="hidden">
+    <div class="maptools panel">
+      <button class="btn" id="mapBtn">🔎 Load jobs onto map</button>
+      <span id="mapCount" style="font-size:13px;color:var(--mut)"></span>
+      <div class="legend" id="mapLegend"></div>
+    </div>
+    <div id="map"></div>
+    <div class="foot">Entry-level roles across Greater Manchester, plotted by area. Click a cluster to zoom in, a dot for details. Needs an internet connection for map tiles.</div>
+  </section>
+
   <!-- TAB 3: EVERYTHING -->
   <section id="tab-all" class="hidden">
     <div class="infobar">🌐 <b>Everything</b> — every job found across all sources and all areas (including outside Greater Manchester and roles the Job Search tab filters out). Use search to dig in.</div>
@@ -222,10 +253,28 @@ const LOGO_COLORS=["#4b5d78","#3f6f63","#7a5c8a","#8a5b4b","#4a6a8a","#6a6577","
 const BOROUGHS=["Manchester","Salford","Trafford","Stockport","Tameside","Oldham","Rochdale","Bury","Bolton","Wigan"];
 const FUNCTIONS=["Retail","Hospitality","Care & Health","Admin & Office","Customer Service","Warehouse","Cleaning","Apprentice/Trainee","Other","Driving"];
 const MAX_RENDER=250;
+// Spam / non-entry / professional-graduate roles to keep OUT of the realistic Job Search tab.
+const EXCLUDE_RE=/(commission[- ]only|self[- ]?employed|business opportunit|franchise|door[- ]to[- ]door|earn up to|uncapped|\bote\b|graduate scheme|graduate programme|graduate program|trainee solicitor|trainee account|trainee surveyor|supply teacher|recruitment consultant|brand ambassador|multi[- ]?drop)/i;
+const TOWN_COORDS={
+  "manchester airport":[53.365,-2.2727],"trafford centre":[53.467,-2.348],"trafford park":[53.466,-2.321],
+  "deansgate":[53.477,-2.250],"ancoats":[53.484,-2.227],"didsbury":[53.418,-2.231],"chorlton":[53.443,-2.279],
+  "withington":[53.433,-2.230],"wythenshawe":[53.392,-2.264],"rusholme":[53.452,-2.224],"manchester":[53.4808,-2.2426],
+  "salford":[53.4875,-2.2901],"eccles":[53.483,-2.334],"swinton":[53.513,-2.340],"walkden":[53.524,-2.397],"irlam":[53.446,-2.422],
+  "stretford":[53.447,-2.309],"urmston":[53.448,-2.352],"sale":[53.424,-2.322],"altrincham":[53.387,-2.348],"timperley":[53.402,-2.330],"hale":[53.378,-2.331],
+  "stockport":[53.4106,-2.1575],"cheadle":[53.394,-2.211],"bramhall":[53.358,-2.162],"hazel grove":[53.376,-2.113],"marple":[53.397,-2.061],"reddish":[53.439,-2.157],"wilmslow":[53.327,-2.233],
+  "ashton":[53.4905,-2.0976],"hyde":[53.449,-2.081],"denton":[53.456,-2.112],"stalybridge":[53.484,-2.056],"droylsden":[53.483,-2.156],"dukinfield":[53.475,-2.083],
+  "oldham":[53.5409,-2.1114],"chadderton":[53.553,-2.133],"royton":[53.566,-2.123],"shaw":[53.579,-2.089],"failsworth":[53.510,-2.155],"saddleworth":[53.555,-2.012],
+  "rochdale":[53.6097,-2.1561],"heywood":[53.592,-2.220],"middleton":[53.555,-2.199],"littleborough":[53.644,-2.099],
+  "bury":[53.5933,-2.2966],"prestwich":[53.535,-2.286],"whitefield":[53.553,-2.298],"radcliffe":[53.562,-2.327],"ramsbottom":[53.650,-2.317],
+  "bolton":[53.5769,-2.4282],"farnworth":[53.546,-2.399],"horwich":[53.595,-2.543],"westhoughton":[53.549,-2.524],
+  "wigan":[53.5450,-2.6325],"leigh":[53.497,-2.517],"atherton":[53.523,-2.494],"tyldesley":[53.513,-2.466],"hindley":[53.535,-2.572],
+};
+const BOROUGH_COORDS={Manchester:[53.4808,-2.2426],Salford:[53.4875,-2.2901],Trafford:[53.447,-2.309],Stockport:[53.4106,-2.1575],Tameside:[53.4905,-2.0976],Oldham:[53.5409,-2.1114],Rochdale:[53.6097,-2.1561],Bury:[53.5933,-2.2966],Bolton:[53.5769,-2.4282],Wigan:[53.5450,-2.6325]};
 
 let STORES=[],SCAN={},JOBS=[],JOBMAP={};
 let activeBoroughs=new Set(BOROUGHS), activeFuncs=new Set(FUNCTIONS.filter(f=>f!=="Driving")), expFilter="entry";
 let sel={jobs:null,all:null}, activeBoardTab="jobs";
+let mapObj=null, clusterGroup=null;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
 const safeUrl=u=>/^https?:\/\//i.test(u||"")?u:"#";
@@ -237,8 +286,10 @@ async function init(){
     const t=b.dataset.tab;
     $("tab-directory").classList.toggle("hidden",t!=="directory");
     $("tab-board").classList.toggle("hidden",t!=="board");
+    $("tab-map").classList.toggle("hidden",t!=="map");
     $("tab-all").classList.toggle("hidden",t!=="all");
     if(t==="board"){activeBoardTab="jobs";renderJobs();} if(t==="all"){activeBoardTab="all";renderAll();}
+    if(t==="map"){activeBoardTab="map";buildMap();}
   }));
   try{ STORES=await (await fetch("/api/stores")).json(); }
   catch{ $("subtitle").textContent="⚠ Run start.bat (node server.mjs) then open http://localhost:5173"; ["scanBtn","boardBtn","allBtn"].forEach(i=>$(i).disabled=true); return; }
@@ -258,6 +309,7 @@ async function init(){
 
   $("boardBtn").addEventListener("click",runBoardScan);
   $("allBtn").addEventListener("click",runBoardScan);
+  $("mapBtn").addEventListener("click",runBoardScan);
   ["boardSearch","typeSel","srcSel","sortSel"].forEach(id=>$(id).addEventListener("input",renderJobs));
   ["allSearch","allSrcSel","allSortSel"].forEach(id=>$(id).addEventListener("input",renderAll));
   $("expSeg").addEventListener("click",e=>{if(e.target.dataset.exp){expFilter=e.target.dataset.exp;[...$("expSeg").children].forEach(b=>b.classList.toggle("on",b.dataset.exp===expFilter));renderJobs();}});
@@ -377,6 +429,7 @@ function jobPasses(j){
   if(expFilter==="entry"&&j.level!=="entry")return false;
   if(!activeFuncs.has(j.func||"Other"))return false;
   if(isDayRate(j.salary))return false;
+  if(EXCLUDE_RE.test((j.title||"")+" "+(j.description||"")))return false;
   const q=$("boardSearch").value.toLowerCase();
   if(q&&!((j.title||"").toLowerCase().includes(q)||(j.company||"").toLowerCase().includes(q)))return false;
   const src=$("srcSel").value;if(src&&j.source!==src)return false;
@@ -398,11 +451,37 @@ function allPasses(j){
 }
 function renderAll(){ if(activeBoardTab!=="all")return; paintList(sortJobs(JOBS.filter(allPasses),$("allSortSel").value),"all"); }
 
+/* Map view */
+function mapJobs(){ return JOBS.filter(j=>j.borough && j.level==="entry" && !isDayRate(j.salary) && j.func!=="Driving" && !EXCLUDE_RE.test((j.title||"")+" "+(j.description||""))); }
+function buildMap(){
+  if(typeof L==="undefined"){ $("mapCount").textContent="Map couldn't load — check your internet connection."; return; }
+  if(!mapObj){
+    mapObj=L.map("map",{scrollWheelZoom:true}).setView([53.4808,-2.2426],11);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{attribution:"© OpenStreetMap © CARTO",subdomains:"abcd",maxZoom:19}).addTo(mapObj);
+    clusterGroup=L.markerClusterGroup({maxClusterRadius:46,showCoverageOnHover:false});
+    mapObj.addLayer(clusterGroup);
+    $("mapLegend").innerHTML=Object.entries(SRC_COLORS).map(([s,c])=>`<span><i style="background:${c}"></i>${esc(s)}</span>`).join("");
+  }
+  clusterGroup.clearLayers();
+  const jobs=mapJobs();
+  $("mapCount").innerHTML=JOBS.length?`<b>${jobs.length}</b> entry-level jobs mapped across Greater Manchester`:`Hit <b>Load jobs onto map</b> to begin.`;
+  jobs.forEach(j=>{
+    let c=BOROUGH_COORDS[j.borough]||[53.4808,-2.2426];
+    const loc=(j.location||"").toLowerCase();
+    for(const [t,co] of Object.entries(TOWN_COORDS)){ if(loc.includes(t)){ c=co; break; } }
+    const lat=c[0]+(Math.random()-0.5)*0.012, lng=c[1]+(Math.random()-0.5)*0.018;
+    const m=L.circleMarker([lat,lng],{radius:6,color:"#fff",weight:1.5,fillColor:SRC_COLORS[j.source]||"#0a66c2",fillOpacity:.92});
+    m.bindPopup(`<div class="pt">${esc(j.title)}</div><div class="pc">${esc(j.company||"")}</div><div class="pl">📍 ${esc(j.location||"Manchester")}${j.salary?" · "+esc(j.salary):""}</div><a href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener">Apply on ${esc(j.source)} →</a>`);
+    clusterGroup.addLayer(m);
+  });
+  setTimeout(()=>mapObj.invalidateSize(),120);
+}
+
 let renderTimer=null;
 const scheduleRender=()=>{if(renderTimer)return;renderTimer=setTimeout(()=>{renderTimer=null;activeBoardTab==="all"?renderAll():renderJobs();},250);};
 
 async function runBoardScan(){
-  ["boardBtn","allBtn"].forEach(i=>{$(i).disabled=true;$(i).textContent="⏳ Searching…";});
+  ["boardBtn","allBtn","mapBtn"].forEach(i=>{$(i).disabled=true;$(i).textContent="⏳ Searching…";});
   JOBS=[];JOBMAP={};sel={jobs:null,all:null};
   ["joblist","allList"].forEach(i=>$(i).innerHTML="");
   ["jobdetail","allDetail"].forEach(i=>$(i).innerHTML='<div class="dempty">Select a job to see details.</div>');
@@ -421,12 +500,14 @@ async function runBoardScan(){
       else if(m.type==="done"){done=total;paint();renderJobs();renderAll();}
       else if(m.type==="error"){paint(m.message);}});
   }catch{paint("Search error — is the server running?");}
-  renderJobs();renderAll();
+  renderJobs();renderAll();if(mapObj)buildMap();
   if(JOBS.length===0){["boardEmpty","allEmpty"].forEach(i=>{$(i).textContent="No jobs found right now — try again later.";$(i).classList.remove("hidden");});}
   $("boardBtn").disabled=false;$("boardBtn").textContent="🔄 Refresh jobs";
   $("allBtn").disabled=false;$("allBtn").textContent="🔄 Refresh";
+  $("mapBtn").disabled=false;$("mapBtn").textContent="🔄 Refresh map";
 }
 async function streamNDJSON(res,onMsg){
+  if(!res.ok||!res.body)throw new Error("Bad response "+res.status);
   const rd=res.body.getReader(),dec=new TextDecoder();let buf="";
   while(true){const{value,done}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});
     let nl;while((nl=buf.indexOf("\n"))>=0){const line=buf.slice(0,nl);buf=buf.slice(nl+1);if(line.trim()){try{onMsg(JSON.parse(line));}catch{}}}}
