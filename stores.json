@@ -1,133 +1,5569 @@
 [
-  { "name": "H&M", "locations": ["Trafford Centre","Arndale","Market Street","Altrincham"], "category": "Fashion", "careers": "https://career.hm.com" },
-  { "name": "Zara / Bershka / Pull&Bear / Stradivarius", "locations": ["Trafford Centre","Arndale"], "category": "Fashion", "careers": "https://www.inditex.com/en/join-us" },
-  { "name": "Next", "locations": ["Trafford Centre","Arndale","Altrincham"], "category": "Fashion", "careers": "https://jobs.next.co.uk" },
-  { "name": "River Island", "locations": ["Trafford Centre","Arndale"], "category": "Fashion", "careers": "https://careers.riverisland.com" },
-  { "name": "Primark", "locations": ["Market Street","Piccadilly"], "category": "Fashion", "careers": "https://careers.primark.com/en" },
-  { "name": "Marks & Spencer", "locations": ["Trafford Centre","Arndale","Market Street","Altrincham"], "category": "Fashion", "careers": "https://jobs.marksandspencer.com" },
-  { "name": "New Look", "locations": ["Arndale","Market Street"], "category": "Fashion", "careers": "https://www.newlook.com/uk/careers" },
-  { "name": "Urban Outfitters", "locations": ["Arndale"], "category": "Fashion", "careers": "https://www.urbn.com/work-with-us" },
-  { "name": "Uniqlo", "locations": ["Arndale"], "category": "Fashion", "careers": "https://www.fastretailing.com/employment/" },
-  { "name": "Levi's", "locations": ["Arndale","Trafford Centre"], "category": "Fashion", "careers": "https://www.levistrauss.com/work-with-us/" },
-  { "name": "AllSaints", "locations": ["Trafford Centre","Arndale"], "category": "Fashion", "careers": "https://apply.workable.com/allsaints/" },
-  { "name": "Hugo Boss", "locations": ["Trafford Centre","Arndale"], "category": "Fashion", "careers": "https://jobs.hugoboss.com" },
-  { "name": "Calvin Klein / Tommy Hilfiger (PVH)", "locations": ["Trafford Centre","Arndale"], "category": "Fashion", "careers": "https://careers.pvh.com" },
-  { "name": "Abercrombie & Fitch / Hollister", "locations": ["Trafford Centre","Arndale"], "category": "Fashion", "careers": "https://corporate.abercrombie.com/careers/" },
-  { "name": "Victoria's Secret", "locations": ["Trafford Centre"], "category": "Fashion", "careers": "https://careers.victoriassecret.com/en/" },
-  { "name": "Ann Summers", "locations": ["Trafford Centre","Arndale"], "category": "Fashion", "careers": "https://www.annsummers.com/about-ann-summers/careers" },
-  { "name": "Reiss", "locations": ["Trafford Centre","Arndale"], "category": "Fashion", "careers": "https://careers.reiss.com" },
-  { "name": "Ted Baker", "locations": ["Trafford Centre"], "category": "Fashion", "careers": "https://corporate.authentic.com/careers" },
-  { "name": "Monsoon / Accessorize", "locations": ["Trafford Centre","Arndale","Market Street"], "category": "Fashion", "careers": "https://madeinmonsoon.com" },
-  { "name": "White Stuff", "locations": ["Trafford Centre"], "category": "Fashion", "careers": "https://careers.whitestuff.com" },
-  { "name": "Fat Face", "locations": ["Trafford Centre"], "category": "Fashion", "careers": "https://careers.fatface.com" },
-  { "name": "TK Maxx", "locations": ["Arndale","Piccadilly"], "category": "Fashion", "careers": "https://www.tjxeurope.com/jobs" },
-  { "name": "Superdry", "locations": ["Arndale","Trafford Centre"], "category": "Fashion", "careers": "https://careers.superdry.com" },
-  { "name": "Crew Clothing", "locations": ["Altrincham"], "category": "Fashion", "careers": "https://www.crewclothing.co.uk/about-crew/work-with-us/" },
-  { "name": "Oliver Bonas", "locations": ["Altrincham"], "category": "Fashion", "careers": "https://jobs.oliverbonas.com" },
-  { "name": "Flannels", "locations": ["Altrincham"], "category": "Fashion", "careers": "https://www.frasersgroup.co.uk/join-us" },
-
-  { "name": "JD Sports", "locations": ["Trafford Centre","Arndale","Market Street","Manchester Airport"], "category": "Sports", "careers": "https://www.jdplc.com/careers" },
-  { "name": "Foot Locker", "locations": ["Arndale","Market Street"], "category": "Sports", "careers": "https://careers.footlocker.com" },
-  { "name": "Footasylum", "locations": ["Arndale"], "category": "Sports", "careers": "https://footasylumcareers.com" },
-  { "name": "Sports Direct / Frasers Group", "locations": ["Arndale","Piccadilly"], "category": "Sports", "careers": "https://www.frasersgroup.co.uk/join-us" },
-  { "name": "The North Face / Timberland (VF Corp)", "locations": ["Arndale","Trafford Centre"], "category": "Sports", "careers": "https://www.vfc.com/careers" },
-  { "name": "Alo Yoga", "locations": ["Arndale"], "category": "Sports", "careers": "https://www.aloyoga.com/pages/careers" },
-  { "name": "Nike", "locations": ["Trafford Centre","Arndale"], "category": "Sports", "careers": "https://careers.nike.com" },
-  { "name": "Adidas", "locations": ["Trafford Centre","Arndale"], "category": "Sports", "careers": "https://careers.adidas-group.com" },
-  { "name": "Mountain Warehouse", "locations": ["Altrincham"], "category": "Sports", "careers": "https://www.mountainwarehouse.com/about/working-at-mountain-warehouse/" },
-
-  { "name": "Boots", "locations": ["Trafford Centre","Arndale","Market Street","Piccadilly","Altrincham","Manchester Airport"], "category": "Beauty & Health", "careers": "https://www.boots.jobs" },
-  { "name": "Superdrug", "locations": ["Arndale","Market Street","Altrincham"], "category": "Beauty & Health", "careers": "https://www.superdrug.com/careers" },
-  { "name": "Lush", "locations": ["Arndale","Market Street","Trafford Centre"], "category": "Beauty & Health", "careers": "https://www.lush.com/uk/en/c/jobs" },
-  { "name": "Sephora", "locations": ["Trafford Centre"], "category": "Beauty & Health", "careers": "https://www.sephora.co.uk/careers" },
-  { "name": "Bath & Body Works", "locations": ["Trafford Centre"], "category": "Beauty & Health", "careers": "https://careers.bathandbodyworks.com/en/" },
-  { "name": "Rituals", "locations": ["Arndale","Trafford Centre","Altrincham","Manchester Airport"], "category": "Beauty & Health", "careers": "https://careers.rituals.com" },
-  { "name": "MAC / Estée Lauder / Clinique (ELC)", "locations": ["Trafford Centre","Arndale"], "category": "Beauty & Health", "careers": "https://www.elcompanies.com/en/careers" },
-  { "name": "Benefit Cosmetics", "locations": ["Trafford Centre","Arndale"], "category": "Beauty & Health", "careers": "https://www.benefitcosmetics.com/en-gb/benefits-careers" },
-  { "name": "L'Oréal / Lancôme / YSL Beauty", "locations": ["Trafford Centre","Arndale"], "category": "Beauty & Health", "careers": "https://www.loreal.com/en/careers/" },
-  { "name": "Holland & Barrett", "locations": ["Altrincham"], "category": "Beauty & Health", "careers": "https://careers.hollandandbarrett.com" },
-
-  { "name": "Selfridges", "locations": ["Trafford Centre"], "category": "Department Store", "careers": "https://apply.workable.com/selfridges/" },
-  { "name": "John Lewis", "locations": ["Trafford Centre"], "category": "Department Store", "careers": "https://www.jlpjobs.com" },
-
-  { "name": "Apple", "locations": ["Trafford Centre","Arndale"], "category": "Tech & Mobile", "careers": "https://jobs.apple.com/en-gb/search" },
-  { "name": "EE", "locations": ["Trafford Centre","Arndale","Market Street","Altrincham"], "category": "Tech & Mobile", "careers": "https://jobs.bt.com/search/?q=EE" },
-  { "name": "O2", "locations": ["Arndale","Trafford Centre","Market Street"], "category": "Tech & Mobile", "careers": "https://jobs.virginmediao2.co.uk" },
-  { "name": "Vodafone", "locations": ["Arndale","Market Street"], "category": "Tech & Mobile", "careers": "https://careers.vodafone.com/uk/" },
-  { "name": "Three", "locations": ["Arndale","Trafford Centre"], "category": "Tech & Mobile", "careers": "https://careers.three.co.uk" },
-  { "name": "Game", "locations": ["Arndale","Trafford Centre"], "category": "Tech & Mobile", "careers": "https://www.game.co.uk/careers" },
-  { "name": "Currys", "locations": ["Piccadilly"], "category": "Tech & Mobile", "careers": "https://careers.currys.co.uk" },
-  { "name": "CeX", "locations": ["Altrincham"], "category": "Tech & Mobile", "careers": "https://apply.workable.com/cex" },
-
-  { "name": "Clarks", "locations": ["Trafford Centre","Arndale","Market Street"], "category": "Footwear", "careers": "https://www.clarksjobs.com" },
-  { "name": "Schuh", "locations": ["Trafford Centre","Arndale"], "category": "Footwear", "careers": "https://careers.schuh.co.uk" },
-  { "name": "Office", "locations": ["Trafford Centre","Arndale"], "category": "Footwear", "careers": "https://www.office.co.uk/view/content/careers" },
-  { "name": "Dune London", "locations": ["Trafford Centre"], "category": "Footwear", "careers": "https://careers.dunelondon.com" },
-  { "name": "Kurt Geiger / Carvela", "locations": ["Trafford Centre"], "category": "Footwear", "careers": "https://apply.workable.com/kurt-geiger" },
-  { "name": "UGG / Timberland (Deckers)", "locations": ["Trafford Centre"], "category": "Footwear", "careers": "https://www.deckers.com/careers" },
-
-  { "name": "Pandora", "locations": ["Trafford Centre","Arndale","Market Street","Manchester Airport"], "category": "Jewellery & Watches", "careers": "https://careers.pandoragroup.com" },
-  { "name": "Swarovski", "locations": ["Trafford Centre","Arndale"], "category": "Jewellery & Watches", "careers": "https://www.swarovski.com/en-GB/c/careers/" },
-  { "name": "Ernest Jones / H.Samuel / Goldsmiths (Signet)", "locations": ["Trafford Centre","Arndale"], "category": "Jewellery & Watches", "careers": "https://www.signetjewelers.com/careers/" },
-  { "name": "Beaverbrooks", "locations": ["Trafford Centre","Arndale"], "category": "Jewellery & Watches", "careers": "https://www.beaverbrooks.co.uk/careers" },
-  { "name": "Cartier / IWC (Richemont)", "locations": ["Trafford Centre"], "category": "Jewellery & Watches", "careers": "https://careers.richemont.com/en/jobs/" },
-  { "name": "Breitling", "locations": ["Trafford Centre"], "category": "Jewellery & Watches", "careers": "https://careers.breitling.com" },
-  { "name": "Watches of Switzerland", "locations": ["Trafford Centre","Manchester Airport"], "category": "Jewellery & Watches", "careers": "https://www.watches-of-switzerland.co.uk/about-us/careers" },
-
-  { "name": "McDonald's", "locations": ["Trafford Centre","Arndale","Market Street","Piccadilly"], "category": "Food & Drink", "careers": "https://people.mcdonalds.co.uk" },
-  { "name": "Burger King", "locations": ["Trafford Centre","Arndale","Piccadilly","Manchester Airport"], "category": "Food & Drink", "careers": "https://www.bk.com/jobs" },
-  { "name": "KFC", "locations": ["Trafford Centre","Arndale","Piccadilly"], "category": "Food & Drink", "careers": "https://kfc.co.uk/careers" },
-  { "name": "Nando's", "locations": ["Trafford Centre","Arndale"], "category": "Food & Drink", "careers": "https://nandos.careers" },
-  { "name": "Five Guys", "locations": ["Arndale","Trafford Centre"], "category": "Food & Drink", "careers": "https://careers.fiveguys.com/us/en" },
-  { "name": "Greggs", "locations": ["Arndale","Market Street","Piccadilly","Manchester Airport"], "category": "Food & Drink", "careers": "https://careers.greggs.co.uk" },
-  { "name": "Starbucks", "locations": ["Trafford Centre","Arndale","Market Street","Manchester Airport"], "category": "Food & Drink", "careers": "https://careers.starbucks.com" },
-  { "name": "Costa Coffee", "locations": ["Trafford Centre","Arndale","Market Street","Piccadilly","Altrincham","Manchester Airport"], "category": "Food & Drink", "careers": "https://www.costa.co.uk/careers" },
-  { "name": "Caffè Nero", "locations": ["Trafford Centre","Arndale","Market Street","Altrincham","Manchester Airport"], "category": "Food & Drink", "careers": "https://www.caffenero.com/uk/careers" },
-  { "name": "Pret A Manger", "locations": ["Market Street","Piccadilly","Arndale","Manchester Airport"], "category": "Food & Drink", "careers": "https://www.pret.co.uk/en-GB/join-pret" },
-  { "name": "Subway", "locations": ["Arndale","Trafford Centre","Piccadilly"], "category": "Food & Drink", "careers": "https://careers.subway.com" },
-  { "name": "Taco Bell", "locations": ["Arndale"], "category": "Food & Drink", "careers": "https://tacobelljobs.com" },
-  { "name": "Wagamama", "locations": ["Trafford Centre","Arndale"], "category": "Food & Drink", "careers": "https://apply.workable.com/wagamama" },
-  { "name": "Zizzi", "locations": ["Trafford Centre"], "category": "Food & Drink", "careers": "https://www.zizzi.co.uk/about-us/careers" },
-  { "name": "Pizza Express", "locations": ["Trafford Centre"], "category": "Food & Drink", "careers": "https://www.pizzaexpress.com/careers" },
-  { "name": "Chaiiwala", "locations": ["Trafford Centre","Arndale"], "category": "Food & Drink", "careers": "https://chaiiwala.com/join-us/" },
-  { "name": "Chopstix", "locations": ["Trafford Centre","Arndale"], "category": "Food & Drink", "careers": "https://chopstixnoodles.co.uk/careers/" },
-  { "name": "Joe & The Juice", "locations": ["Arndale","Market Street"], "category": "Food & Drink", "careers": "https://www.joejuice.com/careers" },
-  { "name": "Barburrito", "locations": ["Trafford Centre","Manchester Airport"], "category": "Food & Drink", "careers": "https://apply.workable.com/barburrito" },
-  { "name": "All Bar One / Harvester (Mitchell & Butlers)", "locations": ["Trafford Centre"], "category": "Food & Drink", "careers": "https://www.mbcareersandjobs.com" },
-  { "name": "Archie's (burgers & shakes)", "locations": ["Trafford Centre","Arndale","Manchester Airport"], "category": "Food & Drink", "careers": "https://archiesonline.com" },
-
-  { "name": "Lakeland", "locations": ["Trafford Centre"], "category": "Homeware", "careers": "https://www.workforlakeland.co.uk" },
-  { "name": "Søstrene Grene", "locations": ["Arndale","Altrincham"], "category": "Homeware", "careers": "https://uk.indeed.com/cmp/S%C3%B8strene-Grene/jobs" },
-
-  { "name": "Waterstones", "locations": ["Arndale","Market Street","Piccadilly","Altrincham"], "category": "Books & Gifts", "careers": "https://www.waterstones.com/jobs" },
-  { "name": "WH Smith", "locations": ["Arndale","Piccadilly","Market Street","Altrincham","Manchester Airport"], "category": "Books & Gifts", "careers": "https://www.whsmithcareers.co.uk" },
-  { "name": "Card Factory", "locations": ["Trafford Centre","Arndale","Market Street"], "category": "Books & Gifts", "careers": "https://uk.indeed.com/cmp/Card-Factory/jobs" },
-  { "name": "Build-A-Bear", "locations": ["Trafford Centre","Arndale"], "category": "Books & Gifts", "careers": "https://www.buildabear.com/careers" },
-
-  { "name": "Claire's", "locations": ["Arndale","Trafford Centre"], "category": "Accessories", "careers": "https://careers.claires.com" },
-  { "name": "Sunglass Hut (EssilorLuxottica)", "locations": ["Trafford Centre","Arndale"], "category": "Accessories", "careers": "https://careers.luxottica.com" },
-
-  { "name": "Barclays", "locations": ["Market Street","Piccadilly","Altrincham"], "category": "Banking & Services", "careers": "https://home.barclays/careers/" },
-  { "name": "HSBC", "locations": ["Market Street","Piccadilly"], "category": "Banking & Services", "careers": "https://www.hsbc.com/careers" },
-  { "name": "NatWest", "locations": ["Market Street"], "category": "Banking & Services", "careers": "https://jobs.natwestgroup.com" },
-  { "name": "Lloyds Bank", "locations": ["Market Street"], "category": "Banking & Services", "careers": "https://www.lloydsbankinggroup.com/careers" },
-  { "name": "Nationwide Building Society", "locations": ["Altrincham"], "category": "Banking & Services", "careers": "https://www.nationwide-jobs.co.uk" },
-  { "name": "eurochange", "locations": ["Trafford Centre","Arndale"], "category": "Banking & Services", "careers": "https://www.eurochange.co.uk/jobs" },
-
-  { "name": "PureGym", "locations": ["Altrincham"], "category": "Health & Fitness", "careers": "https://careers.puregym.com" },
-  { "name": "Orangetheory Fitness", "locations": ["Altrincham"], "category": "Health & Fitness", "careers": "https://www.orangetheory.com/en-gb/careers" },
-  { "name": "Holland & Barrett (H&F)", "locations": ["Arndale","Altrincham"], "category": "Health & Fitness", "careers": "https://careers.hollandandbarrett.com" },
-
-  { "name": "Odeon", "locations": ["Trafford Centre"], "category": "Leisure", "careers": "https://www.odeon.co.uk/careers" },
-  { "name": "Cineworld", "locations": ["Piccadilly"], "category": "Leisure", "careers": "https://careers.cineworld.co.uk" },
-  { "name": "Hollywood Bowl", "locations": ["Trafford Centre"], "category": "Leisure", "careers": "https://careers.hollywoodbowlgroup.co.uk" },
-  { "name": "Putt Shack", "locations": ["Arndale"], "category": "Leisure", "careers": "https://www.puttshack.com/careers/" },
-  { "name": "Lane7", "locations": ["Altrincham"], "category": "Leisure", "careers": "https://uk.indeed.com/cmp/Lane7/jobs" },
-
-  { "name": "SSP Group (Upper Crust, Caffè Ritazza, Beer House)", "locations": ["Manchester Airport"], "category": "Food & Drink", "careers": "https://www.foodtravelexperts.com/careers" },
-  { "name": "World Duty Free (Avolta)", "locations": ["Manchester Airport"], "category": "Department Store", "careers": "https://careers.avoltaworld.com" },
-  { "name": "Manchester Airport / MAG", "locations": ["Manchester Airport"], "category": "Banking & Services", "careers": "https://careers.magairports.com" },
-  { "name": "San Carlo", "locations": ["Manchester Airport"], "category": "Food & Drink", "careers": "https://sancarlo.co.uk/careers/" },
-  { "name": "LEGO Store", "locations": ["Trafford Centre","Manchester Airport"], "category": "Books & Gifts", "careers": "https://www.lego.com/en-gb/careers/retail" },
-  { "name": "Chanel (Boutique Mall)", "locations": ["Manchester Airport"], "category": "Beauty & Health", "careers": "https://careers.chanel.com" }
+  {
+    "name": "H&M",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Altrincham"
+    ],
+    "category": "Fashion",
+    "careers": "https://career.hm.com"
+  },
+  {
+    "name": "Zara / Bershka / Pull&Bear / Stradivarius",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.inditex.com/en/join-us"
+  },
+  {
+    "name": "Next",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Altrincham"
+    ],
+    "category": "Fashion",
+    "careers": "https://jobs.next.co.uk"
+  },
+  {
+    "name": "River Island",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.riverisland.com"
+  },
+  {
+    "name": "Primark",
+    "locations": [
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.primark.com/en"
+  },
+  {
+    "name": "Marks & Spencer",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Altrincham"
+    ],
+    "category": "Fashion",
+    "careers": "https://jobs.marksandspencer.com"
+  },
+  {
+    "name": "New Look",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.newlook.com/uk/careers"
+  },
+  {
+    "name": "Urban Outfitters",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.urbn.com/work-with-us"
+  },
+  {
+    "name": "Uniqlo",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.fastretailing.com/employment/"
+  },
+  {
+    "name": "Levi's",
+    "locations": [
+      "Arndale",
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.levistrauss.com/work-with-us/"
+  },
+  {
+    "name": "AllSaints",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://apply.workable.com/allsaints/"
+  },
+  {
+    "name": "Hugo Boss",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://jobs.hugoboss.com"
+  },
+  {
+    "name": "Calvin Klein / Tommy Hilfiger (PVH)",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.pvh.com"
+  },
+  {
+    "name": "Abercrombie & Fitch / Hollister",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://corporate.abercrombie.com/careers/"
+  },
+  {
+    "name": "Victoria's Secret",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.victoriassecret.com/en/"
+  },
+  {
+    "name": "Ann Summers",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.annsummers.com/about-ann-summers/careers"
+  },
+  {
+    "name": "Reiss",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.reiss.com"
+  },
+  {
+    "name": "Ted Baker",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://corporate.authentic.com/careers"
+  },
+  {
+    "name": "Monsoon / Accessorize",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://madeinmonsoon.com"
+  },
+  {
+    "name": "White Stuff",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.whitestuff.com"
+  },
+  {
+    "name": "Fat Face",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.fatface.com"
+  },
+  {
+    "name": "TK Maxx",
+    "locations": [
+      "Arndale",
+      "Piccadilly"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.tjxeurope.com/jobs"
+  },
+  {
+    "name": "Superdry",
+    "locations": [
+      "Arndale",
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.superdry.com"
+  },
+  {
+    "name": "Crew Clothing",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.crewclothing.co.uk/about-crew/work-with-us/"
+  },
+  {
+    "name": "Oliver Bonas",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Fashion",
+    "careers": "https://jobs.oliverbonas.com"
+  },
+  {
+    "name": "Flannels",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.frasersgroup.co.uk/join-us"
+  },
+  {
+    "name": "JD Sports",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Manchester Airport"
+    ],
+    "category": "Sports",
+    "careers": "https://www.jdplc.com/careers"
+  },
+  {
+    "name": "Foot Locker",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Sports",
+    "careers": "https://careers.footlocker.com"
+  },
+  {
+    "name": "Footasylum",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Sports",
+    "careers": "https://footasylumcareers.com"
+  },
+  {
+    "name": "Sports Direct / Frasers Group",
+    "locations": [
+      "Arndale",
+      "Piccadilly"
+    ],
+    "category": "Sports",
+    "careers": "https://www.frasersgroup.co.uk/join-us"
+  },
+  {
+    "name": "The North Face / Timberland (VF Corp)",
+    "locations": [
+      "Arndale",
+      "Trafford Centre"
+    ],
+    "category": "Sports",
+    "careers": "https://www.vfc.com/careers"
+  },
+  {
+    "name": "Alo Yoga",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Sports",
+    "careers": "https://www.aloyoga.com/pages/careers"
+  },
+  {
+    "name": "Nike",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Sports",
+    "careers": "https://careers.nike.com"
+  },
+  {
+    "name": "Adidas",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Sports",
+    "careers": "https://careers.adidas-group.com"
+  },
+  {
+    "name": "Mountain Warehouse",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Sports",
+    "careers": "https://www.mountainwarehouse.com/about/working-at-mountain-warehouse/"
+  },
+  {
+    "name": "Boots",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Piccadilly",
+      "Altrincham",
+      "Manchester Airport"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.boots.jobs"
+  },
+  {
+    "name": "Superdrug",
+    "locations": [
+      "Arndale",
+      "Market Street",
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.superdrug.com/careers"
+  },
+  {
+    "name": "Lush",
+    "locations": [
+      "Arndale",
+      "Market Street",
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.lush.com/uk/en/c/jobs"
+  },
+  {
+    "name": "Sephora",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.sephora.co.uk/careers"
+  },
+  {
+    "name": "Bath & Body Works",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://careers.bathandbodyworks.com/en/"
+  },
+  {
+    "name": "Rituals",
+    "locations": [
+      "Arndale",
+      "Trafford Centre",
+      "Altrincham",
+      "Manchester Airport"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://careers.rituals.com"
+  },
+  {
+    "name": "MAC / Estée Lauder / Clinique (ELC)",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.elcompanies.com/en/careers"
+  },
+  {
+    "name": "Benefit Cosmetics",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.benefitcosmetics.com/en-gb/benefits-careers"
+  },
+  {
+    "name": "L'Oréal / Lancôme / YSL Beauty",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.loreal.com/en/careers/"
+  },
+  {
+    "name": "Holland & Barrett",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://careers.hollandandbarrett.com"
+  },
+  {
+    "name": "Selfridges",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Department Store",
+    "careers": "https://apply.workable.com/selfridges/"
+  },
+  {
+    "name": "John Lewis",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Department Store",
+    "careers": "https://www.jlpjobs.com"
+  },
+  {
+    "name": "Apple",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://jobs.apple.com/en-gb/search"
+  },
+  {
+    "name": "EE",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Altrincham"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://jobs.bt.com/search/?q=EE"
+  },
+  {
+    "name": "O2",
+    "locations": [
+      "Arndale",
+      "Trafford Centre",
+      "Market Street"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://jobs.virginmediao2.co.uk"
+  },
+  {
+    "name": "Vodafone",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://careers.vodafone.com/uk/"
+  },
+  {
+    "name": "Three",
+    "locations": [
+      "Arndale",
+      "Trafford Centre"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://careers.three.co.uk"
+  },
+  {
+    "name": "Game",
+    "locations": [
+      "Arndale",
+      "Trafford Centre"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://www.game.co.uk/careers"
+  },
+  {
+    "name": "Currys",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://careers.currys.co.uk"
+  },
+  {
+    "name": "CeX",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://apply.workable.com/cex"
+  },
+  {
+    "name": "Clarks",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Footwear",
+    "careers": "https://www.clarksjobs.com"
+  },
+  {
+    "name": "Schuh",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Footwear",
+    "careers": "https://careers.schuh.co.uk"
+  },
+  {
+    "name": "Office",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Footwear",
+    "careers": "https://www.office.co.uk/view/content/careers"
+  },
+  {
+    "name": "Dune London",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Footwear",
+    "careers": "https://careers.dunelondon.com"
+  },
+  {
+    "name": "Kurt Geiger / Carvela",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Footwear",
+    "careers": "https://apply.workable.com/kurt-geiger"
+  },
+  {
+    "name": "UGG / Timberland (Deckers)",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Footwear",
+    "careers": "https://www.deckers.com/careers"
+  },
+  {
+    "name": "Pandora",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Manchester Airport"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://careers.pandoragroup.com"
+  },
+  {
+    "name": "Swarovski",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.swarovski.com/en-GB/c/careers/"
+  },
+  {
+    "name": "Ernest Jones / H.Samuel / Goldsmiths (Signet)",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.signetjewelers.com/careers/"
+  },
+  {
+    "name": "Beaverbrooks",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.beaverbrooks.co.uk/careers"
+  },
+  {
+    "name": "Cartier / IWC (Richemont)",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://careers.richemont.com/en/jobs/"
+  },
+  {
+    "name": "Breitling",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://careers.breitling.com"
+  },
+  {
+    "name": "Watches of Switzerland",
+    "locations": [
+      "Trafford Centre",
+      "Manchester Airport"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.watches-of-switzerland.co.uk/about-us/careers"
+  },
+  {
+    "name": "McDonald's",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://people.mcdonalds.co.uk"
+  },
+  {
+    "name": "Burger King",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Piccadilly",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.bk.com/jobs"
+  },
+  {
+    "name": "KFC",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://kfc.co.uk/careers"
+  },
+  {
+    "name": "Nando's",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://nandos.careers"
+  },
+  {
+    "name": "Five Guys",
+    "locations": [
+      "Arndale",
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://careers.fiveguys.com/us/en"
+  },
+  {
+    "name": "Greggs",
+    "locations": [
+      "Arndale",
+      "Market Street",
+      "Piccadilly",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://careers.greggs.co.uk"
+  },
+  {
+    "name": "Starbucks",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://careers.starbucks.com"
+  },
+  {
+    "name": "Costa Coffee",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Piccadilly",
+      "Altrincham",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.costa.co.uk/careers"
+  },
+  {
+    "name": "Caffè Nero",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Altrincham",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.caffenero.com/uk/careers"
+  },
+  {
+    "name": "Pret A Manger",
+    "locations": [
+      "Market Street",
+      "Piccadilly",
+      "Arndale",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.pret.co.uk/en-GB/join-pret"
+  },
+  {
+    "name": "Subway",
+    "locations": [
+      "Arndale",
+      "Trafford Centre",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://careers.subway.com"
+  },
+  {
+    "name": "Taco Bell",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://tacobelljobs.com"
+  },
+  {
+    "name": "Wagamama",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://apply.workable.com/wagamama"
+  },
+  {
+    "name": "Zizzi",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.zizzi.co.uk/about-us/careers"
+  },
+  {
+    "name": "Pizza Express",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.pizzaexpress.com/careers"
+  },
+  {
+    "name": "Chaiiwala",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://chaiiwala.com/join-us/"
+  },
+  {
+    "name": "Chopstix",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://chopstixnoodles.co.uk/careers/"
+  },
+  {
+    "name": "Joe & The Juice",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.joejuice.com/careers"
+  },
+  {
+    "name": "Barburrito",
+    "locations": [
+      "Trafford Centre",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://apply.workable.com/barburrito"
+  },
+  {
+    "name": "All Bar One / Harvester (Mitchell & Butlers)",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.mbcareersandjobs.com"
+  },
+  {
+    "name": "Archie's (burgers & shakes)",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://archiesonline.com"
+  },
+  {
+    "name": "Lakeland",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Homeware",
+    "careers": "https://www.workforlakeland.co.uk"
+  },
+  {
+    "name": "Søstrene Grene",
+    "locations": [
+      "Arndale",
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/cmp/S%C3%B8strene-Grene/jobs"
+  },
+  {
+    "name": "Waterstones",
+    "locations": [
+      "Arndale",
+      "Market Street",
+      "Piccadilly",
+      "Altrincham"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://www.waterstones.com/jobs"
+  },
+  {
+    "name": "WH Smith",
+    "locations": [
+      "Arndale",
+      "Piccadilly",
+      "Market Street",
+      "Altrincham",
+      "Manchester Airport"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://www.whsmithcareers.co.uk"
+  },
+  {
+    "name": "Card Factory",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/cmp/Card-Factory/jobs"
+  },
+  {
+    "name": "Build-A-Bear",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://www.buildabear.com/careers"
+  },
+  {
+    "name": "Claire's",
+    "locations": [
+      "Arndale",
+      "Trafford Centre"
+    ],
+    "category": "Accessories",
+    "careers": "https://careers.claires.com"
+  },
+  {
+    "name": "Sunglass Hut (EssilorLuxottica)",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Accessories",
+    "careers": "https://careers.luxottica.com"
+  },
+  {
+    "name": "Barclays",
+    "locations": [
+      "Market Street",
+      "Piccadilly",
+      "Altrincham"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://home.barclays/careers/"
+  },
+  {
+    "name": "HSBC",
+    "locations": [
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.hsbc.com/careers"
+  },
+  {
+    "name": "NatWest",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://jobs.natwestgroup.com"
+  },
+  {
+    "name": "Lloyds Bank",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.lloydsbankinggroup.com/careers"
+  },
+  {
+    "name": "Nationwide Building Society",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.nationwide-jobs.co.uk"
+  },
+  {
+    "name": "eurochange",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.eurochange.co.uk/jobs"
+  },
+  {
+    "name": "PureGym",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Health & Fitness",
+    "careers": "https://careers.puregym.com"
+  },
+  {
+    "name": "Orangetheory Fitness",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Health & Fitness",
+    "careers": "https://www.orangetheory.com/en-gb/careers"
+  },
+  {
+    "name": "Holland & Barrett (H&F)",
+    "locations": [
+      "Arndale",
+      "Altrincham"
+    ],
+    "category": "Health & Fitness",
+    "careers": "https://careers.hollandandbarrett.com"
+  },
+  {
+    "name": "Odeon",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Leisure",
+    "careers": "https://www.odeon.co.uk/careers"
+  },
+  {
+    "name": "Cineworld",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Leisure",
+    "careers": "https://careers.cineworld.co.uk"
+  },
+  {
+    "name": "Hollywood Bowl",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Leisure",
+    "careers": "https://careers.hollywoodbowlgroup.co.uk"
+  },
+  {
+    "name": "Putt Shack",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Leisure",
+    "careers": "https://www.puttshack.com/careers/"
+  },
+  {
+    "name": "Lane7",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/cmp/Lane7/jobs"
+  },
+  {
+    "name": "SSP Group (Upper Crust, Caffè Ritazza, Beer House)",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.foodtravelexperts.com/careers"
+  },
+  {
+    "name": "World Duty Free (Avolta)",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Department Store",
+    "careers": "https://careers.avoltaworld.com"
+  },
+  {
+    "name": "Manchester Airport / MAG",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://careers.magairports.com"
+  },
+  {
+    "name": "San Carlo",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://sancarlo.co.uk/careers/"
+  },
+  {
+    "name": "LEGO Store",
+    "locations": [
+      "Trafford Centre",
+      "Manchester Airport"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://www.lego.com/en-gb/careers/retail"
+  },
+  {
+    "name": "Chanel (Boutique Mall)",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://careers.chanel.com"
+  },
+  {
+    "name": "1903 Lounge",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/jobs?q=1903%20Lounge&l=Manchester"
+  },
+  {
+    "name": "97 Barbers",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=97%20Barbers&l=Manchester"
+  },
+  {
+    "name": "Admiral Travel",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Travel",
+    "careers": "https://uk.indeed.com/jobs?q=Admiral%20Travel&l=Manchester"
+  },
+  {
+    "name": "aether",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/jobs?q=aether&l=Manchester"
+  },
+  {
+    "name": "Afflecks",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Afflecks&l=Manchester"
+  },
+  {
+    "name": "Aigo Digital",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://uk.indeed.com/jobs?q=Aigo%20Digital&l=Manchester"
+  },
+  {
+    "name": "Aisha Sports",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Sports",
+    "careers": "https://uk.indeed.com/jobs?q=Aisha%20Sports&l=Manchester"
+  },
+  {
+    "name": "Aldi",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.aldirecruitment.co.uk/"
+  },
+  {
+    "name": "Alterations Boutique",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://uk.indeed.com/jobs?q=Alterations%20Boutique&l=Manchester"
+  },
+  {
+    "name": "Amber Alehouse",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Amber%20Alehouse&l=Manchester"
+  },
+  {
+    "name": "American Nail Care",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=American%20Nail%20Care&l=Manchester"
+  },
+  {
+    "name": "American Vintage",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=American%20Vintage&l=Manchester"
+  },
+  {
+    "name": "Amplifon",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Opticians",
+    "careers": "https://www.amplifon.com/uk/careers"
+  },
+  {
+    "name": "Andrew Collinge",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Andrew%20Collinge&l=Manchester"
+  },
+  {
+    "name": "Annie's Secret Hair Extensions Weave Bar",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Annie's%20Secret%20Hair%20Extensions%20Weave%20Bar&l=Manchester"
+  },
+  {
+    "name": "Anthropologie",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.urbn.com/careers"
+  },
+  {
+    "name": "Apiary",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Apiary&l=Manchester"
+  },
+  {
+    "name": "Arcane Bar",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Arcane%20Bar&l=Manchester"
+  },
+  {
+    "name": "Archie's",
+    "locations": [
+      "Trafford Centre",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Archie's&l=Manchester"
+  },
+  {
+    "name": "Argos",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Department Store",
+    "careers": "https://www.sainsburys.jobs/"
+  },
+  {
+    "name": "Aristocracy London",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Aristocracy%20London&l=Manchester"
+  },
+  {
+    "name": "ARNE",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=ARNE&l=Manchester"
+  },
+  {
+    "name": "Art with a Heart",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Art%20with%20a%20Heart&l=Manchester"
+  },
+  {
+    "name": "Arthur Kay & Bro Jewellers",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Arthur%20Kay%20%26%20Bro%20Jewellers&l=Manchester"
+  },
+  {
+    "name": "Asia Crafts",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Asia%20Crafts&l=Manchester"
+  },
+  {
+    "name": "Ask Italian",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Ask%20Italian&l=Manchester"
+  },
+  {
+    "name": "Aspire Lounge",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/jobs?q=Aspire%20Lounge&l=Manchester"
+  },
+  {
+    "name": "Aston's of Manchester",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Aston's%20of%20Manchester&l=Manchester"
+  },
+  {
+    "name": "Astrid & Miyu",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Astrid%20%26%20Miyu&l=Manchester"
+  },
+  {
+    "name": "Austen & Blake",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Austen%20%26%20Blake&l=Manchester"
+  },
+  {
+    "name": "Avril's Fortunes",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/jobs?q=Avril's%20Fortunes&l=Manchester"
+  },
+  {
+    "name": "B&V Trading",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=B%26V%20Trading&l=Manchester"
+  },
+  {
+    "name": "Baby Leon",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Baby%20Leon&l=Manchester"
+  },
+  {
+    "name": "Bagel Nash",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Bagel%20Nash&l=Manchester"
+  },
+  {
+    "name": "Bags Etc",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Accessories",
+    "careers": "https://uk.indeed.com/jobs?q=Bags%20Etc&l=Manchester"
+  },
+  {
+    "name": "Banyan",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Banyan&l=Manchester"
+  },
+  {
+    "name": "BAP Altrincham",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=BAP%20Altrincham&l=Manchester"
+  },
+  {
+    "name": "Bar Etna",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Bar%20Etna&l=Manchester"
+  },
+  {
+    "name": "Batch'd",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Batch'd&l=Manchester"
+  },
+  {
+    "name": "Beermoth",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Beermoth&l=Manchester"
+  },
+  {
+    "name": "Belgian Bar",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Belgian%20Bar&l=Manchester"
+  },
+  {
+    "name": "Bella Italia",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Bella%20Italia&l=Manchester"
+  },
+  {
+    "name": "Belstaff",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Belstaff&l=Manchester"
+  },
+  {
+    "name": "Ben's Cookies",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Ben's%20Cookies&l=Manchester"
+  },
+  {
+    "name": "Best Tailor Altrincham",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://uk.indeed.com/jobs?q=Best%20Tailor%20Altrincham&l=Manchester"
+  },
+  {
+    "name": "Betfred",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Leisure",
+    "careers": "https://www.betfred.com/careers"
+  },
+  {
+    "name": "Bhollywood Dhaba",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Bhollywood%20Dhaba&l=Manchester"
+  },
+  {
+    "name": "Bill's",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.bills-website.co.uk/careers"
+  },
+  {
+    "name": "Biza",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Department Store",
+    "careers": "https://uk.indeed.com/jobs?q=Biza&l=Manchester"
+  },
+  {
+    "name": "Black Cat Club",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Black%20Cat%20Club&l=Manchester"
+  },
+  {
+    "name": "Blanchflower",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Blanchflower&l=Manchester"
+  },
+  {
+    "name": "Blanchflower Coffee & Bakery",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Blanchflower%20Coffee%20%26%20Bakery&l=Manchester"
+  },
+  {
+    "name": "Blank Street",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Blank%20Street&l=Manchester"
+  },
+  {
+    "name": "Blank Street Coffee",
+    "locations": [
+      "Trafford Centre",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Blank%20Street%20Coffee&l=Manchester"
+  },
+  {
+    "name": "Bloomin Flowers & Plants",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Bloomin%20Flowers%20%26%20Plants&l=Manchester"
+  },
+  {
+    "name": "Bobbi Brown",
+    "locations": [
+      "Arndale",
+      "Market Street",
+      "Manchester Airport"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Bobbi%20Brown&l=Manchester"
+  },
+  {
+    "name": "Bobo Tea",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Bobo%20Tea&l=Manchester"
+  },
+  {
+    "name": "Bodycare",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Bodycare&l=Manchester"
+  },
+  {
+    "name": "Boodles",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Boodles&l=Manchester"
+  },
+  {
+    "name": "Boost Juice",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Boost%20Juice&l=Manchester"
+  },
+  {
+    "name": "Boost Juice Bars",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Boost%20Juice%20Bars&l=Manchester"
+  },
+  {
+    "name": "Bose",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://careers.bose.com/"
+  },
+  {
+    "name": "BOSS",
+    "locations": [
+      "Trafford Centre",
+      "Market Street",
+      "Manchester Airport"
+    ],
+    "category": "Fashion",
+    "careers": "https://group.hugoboss.com/en/career"
+  },
+  {
+    "name": "Bounceback Food",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Bounceback%20Food&l=Manchester"
+  },
+  {
+    "name": "Boux Avenue",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.bouxavenue.com/careers"
+  },
+  {
+    "name": "BPerfect Cosmetics",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=BPerfect%20Cosmetics&l=Manchester"
+  },
+  {
+    "name": "Bravissimo",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Bravissimo&l=Manchester"
+  },
+  {
+    "name": "Brazilian Waxing Company",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Brazilian%20Waxing%20Company&l=Manchester"
+  },
+  {
+    "name": "Brew'd",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Brew'd&l=Manchester"
+  },
+  {
+    "name": "British Heart Foundation",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://jobs.bhf.org.uk/"
+  },
+  {
+    "name": "Brows",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Brows&l=Manchester"
+  },
+  {
+    "name": "Bubbleology",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Bubbleology&l=Manchester"
+  },
+  {
+    "name": "Build-A-Bear Workshop",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Toys",
+    "careers": "https://www.buildabear.com/careers.html"
+  },
+  {
+    "name": "Bundobust",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://bundobust.com/careers/"
+  },
+  {
+    "name": "Bunsik",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Bunsik&l=Manchester"
+  },
+  {
+    "name": "Burberry",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.burberry.com/"
+  },
+  {
+    "name": "Byron",
+    "locations": [
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Byron&l=Manchester"
+  },
+  {
+    "name": "Cabana",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Cabana&l=Manchester"
+  },
+  {
+    "name": "Cafe Greco",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Cafe%20Greco&l=Manchester"
+  },
+  {
+    "name": "Cake Box",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Cake%20Box&l=Manchester"
+  },
+  {
+    "name": "Calma Salons",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Calma%20Salons&l=Manchester"
+  },
+  {
+    "name": "Candles & Oud",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Candles%20%26%20Oud&l=Manchester"
+  },
+  {
+    "name": "Cards Galore",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Cards%20Galore&l=Manchester"
+  },
+  {
+    "name": "Carluccio's",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Carluccio's&l=Manchester"
+  },
+  {
+    "name": "Castle Fine Art",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Castle%20Fine%20Art&l=Manchester"
+  },
+  {
+    "name": "Castore",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Sports",
+    "careers": "https://castore.com/pages/careers"
+  },
+  {
+    "name": "Cell Base",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://uk.indeed.com/jobs?q=Cell%20Base&l=Manchester"
+  },
+  {
+    "name": "Chanel",
+    "locations": [
+      "Market Street",
+      "Manchester Airport"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.chanel.com/gb/careers/"
+  },
+  {
+    "name": "Charles Tyrwhitt",
+    "locations": [
+      "Trafford Centre",
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.ctshirts.com/uk/careers"
+  },
+  {
+    "name": "Cheshire Cupcakes",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Cheshire%20Cupcakes&l=Manchester"
+  },
+  {
+    "name": "Chisholm Hunter",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.chisholmhunter.co.uk/careers"
+  },
+  {
+    "name": "Chit 'n' Chaat",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Chit%20'n'%20Chaat&l=Manchester"
+  },
+  {
+    "name": "Chopstix Noodle Bar",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Chopstix%20Noodle%20Bar&l=Manchester"
+  },
+  {
+    "name": "Chorlton Cheesemongers",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Chorlton%20Cheesemongers&l=Manchester"
+  },
+  {
+    "name": "Cibo",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Cibo&l=Manchester"
+  },
+  {
+    "name": "Cicchetti",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Cicchetti&l=Manchester"
+  },
+  {
+    "name": "City Specs",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Opticians",
+    "careers": "https://uk.indeed.com/jobs?q=City%20Specs&l=Manchester"
+  },
+  {
+    "name": "Clarendon Fine Art",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Clarendon%20Fine%20Art&l=Manchester"
+  },
+  {
+    "name": "Clas Ohlson",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Clas%20Ohlson&l=Manchester"
+  },
+  {
+    "name": "Clinique",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Clinique&l=Manchester"
+  },
+  {
+    "name": "Clinton Cards",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Clinton%20Cards&l=Manchester"
+  },
+  {
+    "name": "Clintons",
+    "locations": [
+      "Trafford Centre",
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Clintons&l=Manchester"
+  },
+  {
+    "name": "Club Brass",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Club%20Brass&l=Manchester"
+  },
+  {
+    "name": "Co-op On The Go",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://jobs.coop.co.uk/"
+  },
+  {
+    "name": "Coach",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Accessories",
+    "careers": "https://www.tapestry.com/careers/"
+  },
+  {
+    "name": "Coast to Coast",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Coast%20to%20Coast&l=Manchester"
+  },
+  {
+    "name": "Coral",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.entaincareers.com/"
+  },
+  {
+    "name": "Corbieres Wine Cavern",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Corbieres%20Wine%20Cavern&l=Manchester"
+  },
+  {
+    "name": "Costa",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.costa.co.uk/careers"
+  },
+  {
+    "name": "Cosy Club",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Cosy%20Club&l=Manchester"
+  },
+  {
+    "name": "Cottonopolis",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Cottonopolis&l=Manchester"
+  },
+  {
+    "name": "Coupes Creations",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Coupes%20Creations&l=Manchester"
+  },
+  {
+    "name": "Crepslocker",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Footwear",
+    "careers": "https://uk.indeed.com/jobs?q=Crepslocker&l=Manchester"
+  },
+  {
+    "name": "Damò",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Dam%C3%B2&l=Manchester"
+  },
+  {
+    "name": "David M Robinson",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=David%20M%20Robinson&l=Manchester"
+  },
+  {
+    "name": "Deichmann",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Footwear",
+    "careers": "https://jobs.deichmann.com/"
+  },
+  {
+    "name": "Designer Exchange",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Accessories",
+    "careers": "https://uk.indeed.com/jobs?q=Designer%20Exchange&l=Manchester"
+  },
+  {
+    "name": "Destination Beauty",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Destination%20Beauty&l=Manchester"
+  },
+  {
+    "name": "Diamond Heaven",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Diamond%20Heaven&l=Manchester"
+  },
+  {
+    "name": "Diesel",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Diesel&l=Manchester"
+  },
+  {
+    "name": "Dino Falls Adventure Golf",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/jobs?q=Dino%20Falls%20Adventure%20Golf&l=Manchester"
+  },
+  {
+    "name": "Direct Fisheries",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Direct%20Fisheries&l=Manchester"
+  },
+  {
+    "name": "Disney Store",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Toys",
+    "careers": "https://uk.indeed.com/jobs?q=Disney%20Store&l=Manchester"
+  },
+  {
+    "name": "Domino's Pizza",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://careers.dominos.co.uk/"
+  },
+  {
+    "name": "Domus Italia",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Domus%20Italia&l=Manchester"
+  },
+  {
+    "name": "Don Grant",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Don%20Grant&l=Manchester"
+  },
+  {
+    "name": "Dose",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Dose&l=Manchester"
+  },
+  {
+    "name": "Dr Martens",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Footwear",
+    "careers": "https://www.drmartens.com/uk/en/careers"
+  },
+  {
+    "name": "Druckers Vienna Patisserie",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Druckers%20Vienna%20Patisserie&l=Manchester"
+  },
+  {
+    "name": "East Street",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=East%20Street&l=Manchester"
+  },
+  {
+    "name": "Eastern Bloc Records",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Eastern%20Bloc%20Records&l=Manchester"
+  },
+  {
+    "name": "Eat 2 Treat",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Eat%202%20Treat&l=Manchester"
+  },
+  {
+    "name": "Eat Picos",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Eat%20Picos&l=Manchester"
+  },
+  {
+    "name": "Ecco",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Footwear",
+    "careers": "https://uk.indeed.com/jobs?q=Ecco&l=Manchester"
+  },
+  {
+    "name": "Edit Suits Co.",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Edit%20Suits%20Co.&l=Manchester"
+  },
+  {
+    "name": "El Gato Negro",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=El%20Gato%20Negro&l=Manchester"
+  },
+  {
+    "name": "Elite Cigarettes",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Accessories",
+    "careers": "https://uk.indeed.com/jobs?q=Elite%20Cigarettes&l=Manchester"
+  },
+  {
+    "name": "Escape Lounge",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/jobs?q=Escape%20Lounge&l=Manchester"
+  },
+  {
+    "name": "Est Est Est",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Est%20Est%20Est&l=Manchester"
+  },
+  {
+    "name": "Est.14 Hairdressing",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Est.14%20Hairdressing&l=Manchester"
+  },
+  {
+    "name": "Evelyn's Cafe & Bar",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Evelyn's%20Cafe%20%26%20Bar&l=Manchester"
+  },
+  {
+    "name": "Everyman Cinema",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Leisure",
+    "careers": "https://www.everymancinema.com/careers"
+  },
+  {
+    "name": "Excess Baggage Company",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Travel",
+    "careers": "https://uk.indeed.com/jobs?q=Excess%20Baggage%20Company&l=Manchester"
+  },
+  {
+    "name": "EZH",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=EZH&l=Manchester"
+  },
+  {
+    "name": "Ezra & Gil",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Ezra%20%26%20Gil&l=Manchester"
+  },
+  {
+    "name": "F.Hinds Jewellers",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.fhinds.co.uk/Careers"
+  },
+  {
+    "name": "Fast Stitch",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://uk.indeed.com/jobs?q=Fast%20Stitch&l=Manchester"
+  },
+  {
+    "name": "Federal Cafe Bar",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Federal%20Cafe%20Bar&l=Manchester"
+  },
+  {
+    "name": "Ferrious",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Ferrious&l=Manchester"
+  },
+  {
+    "name": "Fever-Tree Cocktail and Champagne Bar",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Fever-Tree%20Cocktail%20and%20Champagne%20Bar&l=Manchester"
+  },
+  {
+    "name": "FIXX Salon",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=FIXX%20Salon&l=Manchester"
+  },
+  {
+    "name": "Fjällräven",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Fj%C3%A4llr%C3%A4ven&l=Manchester"
+  },
+  {
+    "name": "Flight Club",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/jobs?q=Flight%20Club&l=Manchester"
+  },
+  {
+    "name": "Flying Tiger Copenhagen",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Flying%20Tiger%20Copenhagen&l=Manchester"
+  },
+  {
+    "name": "Fossil",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.fossilgroup.com/careers/"
+  },
+  {
+    "name": "Fragrance Shop",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.thefragranceshop.co.uk/careers"
+  },
+  {
+    "name": "Framing Altrincham",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Framing%20Altrincham&l=Manchester"
+  },
+  {
+    "name": "Franco Manca",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Franco%20Manca&l=Manchester"
+  },
+  {
+    "name": "Fred Aldous",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Fred%20Aldous&l=Manchester"
+  },
+  {
+    "name": "Fresh Flowers",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Fresh%20Flowers&l=Manchester"
+  },
+  {
+    "name": "Fruteiro Do Brasil",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Fruteiro%20Do%20Brasil&l=Manchester"
+  },
+  {
+    "name": "Fuel Juice Bar",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Fuel%20Juice%20Bar&l=Manchester"
+  },
+  {
+    "name": "G-Star RAW",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.g-star.com/en_gb/careers"
+  },
+  {
+    "name": "Gabbotts Farm",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Gabbotts%20Farm&l=Manchester"
+  },
+  {
+    "name": "GAIL's",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://gailsbread.co.uk/careers/"
+  },
+  {
+    "name": "Games Workshop",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Toys",
+    "careers": "https://www.games-workshop.com/careers"
+  },
+  {
+    "name": "GAP",
+    "locations": [
+      "Trafford Centre",
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.gapinc.com/en-us/careers"
+  },
+  {
+    "name": "Get Swank Style",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Get%20Swank%20Style&l=Manchester"
+  },
+  {
+    "name": "Gharaana",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Gharaana&l=Manchester"
+  },
+  {
+    "name": "Gift Home",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Gift%20Home&l=Manchester"
+  },
+  {
+    "name": "Gino D'Acampo",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Gino%20D'Acampo&l=Manchester"
+  },
+  {
+    "name": "Giraffe",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Giraffe&l=Manchester"
+  },
+  {
+    "name": "GO Outdoors",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Sports",
+    "careers": "https://www.jobs.jdplc.com/"
+  },
+  {
+    "name": "Golden Touch",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Golden%20Touch&l=Manchester"
+  },
+  {
+    "name": "Goldsmiths",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.thewosgroupcareers.com/"
+  },
+  {
+    "name": "Goldsmiths City Specs Opticians",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Opticians",
+    "careers": "https://uk.indeed.com/jobs?q=Goldsmiths%20City%20Specs%20Opticians&l=Manchester"
+  },
+  {
+    "name": "Gonbay",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Gonbay&l=Manchester"
+  },
+  {
+    "name": "Good Days Barbers",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://uk.indeed.com/jobs?q=Good%20Days%20Barbers&l=Manchester"
+  },
+  {
+    "name": "Gooey",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Gooey&l=Manchester"
+  },
+  {
+    "name": "Gourmet Burger Kitchen",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Gourmet%20Burger%20Kitchen&l=Manchester"
+  },
+  {
+    "name": "Grand Pacific",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Grand%20Pacific&l=Manchester"
+  },
+  {
+    "name": "Grant's Hairdressers",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Grant's%20Hairdressers&l=Manchester"
+  },
+  {
+    "name": "Great North Pie Co.",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Great%20North%20Pie%20Co.&l=Manchester"
+  },
+  {
+    "name": "Great Northern Market",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Great%20Northern%20Market&l=Manchester"
+  },
+  {
+    "name": "Green & Grounded",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Green%20%26%20Grounded&l=Manchester"
+  },
+  {
+    "name": "Grilled Cheese Manchester",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Grilled%20Cheese%20Manchester&l=Manchester"
+  },
+  {
+    "name": "Grindsmith",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Grindsmith&l=Manchester"
+  },
+  {
+    "name": "Gymshark",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Sports",
+    "careers": "https://careers.gymshark.com/"
+  },
+  {
+    "name": "H&M Home",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Homeware",
+    "careers": "https://career.hm.com/"
+  },
+  {
+    "name": "H2O",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Accessories",
+    "careers": "https://uk.indeed.com/jobs?q=H2O&l=Manchester"
+  },
+  {
+    "name": "Halifax",
+    "locations": [
+      "Arndale",
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.lloydsbankinggroup.com/careers.html"
+  },
+  {
+    "name": "Hamleys",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Toys",
+    "careers": "https://www.hamleys.com/careers"
+  },
+  {
+    "name": "Hancocks",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Hancocks&l=Manchester"
+  },
+  {
+    "name": "Hansford's",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Hansford's&l=Manchester"
+  },
+  {
+    "name": "Haribo",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Haribo&l=Manchester"
+  },
+  {
+    "name": "Harvey Nichols",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Department Store",
+    "careers": "https://www.harveynichols.com/careers/"
+  },
+  {
+    "name": "Hasty Tasty Pizza",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Hasty%20Tasty%20Pizza&l=Manchester"
+  },
+  {
+    "name": "Haute Dolci",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Haute%20Dolci&l=Manchester"
+  },
+  {
+    "name": "Headway",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Headway&l=Manchester"
+  },
+  {
+    "name": "Hello Oriental",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Hello%20Oriental&l=Manchester"
+  },
+  {
+    "name": "Hello Streets Alty",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Hello%20Streets%20Alty&l=Manchester"
+  },
+  {
+    "name": "Hidden Corner",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Hidden%20Corner&l=Manchester"
+  },
+  {
+    "name": "HMV",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=HMV&l=Manchester"
+  },
+  {
+    "name": "HOBBS",
+    "locations": [
+      "Trafford Centre",
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=HOBBS&l=Manchester"
+  },
+  {
+    "name": "Holland & Barrett More",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Holland%20%26%20Barrett%20More&l=Manchester"
+  },
+  {
+    "name": "HomeSense",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Homeware",
+    "careers": "https://www.tjxcareers.co.uk/"
+  },
+  {
+    "name": "Honest Crust",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Honest%20Crust&l=Manchester"
+  },
+  {
+    "name": "Hong Thai",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Hong%20Thai&l=Manchester"
+  },
+  {
+    "name": "HOP",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=HOP&l=Manchester"
+  },
+  {
+    "name": "Hotel Chocolat",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.hotelchocolat.com/uk/careers"
+  },
+  {
+    "name": "House of Books & Friends",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=House%20of%20Books%20%26%20Friends&l=Manchester"
+  },
+  {
+    "name": "House of CB",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.houseofcb.com/careers"
+  },
+  {
+    "name": "House of Finesse",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=House%20of%20Finesse&l=Manchester"
+  },
+  {
+    "name": "Hoysons Jewellers",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Hoysons%20Jewellers&l=Manchester"
+  },
+  {
+    "name": "Hublot",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Hublot&l=Manchester"
+  },
+  {
+    "name": "Idaho",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Idaho&l=Manchester"
+  },
+  {
+    "name": "Imzi Communications",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://uk.indeed.com/jobs?q=Imzi%20Communications&l=Manchester"
+  },
+  {
+    "name": "In Time",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=In%20Time&l=Manchester"
+  },
+  {
+    "name": "InMotion",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://uk.indeed.com/jobs?q=InMotion&l=Manchester"
+  },
+  {
+    "name": "Insomnia Cookies",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Insomnia%20Cookies&l=Manchester"
+  },
+  {
+    "name": "iSmash",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://uk.indeed.com/jobs?q=iSmash&l=Manchester"
+  },
+  {
+    "name": "iTREAT SKIN",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=iTREAT%20SKIN&l=Manchester"
+  },
+  {
+    "name": "itsu",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.itsu.com/careers/"
+  },
+  {
+    "name": "J D Wetherspoon",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://jdwetherspoon.com/careers"
+  },
+  {
+    "name": "Jacamo",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.nbrown.co.uk/"
+  },
+  {
+    "name": "Jack & Jones",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://career.bestseller.com/"
+  },
+  {
+    "name": "Jack in the Box",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Jack%20in%20the%20Box&l=Manchester"
+  },
+  {
+    "name": "Jake Shoes",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Footwear",
+    "careers": "https://uk.indeed.com/jobs?q=Jake%20Shoes&l=Manchester"
+  },
+  {
+    "name": "Jardim Rodizio Grill",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Jardim%20Rodizio%20Grill&l=Manchester"
+  },
+  {
+    "name": "JD",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Sports",
+    "careers": "https://www.jdplc.com/careers"
+  },
+  {
+    "name": "Jenna Patties Co",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Jenna%20Patties%20Co&l=Manchester"
+  },
+  {
+    "name": "Jenny Jones Jewellery",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Jenny%20Jones%20Jewellery&l=Manchester"
+  },
+  {
+    "name": "JERK JUNCTION",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=JERK%20JUNCTION&l=Manchester"
+  },
+  {
+    "name": "Jo Malone London",
+    "locations": [
+      "Market Street",
+      "Manchester Airport"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Jo%20Malone%20London&l=Manchester"
+  },
+  {
+    "name": "John Lewis & Partners",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Department Store",
+    "careers": "https://www.jlpjobs.com/"
+  },
+  {
+    "name": "Joos",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://uk.indeed.com/jobs?q=Joos&l=Manchester"
+  },
+  {
+    "name": "KENJI",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=KENJI&l=Manchester"
+  },
+  {
+    "name": "Khaadi",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Khaadi&l=Manchester"
+  },
+  {
+    "name": "Kids Foot Locker",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Footwear",
+    "careers": "https://careers.footlocker.com/"
+  },
+  {
+    "name": "Kiko Milano",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.kikocosmetics.com/en-gb/careers"
+  },
+  {
+    "name": "King Street Townhouse",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Travel",
+    "careers": "https://uk.indeed.com/jobs?q=King%20Street%20Townhouse&l=Manchester"
+  },
+  {
+    "name": "Kingdom of Sweets",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Kingdom%20of%20Sweets&l=Manchester"
+  },
+  {
+    "name": "Kouzina",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Kouzina&l=Manchester"
+  },
+  {
+    "name": "Krispy Kreme",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.krispykreme.co.uk/careers"
+  },
+  {
+    "name": "Kuoni",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Travel",
+    "careers": "https://uk.indeed.com/jobs?q=Kuoni&l=Manchester"
+  },
+  {
+    "name": "Kut Above Creations",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Kut%20Above%20Creations&l=Manchester"
+  },
+  {
+    "name": "L'Occitane",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=L'Occitane&l=Manchester"
+  },
+  {
+    "name": "L'OCCITANE en Provence",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=L'OCCITANE%20en%20Provence&l=Manchester"
+  },
+  {
+    "name": "La Casita",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=La%20Casita&l=Manchester"
+  },
+  {
+    "name": "La Filia",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=La%20Filia&l=Manchester"
+  },
+  {
+    "name": "LA Sport",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Footwear",
+    "careers": "https://uk.indeed.com/jobs?q=LA%20Sport&l=Manchester"
+  },
+  {
+    "name": "Lacoste",
+    "locations": [
+      "Trafford Centre",
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Lacoste&l=Manchester"
+  },
+  {
+    "name": "Läderach",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=L%C3%A4derach&l=Manchester"
+  },
+  {
+    "name": "Las Iguanas",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.lasiguanas.co.uk/careers"
+  },
+  {
+    "name": "Laser Quest",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/jobs?q=Laser%20Quest&l=Manchester"
+  },
+  {
+    "name": "Laura's Hair Boutique",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Laura's%20Hair%20Boutique&l=Manchester"
+  },
+  {
+    "name": "Le Labo",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Le%20Labo&l=Manchester"
+  },
+  {
+    "name": "LEGOLAND Discovery Centre",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Leisure",
+    "careers": "https://careers.merlinentertainments.biz/"
+  },
+  {
+    "name": "Libero",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Libero&l=Manchester"
+  },
+  {
+    "name": "Lily Brow Bar",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Lily%20Brow%20Bar&l=Manchester"
+  },
+  {
+    "name": "Lindt",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Lindt&l=Manchester"
+  },
+  {
+    "name": "Lipsy",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.next.co.uk/"
+  },
+  {
+    "name": "Little Dessert Shop",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://littledessertshop.co.uk/careers/"
+  },
+  {
+    "name": "Little Korean Kitchen",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Little%20Korean%20Kitchen&l=Manchester"
+  },
+  {
+    "name": "Little Window",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Little%20Window&l=Manchester"
+  },
+  {
+    "name": "Little World for Scholars",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Toys",
+    "careers": "https://uk.indeed.com/jobs?q=Little%20World%20for%20Scholars&l=Manchester"
+  },
+  {
+    "name": "Loake",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Footwear",
+    "careers": "https://uk.indeed.com/jobs?q=Loake&l=Manchester"
+  },
+  {
+    "name": "Local Creation",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Local%20Creation&l=Manchester"
+  },
+  {
+    "name": "Lola's Cupcakes",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Lola's%20Cupcakes&l=Manchester"
+  },
+  {
+    "name": "London Camera Exchange",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://uk.indeed.com/jobs?q=London%20Camera%20Exchange&l=Manchester"
+  },
+  {
+    "name": "Lookfantastic",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.thehutgroup.com/careers/"
+  },
+  {
+    "name": "Lotus Food",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Lotus%20Food&l=Manchester"
+  },
+  {
+    "name": "Louis Vuitton",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.louisvuitton.com/eng-gb/la-maison/recruitment"
+  },
+  {
+    "name": "Lounge",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Lounge&l=Manchester"
+  },
+  {
+    "name": "Lovingly Artisan",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Lovingly%20Artisan&l=Manchester"
+  },
+  {
+    "name": "Lovisa",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.lovisa.com/pages/careers"
+  },
+  {
+    "name": "Lucky Cat by Gordon Ramsay",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Lucky%20Cat%20by%20Gordon%20Ramsay&l=Manchester"
+  },
+  {
+    "name": "Luke 1977",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Luke%201977&l=Manchester"
+  },
+  {
+    "name": "Lululemon",
+    "locations": [
+      "Trafford Centre",
+      "Market Street"
+    ],
+    "category": "Sports",
+    "careers": "https://careers.lululemon.com/"
+  },
+  {
+    "name": "Lunya",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Lunya&l=Manchester"
+  },
+  {
+    "name": "Luvyababes",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Luvyababes&l=Manchester"
+  },
+  {
+    "name": "Lux Barbers",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://uk.indeed.com/jobs?q=Lux%20Barbers&l=Manchester"
+  },
+  {
+    "name": "Luxottica",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Opticians",
+    "careers": "https://uk.indeed.com/jobs?q=Luxottica&l=Manchester"
+  },
+  {
+    "name": "M&S",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Department Store",
+    "careers": "https://jobs.marksandspencer.com/"
+  },
+  {
+    "name": "M&S Simply Food",
+    "locations": [
+      "Piccadilly",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://jobs.marksandspencer.com/"
+  },
+  {
+    "name": "Mabel's Cafe & Tea Room",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Mabel's%20Cafe%20%26%20Tea%20Room&l=Manchester"
+  },
+  {
+    "name": "Mackie Mayor",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Mackie%20Mayor&l=Manchester"
+  },
+  {
+    "name": "Maison Dior",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Maison%20Dior&l=Manchester"
+  },
+  {
+    "name": "Mamas & Papas",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Homeware",
+    "careers": "https://www.mamasandpapas.com/en-gb/careers"
+  },
+  {
+    "name": "Manchester City",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Sports",
+    "careers": "https://uk.indeed.com/jobs?q=Manchester%20City&l=Manchester"
+  },
+  {
+    "name": "MANGO",
+    "locations": [
+      "Trafford Centre",
+      "Piccadilly"
+    ],
+    "category": "Fashion",
+    "careers": "https://jobs.mango.com/"
+  },
+  {
+    "name": "Market House Coffee",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Market%20House%20Coffee&l=Manchester"
+  },
+  {
+    "name": "Market Point",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Market%20Point&l=Manchester"
+  },
+  {
+    "name": "Martin Ceramics",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Martin%20Ceramics&l=Manchester"
+  },
+  {
+    "name": "Masa Art Gallery and Gifts",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Masa%20Art%20Gallery%20and%20Gifts&l=Manchester"
+  },
+  {
+    "name": "MATCHA MADE",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=MATCHA%20MADE&l=Manchester"
+  },
+  {
+    "name": "Mathnasium",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://uk.indeed.com/jobs?q=Mathnasium&l=Manchester"
+  },
+  {
+    "name": "Max Spielmann",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://www.maxspielmann.co.uk/careers"
+  },
+  {
+    "name": "Mayfly Jewellery",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Mayfly%20Jewellery&l=Manchester"
+  },
+  {
+    "name": "Mays Jewellers",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Mays%20Jewellers&l=Manchester"
+  },
+  {
+    "name": "MC Watches",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=MC%20Watches&l=Manchester"
+  },
+  {
+    "name": "ME+EM",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=ME%2BEM&l=Manchester"
+  },
+  {
+    "name": "Menkind",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Menkind&l=Manchester"
+  },
+  {
+    "name": "Metro Bank",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.metrobankonline.co.uk/about-us/careers/"
+  },
+  {
+    "name": "Mhariam",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Mhariam&l=Manchester"
+  },
+  {
+    "name": "Michael Kors",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Accessories",
+    "careers": "https://www.capriholdings.com/careers/"
+  },
+  {
+    "name": "Michael's Coffee House",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Michael's%20Coffee%20House&l=Manchester"
+  },
+  {
+    "name": "Micro Bar",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Micro%20Bar&l=Manchester"
+  },
+  {
+    "name": "Miller & Carter",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Miller%20%26%20Carter&l=Manchester"
+  },
+  {
+    "name": "Millie's Cookies",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Millie's%20Cookies&l=Manchester"
+  },
+  {
+    "name": "MINISO",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=MINISO&l=Manchester"
+  },
+  {
+    "name": "Mint Velvet",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Mint%20Velvet&l=Manchester"
+  },
+  {
+    "name": "Mobile Phone Solution",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://uk.indeed.com/jobs?q=Mobile%20Phone%20Solution&l=Manchester"
+  },
+  {
+    "name": "Mobilise",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://uk.indeed.com/jobs?q=Mobilise&l=Manchester"
+  },
+  {
+    "name": "Molton Brown",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.moltonbrown.co.uk/careers"
+  },
+  {
+    "name": "Money Exchange",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Travel",
+    "careers": "https://uk.indeed.com/jobs?q=Money%20Exchange&l=Manchester"
+  },
+  {
+    "name": "Monica Vinader",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Monica%20Vinader&l=Manchester"
+  },
+  {
+    "name": "Mooboo",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Mooboo&l=Manchester"
+  },
+  {
+    "name": "Morrisons",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.morrisons.jobs/"
+  },
+  {
+    "name": "Moss",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Moss&l=Manchester"
+  },
+  {
+    "name": "Mr Thomas's Chop House",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Mr%20Thomas's%20Chop%20House&l=Manchester"
+  },
+  {
+    "name": "Mulberry",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Accessories",
+    "careers": "https://www.mulberry.com/gb/careers"
+  },
+  {
+    "name": "Mumma's Fried Chicken",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Mumma's%20Fried%20Chicken&l=Manchester"
+  },
+  {
+    "name": "My Cookie Dough",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=My%20Cookie%20Dough&l=Manchester"
+  },
+  {
+    "name": "Nahm Prik",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Nahm%20Prik&l=Manchester"
+  },
+  {
+    "name": "Namco Funscape",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/jobs?q=Namco%20Funscape&l=Manchester"
+  },
+  {
+    "name": "Napoli Street Pizza",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Napoli%20Street%20Pizza&l=Manchester"
+  },
+  {
+    "name": "Nashville Hot House",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Nashville%20Hot%20House&l=Manchester"
+  },
+  {
+    "name": "Nationwide",
+    "locations": [
+      "Market Street",
+      "Piccadilly",
+      "Altrincham"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.nationwide-jobs.co.uk/"
+  },
+  {
+    "name": "Neal's Yard Remedies",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Neal's%20Yard%20Remedies&l=Manchester"
+  },
+  {
+    "name": "Nell's Pizza",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Nell's%20Pizza&l=Manchester"
+  },
+  {
+    "name": "Nespresso",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.nestle.com/jobs"
+  },
+  {
+    "name": "New Balance",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Footwear",
+    "careers": "https://jobs.newbalance.com/"
+  },
+  {
+    "name": "New Market Dairy",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=New%20Market%20Dairy&l=Manchester"
+  },
+  {
+    "name": "Newspoint",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Newspoint&l=Manchester"
+  },
+  {
+    "name": "Next Home",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Homeware",
+    "careers": "https://careers.next.co.uk/"
+  },
+  {
+    "name": "Nichi",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Nichi&l=Manchester"
+  },
+  {
+    "name": "Night & Day Cafe",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/jobs?q=Night%20%26%20Day%20Cafe&l=Manchester"
+  },
+  {
+    "name": "Noria",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Noria&l=Manchester"
+  },
+  {
+    "name": "Nostro",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Nostro&l=Manchester"
+  },
+  {
+    "name": "Nutz UK",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Nutz%20UK&l=Manchester"
+  },
+  {
+    "name": "O2 (Virgin Media O2)",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://www.virginmediao2careers.co.uk/"
+  },
+  {
+    "name": "Occasions",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Occasions&l=Manchester"
+  },
+  {
+    "name": "Oh You Pretty Things",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Accessories",
+    "careers": "https://uk.indeed.com/jobs?q=Oh%20You%20Pretty%20Things&l=Manchester"
+  },
+  {
+    "name": "Oi Polloi",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Oi%20Polloi&l=Manchester"
+  },
+  {
+    "name": "Oklahoma",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Oklahoma&l=Manchester"
+  },
+  {
+    "name": "OMEGA",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=OMEGA&l=Manchester"
+  },
+  {
+    "name": "One Small Step",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Footwear",
+    "careers": "https://uk.indeed.com/jobs?q=One%20Small%20Step&l=Manchester"
+  },
+  {
+    "name": "Onje",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Onje&l=Manchester"
+  },
+  {
+    "name": "Opatra London",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Opatra%20London&l=Manchester"
+  },
+  {
+    "name": "Oppio Lounge",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Oppio%20Lounge&l=Manchester"
+  },
+  {
+    "name": "Optical Express",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Opticians",
+    "careers": "https://www.opticalexpress.co.uk/careers"
+  },
+  {
+    "name": "Origins",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Origins&l=Manchester"
+  },
+  {
+    "name": "Otters in a Pot",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Otters%20in%20a%20Pot&l=Manchester"
+  },
+  {
+    "name": "Owen's Kitchen",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Owen's%20Kitchen&l=Manchester"
+  },
+  {
+    "name": "Palms Cafe",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Palms%20Cafe&l=Manchester"
+  },
+  {
+    "name": "Pancake House",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pancake%20House&l=Manchester"
+  },
+  {
+    "name": "Pancho's Burritos",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pancho's%20Burritos&l=Manchester"
+  },
+  {
+    "name": "Paperchase",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Paperchase&l=Manchester"
+  },
+  {
+    "name": "Paradise Island",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Leisure",
+    "careers": "https://uk.indeed.com/jobs?q=Paradise%20Island&l=Manchester"
+  },
+  {
+    "name": "Parasol",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Accessories",
+    "careers": "https://uk.indeed.com/jobs?q=Parasol&l=Manchester"
+  },
+  {
+    "name": "Pasta Evangelists",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pasta%20Evangelists&l=Manchester"
+  },
+  {
+    "name": "Pasta Factory",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pasta%20Factory&l=Manchester"
+  },
+  {
+    "name": "Pasty Shop",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pasty%20Shop&l=Manchester"
+  },
+  {
+    "name": "Patagonia",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.patagonia.com/careers/"
+  },
+  {
+    "name": "Paul's Hair & Beauty World",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Paul's%20Hair%20%26%20Beauty%20World&l=Manchester"
+  },
+  {
+    "name": "Pearl T",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pearl%20T&l=Manchester"
+  },
+  {
+    "name": "Perfume Shop",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.theperfumeshop.com/careers"
+  },
+  {
+    "name": "Pesto",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pesto&l=Manchester"
+  },
+  {
+    "name": "Phanthong",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Phanthong&l=Manchester"
+  },
+  {
+    "name": "Pho",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pho&l=Manchester"
+  },
+  {
+    "name": "Pho You",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pho%20You&l=Manchester"
+  },
+  {
+    "name": "Piccadilly Records",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Piccadilly%20Records&l=Manchester"
+  },
+  {
+    "name": "Pix Pizza",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pix%20Pizza&l=Manchester"
+  },
+  {
+    "name": "Pizza Hut",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://jobs.pizzahut.co.uk/"
+  },
+  {
+    "name": "PizzaExpress",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://jobs.pizzaexpress.com/"
+  },
+  {
+    "name": "Pizzeria da Michele",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pizzeria%20da%20Michele&l=Manchester"
+  },
+  {
+    "name": "Pop Boutique",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Pop%20Boutique&l=Manchester"
+  },
+  {
+    "name": "Pop Mart",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Toys",
+    "careers": "https://uk.indeed.com/jobs?q=Pop%20Mart&l=Manchester"
+  },
+  {
+    "name": "Pop Specs",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Opticians",
+    "careers": "https://uk.indeed.com/jobs?q=Pop%20Specs&l=Manchester"
+  },
+  {
+    "name": "Pork & Pickle",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pork%20%26%20Pickle&l=Manchester"
+  },
+  {
+    "name": "Porta Tapas Bar",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Porta%20Tapas%20Bar&l=Manchester"
+  },
+  {
+    "name": "Pot Kettle Black",
+    "locations": [
+      "Market Street",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pot%20Kettle%20Black&l=Manchester"
+  },
+  {
+    "name": "Pott St Bagels",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pott%20St%20Bagels&l=Manchester"
+  },
+  {
+    "name": "Pound Bakery",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Pound%20Bakery&l=Manchester"
+  },
+  {
+    "name": "Poundland",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Department Store",
+    "careers": "https://www.poundland.co.uk/careers/"
+  },
+  {
+    "name": "PRET",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.pret.co.uk/en-gb/careers"
+  },
+  {
+    "name": "Pro:Direct Sport",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Sports",
+    "careers": "https://uk.indeed.com/jobs?q=Pro%3ADirect%20Sport&l=Manchester"
+  },
+  {
+    "name": "ProCook",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Homeware",
+    "careers": "https://www.procook.co.uk/careers"
+  },
+  {
+    "name": "Pure Piercing",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://uk.indeed.com/jobs?q=Pure%20Piercing&l=Manchester"
+  },
+  {
+    "name": "Pureseoul",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Pureseoul&l=Manchester"
+  },
+  {
+    "name": "PYT",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=PYT&l=Manchester"
+  },
+  {
+    "name": "Quality Save",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Quality%20Save&l=Manchester"
+  },
+  {
+    "name": "Quiz",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.quizclothing.co.uk/careers"
+  },
+  {
+    "name": "Quiz Clothing",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Quiz%20Clothing&l=Manchester"
+  },
+  {
+    "name": "Radley London",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Accessories",
+    "careers": "https://www.radley.co.uk/careers"
+  },
+  {
+    "name": "Reeds",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Reeds&l=Manchester"
+  },
+  {
+    "name": "Regal Nails",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Regal%20Nails&l=Manchester"
+  },
+  {
+    "name": "Represent",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Represent&l=Manchester"
+  },
+  {
+    "name": "Reserve Wines",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.reservewines.co.uk/pages/careers"
+  },
+  {
+    "name": "Rhode Island Coffee",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Rhode%20Island%20Coffee&l=Manchester"
+  },
+  {
+    "name": "Rigatoni's",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Rigatoni's&l=Manchester"
+  },
+  {
+    "name": "Rolex",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Rolex&l=Manchester"
+  },
+  {
+    "name": "Rolled",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Rolled&l=Manchester"
+  },
+  {
+    "name": "Rollers",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Rollers&l=Manchester"
+  },
+  {
+    "name": "Rowntrees Café",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Rowntrees%20Caf%C3%A9&l=Manchester"
+  },
+  {
+    "name": "Royal Exchange Flowers",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Royal%20Exchange%20Flowers&l=Manchester"
+  },
+  {
+    "name": "Rubens Mezze Grill",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Rubens%20Mezze%20Grill&l=Manchester"
+  },
+  {
+    "name": "Rudy's Pizza",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://rudyspizza.co.uk/careers/"
+  },
+  {
+    "name": "Ryman",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Ryman&l=Manchester"
+  },
+  {
+    "name": "Sainsbury's Local",
+    "locations": [
+      "Arndale",
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.sainsburys.jobs/"
+  },
+  {
+    "name": "Salvi's",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Salvi's&l=Manchester"
+  },
+  {
+    "name": "Sam Joseph Chocolates",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Sam%20Joseph%20Chocolates&l=Manchester"
+  },
+  {
+    "name": "Samsung",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://www.samsung.com/uk/about-us/careers/"
+  },
+  {
+    "name": "Sand Hairdressing",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Sand%20Hairdressing&l=Manchester"
+  },
+  {
+    "name": "Sandinista",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Sandinista&l=Manchester"
+  },
+  {
+    "name": "Santander",
+    "locations": [
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.santandercareers.com/"
+  },
+  {
+    "name": "Schuh Kids",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Footwear",
+    "careers": "https://www.schuh.co.uk/careers/"
+  },
+  {
+    "name": "Scotts",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.jobs.jdplc.com/"
+  },
+  {
+    "name": "Scribbler",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Scribbler&l=Manchester"
+  },
+  {
+    "name": "Scrivens",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Opticians",
+    "careers": "https://www.scrivens.com/careers"
+  },
+  {
+    "name": "SEA LIFE",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Leisure",
+    "careers": "https://careers.merlinentertainments.biz/"
+  },
+  {
+    "name": "Sean Rayment Boutique",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Sean%20Rayment%20Boutique&l=Manchester"
+  },
+  {
+    "name": "Selfridges & Co",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Department Store",
+    "careers": "https://www.selfridges.com/GB/en/features/info/careers/"
+  },
+  {
+    "name": "Shake Shack",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.shakeshack.com/careers"
+  },
+  {
+    "name": "Shoe Doctor",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://uk.indeed.com/jobs?q=Shoe%20Doctor&l=Manchester"
+  },
+  {
+    "name": "Shoe Zone",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Footwear",
+    "careers": "https://www.shoezone.com/Careers"
+  },
+  {
+    "name": "Shoezone",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Footwear",
+    "careers": "https://uk.indeed.com/jobs?q=Shoezone&l=Manchester"
+  },
+  {
+    "name": "Shoryu Ramen",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Shoryu%20Ramen&l=Manchester"
+  },
+  {
+    "name": "Simply Be",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://careers.nbrown.co.uk/"
+  },
+  {
+    "name": "Simply News",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Simply%20News&l=Manchester"
+  },
+  {
+    "name": "Six by Nico",
+    "locations": [
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.sixbynico.co.uk/careers"
+  },
+  {
+    "name": "Size?",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Footwear",
+    "careers": "https://www.jobs.jdplc.com/"
+  },
+  {
+    "name": "Skechers",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Footwear",
+    "careers": "https://www.skechers.com/careers/"
+  },
+  {
+    "name": "Skipton Building Society",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.skiptonbuildingsocietycareers.co.uk/"
+  },
+  {
+    "name": "Sky",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://careers.sky.com/"
+  },
+  {
+    "name": "Slim Chickens",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Slim%20Chickens&l=Manchester"
+  },
+  {
+    "name": "Smiggle",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://www.smiggle.co.uk/careers"
+  },
+  {
+    "name": "Smile Stylist",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://uk.indeed.com/jobs?q=Smile%20Stylist&l=Manchester"
+  },
+  {
+    "name": "Smokeshed",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Smokeshed&l=Manchester"
+  },
+  {
+    "name": "Smoothielicious",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Smoothielicious&l=Manchester"
+  },
+  {
+    "name": "Snowflake Gelato",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Snowflake%20Gelato&l=Manchester"
+  },
+  {
+    "name": "So Marrakesh",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=So%20Marrakesh&l=Manchester"
+  },
+  {
+    "name": "SockShop",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Accessories",
+    "careers": "https://uk.indeed.com/jobs?q=SockShop&l=Manchester"
+  },
+  {
+    "name": "Soup Kitchen",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Soup%20Kitchen&l=Manchester"
+  },
+  {
+    "name": "SPACE NK",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.spacenk.com/uk/careers.html"
+  },
+  {
+    "name": "Specsavers",
+    "locations": [
+      "Arndale",
+      "Altrincham"
+    ],
+    "category": "Opticians",
+    "careers": "https://www.specsavers.co.uk/careers"
+  },
+  {
+    "name": "Spice 2",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Spice%202&l=Manchester"
+  },
+  {
+    "name": "Sporting Chance",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Sporting%20Chance&l=Manchester"
+  },
+  {
+    "name": "Spud-U-Like",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Spud-U-Like&l=Manchester"
+  },
+  {
+    "name": "SS Beauty",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=SS%20Beauty&l=Manchester"
+  },
+  {
+    "name": "Stars & Legends",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=Stars%20%26%20Legends&l=Manchester"
+  },
+  {
+    "name": "Strawberry Gardens",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Strawberry%20Gardens&l=Manchester"
+  },
+  {
+    "name": "Sugo Pasta Kitchen",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Sugo%20Pasta%20Kitchen&l=Manchester"
+  },
+  {
+    "name": "Sunglass Hut",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Accessories",
+    "careers": "https://uk.indeed.com/jobs?q=Sunglass%20Hut&l=Manchester"
+  },
+  {
+    "name": "Sunnamusk",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Sunnamusk&l=Manchester"
+  },
+  {
+    "name": "Supercuts",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://uk.indeed.com/jobs?q=Supercuts&l=Manchester"
+  },
+  {
+    "name": "Swatch",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Piccadilly"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.swatch.com/en-gb/careers.html"
+  },
+  {
+    "name": "TAG Heuer Boutique",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=TAG%20Heuer%20Boutique&l=Manchester"
+  },
+  {
+    "name": "Tailors of Altrincham",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://uk.indeed.com/jobs?q=Tailors%20of%20Altrincham&l=Manchester"
+  },
+  {
+    "name": "Takk",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Takk&l=Manchester"
+  },
+  {
+    "name": "Takk Coffee",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Takk%20Coffee&l=Manchester"
+  },
+  {
+    "name": "Tampopo",
+    "locations": [
+      "Trafford Centre",
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Tampopo&l=Manchester"
+  },
+  {
+    "name": "Tartelette by Wendy",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Tartelette%20by%20Wendy&l=Manchester"
+  },
+  {
+    "name": "Temple Street Claypot Rice",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Temple%20Street%20Claypot%20Rice&l=Manchester"
+  },
+  {
+    "name": "Tender Cow",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Tender%20Cow&l=Manchester"
+  },
+  {
+    "name": "Terracotta",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Terracotta&l=Manchester"
+  },
+  {
+    "name": "Tesco Express",
+    "locations": [
+      "Arndale",
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.tesco-careers.com/"
+  },
+  {
+    "name": "TGI Fridays",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.tgifridays.co.uk/careers"
+  },
+  {
+    "name": "Thaikhun Street",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Thaikhun%20Street&l=Manchester"
+  },
+  {
+    "name": "The Alchemist",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.thealchemist.uk.com/careers"
+  },
+  {
+    "name": "The Black Iron Grill",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Black%20Iron%20Grill&l=Manchester"
+  },
+  {
+    "name": "The Body Shop",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.thebodyshop.com/en-gb/careers"
+  },
+  {
+    "name": "The Bookshop by WHSmith",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://whsmithcareers.co.uk/"
+  },
+  {
+    "name": "The Bridgewater Exchange",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Bridgewater%20Exchange&l=Manchester"
+  },
+  {
+    "name": "The Butchers Chop Shop",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Butchers%20Chop%20Shop&l=Manchester"
+  },
+  {
+    "name": "The Con Club",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Con%20Club&l=Manchester"
+  },
+  {
+    "name": "The Entertainer",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Toys",
+    "careers": "https://www.thetoyshop.com/careers"
+  },
+  {
+    "name": "The Evergreen Bar & Brasserie",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Evergreen%20Bar%20%26%20Brasserie&l=Manchester"
+  },
+  {
+    "name": "The House",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20House&l=Manchester"
+  },
+  {
+    "name": "The Irish Deli",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Irish%20Deli&l=Manchester"
+  },
+  {
+    "name": "The Manchester Social",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Manchester%20Social&l=Manchester"
+  },
+  {
+    "name": "The Mill",
+    "locations": [
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Mill&l=Manchester"
+  },
+  {
+    "name": "The Music Store",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Music%20Store&l=Manchester"
+  },
+  {
+    "name": "The Nook",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Nook&l=Manchester"
+  },
+  {
+    "name": "The Plant Blend",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Plant%20Blend&l=Manchester"
+  },
+  {
+    "name": "The Real Greek",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Real%20Greek&l=Manchester"
+  },
+  {
+    "name": "The Rex",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Rex&l=Manchester"
+  },
+  {
+    "name": "The Shake Lab",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Shake%20Lab&l=Manchester"
+  },
+  {
+    "name": "The Swiss Watch Shop",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Swiss%20Watch%20Shop&l=Manchester"
+  },
+  {
+    "name": "The Tatton Pub",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Tatton%20Pub&l=Manchester"
+  },
+  {
+    "name": "The Watch Lab",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Watch%20Lab&l=Manchester"
+  },
+  {
+    "name": "The Whiskey Jar",
+    "locations": [
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Whiskey%20Jar&l=Manchester"
+  },
+  {
+    "name": "The Whisky Shop",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=The%20Whisky%20Shop&l=Manchester"
+  },
+  {
+    "name": "The White Company",
+    "locations": [
+      "Trafford Centre",
+      "Market Street"
+    ],
+    "category": "Homeware",
+    "careers": "https://www.thewhitecompany.com/uk/careers"
+  },
+  {
+    "name": "The Works",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://www.theworks.co.uk/careers"
+  },
+  {
+    "name": "Thérapie Clinic",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://www.therapieclinic.com/careers/"
+  },
+  {
+    "name": "Thomas Sabo",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.thomassabo.com/en/careers/"
+  },
+  {
+    "name": "Thorntons",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Thorntons&l=Manchester"
+  },
+  {
+    "name": "Timberland",
+    "locations": [
+      "Trafford Centre",
+      "Market Street"
+    ],
+    "category": "Footwear",
+    "careers": "https://www.vfc.com/careers"
+  },
+  {
+    "name": "Timepiece",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://uk.indeed.com/jobs?q=Timepiece&l=Manchester"
+  },
+  {
+    "name": "Timpson",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.timpson-group.co.uk/careers/"
+  },
+  {
+    "name": "Toast",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Toast&l=Manchester"
+  },
+  {
+    "name": "Tommy Hilfiger",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.pvh.com/careers"
+  },
+  {
+    "name": "TONI&GUY",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Beauty & Health",
+    "careers": "https://toniandguy.com/careers/"
+  },
+  {
+    "name": "Tortilla",
+    "locations": [
+      "Arndale",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.tortilla.co.uk/careers"
+  },
+  {
+    "name": "Toys 'r' us",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Toys",
+    "careers": "https://uk.indeed.com/jobs?q=Toys%20'r'%20us&l=Manchester"
+  },
+  {
+    "name": "Trailberg",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Sports",
+    "careers": "https://uk.indeed.com/jobs?q=Trailberg&l=Manchester"
+  },
+  {
+    "name": "Trattoria Milano",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Trattoria%20Milano&l=Manchester"
+  },
+  {
+    "name": "Travelex",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.travelex.com/careers"
+  },
+  {
+    "name": "Trendy Girl",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Trendy%20Girl&l=Manchester"
+  },
+  {
+    "name": "Tru Street",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Tru%20Street&l=Manchester"
+  },
+  {
+    "name": "TSB",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Banking & Services",
+    "careers": "https://www.tsbjobs.co.uk/"
+  },
+  {
+    "name": "TUI",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Travel",
+    "careers": "https://careers.tui.com/"
+  },
+  {
+    "name": "Unagi Street Food & Sushi",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Unagi%20Street%20Food%20%26%20Sushi&l=Manchester"
+  },
+  {
+    "name": "Upper Crust",
+    "locations": [
+      "Piccadilly",
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.foodtravelexperts.com/uk/careers/"
+  },
+  {
+    "name": "Utility",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Utility&l=Manchester"
+  },
+  {
+    "name": "Vans",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Footwear",
+    "careers": "https://www.vfc.com/careers"
+  },
+  {
+    "name": "Vapiano",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Vapiano&l=Manchester"
+  },
+  {
+    "name": "Viet Shack",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Viet%20Shack&l=Manchester"
+  },
+  {
+    "name": "Virgin Holidays",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Travel",
+    "careers": "https://uk.indeed.com/jobs?q=Virgin%20Holidays&l=Manchester"
+  },
+  {
+    "name": "Vision Express",
+    "locations": [
+      "Trafford Centre",
+      "Arndale"
+    ],
+    "category": "Opticians",
+    "careers": "https://www.visionexpress.com/careers"
+  },
+  {
+    "name": "Vispring",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Vispring&l=Manchester"
+  },
+  {
+    "name": "Vivienne Westwood",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Vivienne%20Westwood&l=Manchester"
+  },
+  {
+    "name": "Vuse",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Tech & Mobile",
+    "careers": "https://uk.indeed.com/jobs?q=Vuse&l=Manchester"
+  },
+  {
+    "name": "W & E Greene Luggage and Bags",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Accessories",
+    "careers": "https://uk.indeed.com/jobs?q=W%20%26%20E%20Greene%20Luggage%20and%20Bags&l=Manchester"
+  },
+  {
+    "name": "Wahaca",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Wahaca&l=Manchester"
+  },
+  {
+    "name": "Warren James",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Jewellery & Watches",
+    "careers": "https://www.warrenjames.co.uk/careers"
+  },
+  {
+    "name": "Warrens Fruit and Veg",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Warrens%20Fruit%20and%20Veg&l=Manchester"
+  },
+  {
+    "name": "Wetherspoon",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.jdwetherspoon.com/careers"
+  },
+  {
+    "name": "WH Harding",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=WH%20Harding&l=Manchester"
+  },
+  {
+    "name": "Whales Fishmongers",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Whales%20Fishmongers&l=Manchester"
+  },
+  {
+    "name": "Whistles",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Whistles&l=Manchester"
+  },
+  {
+    "name": "Whites Fruit and Veg",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Whites%20Fruit%20and%20Veg&l=Manchester"
+  },
+  {
+    "name": "Whittard",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Whittard&l=Manchester"
+  },
+  {
+    "name": "Whittard of Chelsea",
+    "locations": [
+      "Market Street",
+      "Piccadilly"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Whittard%20of%20Chelsea&l=Manchester"
+  },
+  {
+    "name": "WHSmith",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street",
+      "Piccadilly",
+      "Altrincham",
+      "Manchester Airport"
+    ],
+    "category": "Books & Gifts",
+    "careers": "https://www.whsmithcareers.co.uk/"
+  },
+  {
+    "name": "Wilko",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Wilko&l=Manchester"
+  },
+  {
+    "name": "Wing's",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Wing's&l=Manchester"
+  },
+  {
+    "name": "WINGSTOP",
+    "locations": [
+      "Trafford Centre"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.wingstop.co.uk/careers"
+  },
+  {
+    "name": "World Duty Free",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Department Store",
+    "careers": "https://uk.indeed.com/jobs?q=World%20Duty%20Free&l=Manchester"
+  },
+  {
+    "name": "WowYauChow",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=WowYauChow&l=Manchester"
+  },
+  {
+    "name": "Wrapchic",
+    "locations": [
+      "Manchester Airport"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Wrapchic&l=Manchester"
+  },
+  {
+    "name": "Yankee Candle",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Homeware",
+    "careers": "https://uk.indeed.com/jobs?q=Yankee%20Candle&l=Manchester"
+  },
+  {
+    "name": "Yards Store",
+    "locations": [
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://uk.indeed.com/jobs?q=Yards%20Store&l=Manchester"
+  },
+  {
+    "name": "Yes Burger Alty",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Yes%20Burger%20Alty&l=Manchester"
+  },
+  {
+    "name": "Yo! Sushi",
+    "locations": [
+      "Trafford Centre",
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://www.yosushi.com/careers"
+  },
+  {
+    "name": "Yours Clothing",
+    "locations": [
+      "Arndale",
+      "Market Street"
+    ],
+    "category": "Fashion",
+    "careers": "https://www.yoursclothing.co.uk/careers"
+  },
+  {
+    "name": "Yum Cha",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Yum%20Cha&l=Manchester"
+  },
+  {
+    "name": "Zero Gravity Float Spa",
+    "locations": [
+      "Altrincham"
+    ],
+    "category": "Health & Fitness",
+    "careers": "https://uk.indeed.com/jobs?q=Zero%20Gravity%20Float%20Spa&l=Manchester"
+  },
+  {
+    "name": "Zorbas",
+    "locations": [
+      "Arndale"
+    ],
+    "category": "Food & Drink",
+    "careers": "https://uk.indeed.com/jobs?q=Zorbas&l=Manchester"
+  }
 ]
