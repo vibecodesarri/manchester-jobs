@@ -249,7 +249,7 @@
 </head>
 <body>
 <header class="topnav"><div class="topnav-inner">
-  <div class="logo"><div class="logomark">MJ</div>Manchester Jobs <span id="subtitle">Loading…</span></div>
+  <div class="logo"><div class="logomark">MJ</div>Manchester Jobs<span id="subtitle" style="display:none"></span></div>
 </div></header>
 <div class="app">
   <aside class="leftcol">
@@ -309,7 +309,7 @@
     </div>
 
     <div class="count" id="boardCount">Hit <b>Search</b> to pull live entry-level jobs you're likely to get across Greater Manchester.</div>
-    <div class="layout">
+    <div class="layout" id="boardLayout" style="display:none">
       <div class="joblist" id="joblist"></div>
       <div class="jobdetail" id="jobdetail"><div class="dempty">Select a job to see details.</div></div>
     </div>
@@ -417,7 +417,7 @@
       <select id="allSortSel"><option value="new">Newest first</option><option value="sal">Highest pay</option><option value="az">Title A–Z</option></select>
     </div>
     <div class="count" id="allCount">Hit <b>Search</b> to load everything.</div>
-    <div class="layout">
+    <div class="layout" id="allLayout" style="display:none">
       <div class="joblist" id="allList"></div>
       <div class="jobdetail" id="allDetail"><div class="dempty">Select a job to see details.</div></div>
     </div>
@@ -640,7 +640,9 @@ function selectJob(mode,id,keepScroll){
 }
 function paintList(list,mode){
   const listId=mode==="jobs"?"joblist":"allList", detId=mode==="jobs"?"jobdetail":"allDetail",
-        countId=mode==="jobs"?"boardCount":"allCount", emptyId=mode==="jobs"?"boardEmpty":"allEmpty";
+        countId=mode==="jobs"?"boardCount":"allCount", emptyId=mode==="jobs"?"boardEmpty":"allEmpty",
+        layoutId=mode==="jobs"?"boardLayout":"allLayout";
+  $(layoutId).style.display=JOBS.length?"grid":"none";
   if(JOBS.length===0){$(listId).innerHTML="";return;}
   const shown=list.slice(0,MAX_RENDER);
   $(countId).innerHTML=`Showing <b>${shown.length}</b>${list.length>shown.length?` of ${list.length}`:""} ${mode==="jobs"?"matching":"of "+JOBS.length} jobs`+(list.length>MAX_RENDER?` · refine to see more`:"");
