@@ -29,7 +29,7 @@
   .topnav{background:#fff;border-bottom:1px solid #e3e1dc;position:sticky;top:0;z-index:40;box-shadow:0 1px 2px rgba(0,0,0,.04)}
   .topnav-inner{max-width:1128px;margin:0 auto;padding:0 16px;height:52px;display:flex;align-items:center;gap:10px}
   .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px;color:#1d2226}
-  .logomark{width:30px;height:30px;border-radius:7px;background:#0a66c2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;letter-spacing:.5px}
+  .logomark{width:32px;height:32px;display:block;flex-shrink:0}
   .logo span{color:#62696f;font-weight:400;font-size:13px}
   .app{max-width:1128px;margin:0 auto;display:grid;grid-template-columns:300px 1fr;gap:24px;padding:24px 16px 64px;align-items:start}
   .leftcol{display:flex;flex-direction:column;gap:12px;position:sticky;top:68px}
@@ -187,7 +187,10 @@
   .clform label{font-size:11.5px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.4px;margin-bottom:-5px}
   .clform input,.clform select,.clform textarea{width:100%;font-family:inherit;font-size:13.5px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;background:var(--card);color:var(--ink)}
   .clform textarea{resize:vertical;min-height:74px;line-height:1.5}
-  .clform .row{display:flex;gap:10px}.clform .row>*{flex:1}
+  .clform .row{display:flex;gap:10px}.clform .row>*{flex:1;min-width:0}
+  .cvgrouphd{font-size:11px;font-weight:800;color:#0a66c2;text-transform:uppercase;letter-spacing:.5px;margin:12px 0 -2px;padding-top:10px;border-top:1px solid var(--line2)}
+  .cvgrouphd.first{margin-top:0;padding-top:0;border-top:0}
+  .clform .opt{color:var(--faint);font-weight:400;text-transform:none;letter-spacing:0}
   .clgen{margin-top:4px}
   .clpreviewwrap{padding:18px 20px;min-height:300px}
   .clpreview{white-space:pre-wrap;font-size:13.5px;line-height:1.7;color:#2a3744;border:1px solid var(--line);border-radius:9px;padding:18px 20px;min-height:260px;background:#fcfcfb;font-family:Georgia,'Times New Roman',serif}
@@ -249,27 +252,37 @@
 </head>
 <body>
 <header class="topnav"><div class="topnav-inner">
-  <div class="logo"><div class="logomark">MJ</div>Manchester Jobs<span id="subtitle" style="display:none"></span></div>
+  <div class="logo"><svg class="logomark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Manchester Jobs logo">
+    <rect width="40" height="40" rx="9" fill="#0b3b7a"/>
+    <ellipse cx="13.5" cy="14.5" rx="6.6" ry="4" fill="#fff" opacity=".92" transform="rotate(-22 13.5 14.5)"/>
+    <ellipse cx="26.5" cy="14.5" rx="6.6" ry="4" fill="#fff" opacity=".92" transform="rotate(22 26.5 14.5)"/>
+    <defs><clipPath id="mjbod"><ellipse cx="20" cy="24" rx="7" ry="9"/></clipPath></defs>
+    <ellipse cx="20" cy="24" rx="7" ry="9" fill="#f7c948"/>
+    <g clip-path="url(#mjbod)" fill="#0b3b7a"><rect x="12" y="18.6" width="16" height="2.7"/><rect x="12" y="23.6" width="16" height="2.7"/><rect x="12" y="28.6" width="16" height="2.5"/></g>
+    <path d="M17.5 13.2C16 10 14 9.2 12.6 9.2" stroke="#f7c948" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M22.5 13.2C24 10 26 9.2 27.4 9.2" stroke="#f7c948" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="12.4" cy="9" r="1.5" fill="#f7c948"/><circle cx="27.6" cy="9" r="1.5" fill="#f7c948"/>
+  </svg>Manchester Jobs<span id="subtitle" style="display:none"></span></div>
 </div></header>
 <div class="app">
   <aside class="leftcol">
     <div class="card profilecard"><div class="pcbanner"></div><div class="pcbody" id="authArea"></div></div>
     <div class="card navcard"><nav class="tabs">
-      <button class="tab active" data-tab="board">Job Search</button>
+      <button class="tab active" data-tab="directory">Store Directory</button>
+      <button class="tab" data-tab="board">Job Search</button>
       <button class="tab" data-tab="apps">Job tracker</button>
       <button class="tab" data-tab="cv">CV Maker</button>
       <button class="tab" data-tab="cover">Cover Letter</button>
       <button class="tab" data-tab="assistant">Assistant</button>
       <button class="tab" data-tab="map">Map</button>
       <button class="tab" data-tab="all">All Jobs</button>
-      <button class="tab" data-tab="directory">Store Directory</button>
     </nav></div>
     <div class="footlinks"><b>Manchester Jobs</b> · Live entry-level roles across Greater Manchester. Built to help you get hired.</div>
   </aside>
   <main class="main"><div class="wrap">
 
   <!-- TAB 1: STORE DIRECTORY -->
-  <section id="tab-directory" class="hidden">
+  <section id="tab-directory">
     <div class="scanrow panel">
       <button class="btn" id="scanBtn">Scan careers sites</button>
       <div class="sub">Check which of the <b id="brandcount"></b> brands are hiring and what <b>entry-level roles</b> they advertise — apply to the store directly.</div>
@@ -289,7 +302,7 @@
   </section>
 
   <!-- TAB 2: JOB SEARCH (relevant) -->
-  <section id="tab-board">
+  <section id="tab-board" class="hidden">
     <div style="margin-bottom:14px"><h1 class="sechead">Jobs in Greater Manchester</h1><p class="subhead">Live entry-level roles for you — filter by area and category, then save the ones you like.</p></div>
     <div class="searchrow panel">
       <button class="btn" id="boardBtn">Search Manchester jobs</button>
@@ -371,19 +384,40 @@
   <!-- TAB: CV MAKER -->
   <section id="tab-cv" class="hidden">
     <div class="clwrap">
-      <div class="clform panel">
-        <div><label>Your name</label><input id="cvName" placeholder="Sarri Munem" /></div>
+      <form class="clform panel" id="cvForm" autocomplete="on" onsubmit="return false">
+        <div class="cvgrouphd first">Personal details</div>
+        <div><label>Full name</label><input id="cvName" name="name" autocomplete="name" placeholder="Sarri Munem" /></div>
         <div class="row">
-          <div><label>Email</label><input id="cvEmail" placeholder="you@email.com" /></div>
-          <div><label>Phone</label><input id="cvPhone" placeholder="07…" /></div>
+          <div><label>Email</label><input id="cvEmail" name="email" type="email" autocomplete="email" placeholder="you@email.com" /></div>
+          <div><label>Phone</label><input id="cvPhone" name="tel" type="tel" autocomplete="tel" placeholder="07…" /></div>
         </div>
-        <div><label>Location</label><input id="cvLocation" placeholder="Manchester" /></div>
+        <div><label>Address</label><input id="cvAddress" name="street-address" autocomplete="street-address" placeholder="12 Example Street" /></div>
+        <div class="row">
+          <div><label>Town / City</label><input id="cvLocation" name="city" autocomplete="address-level2" placeholder="Manchester" /></div>
+          <div><label>Postcode</label><input id="cvPostcode" name="postcode" autocomplete="postal-code" placeholder="M1 1AA" /></div>
+        </div>
+        <div class="row">
+          <div><label>Date of birth <span class="opt">(optional)</span></label><input id="cvDob" type="date" autocomplete="bday" /></div>
+          <div><label>Driving licence</label><select id="cvLicence"><option value="">—</option><option>None</option><option>Provisional</option><option>Full UK</option></select></div>
+        </div>
+        <div class="row">
+          <div><label>Right to work in UK</label><select id="cvRtw"><option value="">—</option><option>Yes</option><option>Requires sponsorship</option></select></div>
+          <div><label>LinkedIn / portfolio <span class="opt">(optional)</span></label><input id="cvLink" name="url" autocomplete="url" placeholder="linkedin.com/in/…" /></div>
+        </div>
+
+        <div class="cvgrouphd">Your experience</div>
         <div><label>Target role(s)</label><input id="cvRole" placeholder="Sales Assistant, Customer Service" /></div>
-        <div><label>Experience (jobs, work experience, volunteering — anything)</label><textarea id="cvExp" placeholder="e.g. Helped at family shop on weekends serving customers and handling cash; 2 weeks work experience at a cafe…"></textarea></div>
-        <div><label>Education</label><textarea id="cvEdu" placeholder="e.g. GCSEs including Maths and English; currently at college studying…"></textarea></div>
-        <div><label>Skills &amp; strengths</label><textarea id="cvSkills" placeholder="e.g. Friendly, reliable, good with people, quick learner, basic IT…"></textarea></div>
+        <div><label>Work history — role, employer, dates, what you did</label><textarea id="cvExp" placeholder="e.g. Sales Assistant — Tesco, Jun 2023–present. Served 100+ customers daily, handled cash & card, restocked shelves, trained 2 new starters. / 2-week work experience at a café (2022)…"></textarea></div>
+        <div><label>Education — school/college, qualifications, grades, dates</label><textarea id="cvEdu" placeholder="e.g. GCSEs (2023) incl. Maths grade 5, English grade 6, Science 5-5, at Whalley Range High School. Currently BTEC Business Level 3 at The Manchester College (2023–present)…"></textarea></div>
+        <div><label>Skills &amp; strengths</label><textarea id="cvSkills" placeholder="e.g. Customer service, teamwork, reliability, cash handling, fast learner, basic IT (Word/Excel)…"></textarea></div>
+        <div><label>Certifications / tickets <span class="opt">(optional)</span></label><textarea id="cvCerts" placeholder="e.g. Food Hygiene Level 2, Emergency First Aid, DBS checked, CSCS card, Forklift licence…"></textarea></div>
+        <div class="row">
+          <div><label>Availability</label><input id="cvAvail" placeholder="Immediate, full-time, weekends" /></div>
+          <div><label>References</label><input id="cvRefs" placeholder="Available on request" /></div>
+        </div>
         <button class="btn" id="cvGenBtn">Generate CV</button>
-      </div>
+        <button type="button" class="btn2" id="cvSaveBtn" style="margin-top:8px">Save my details</button>
+      </form>
       <div class="clpreviewwrap panel">
         <div class="clbar">
           <button class="btn2" id="cvPdfBtn" disabled>Download PDF</button>
@@ -523,6 +557,7 @@ async function init(){
   $("clOutput").addEventListener("input",()=>{const has=$("clOutput").innerText.trim().length>0;$("clPdfBtn").disabled=!has;$("clCopyBtn").disabled=!has;});
 
   $("cvGenBtn").addEventListener("click",genCV);
+  $("cvSaveBtn").addEventListener("click",saveCvDetails);
   $("cvPdfBtn").addEventListener("click",()=>cvPDF(window._cv));
   $("chatSend").addEventListener("click",sendChat);
   $("chatText").addEventListener("keydown",e=>{if(e.key==="Enter")sendChat();});
@@ -791,7 +826,10 @@ function loadProfile(){
   let p={}; try{p=JSON.parse(localStorage.getItem("mj_profile")||"{}");}catch{}
   const set=(id,v)=>{ const el=$(id); if(el&&v&&!el.value) el.value=v; };
   set("clName",p.name);set("clEmail",p.email);set("clPhone",p.phone);
-  set("cvName",p.name);set("cvEmail",p.email);set("cvPhone",p.phone);set("cvLocation",p.location);
+  set("cvName",p.name);set("cvEmail",p.email);set("cvPhone",p.phone);set("cvAddress",p.address);
+  set("cvLocation",p.location);set("cvPostcode",p.postcode);set("cvDob",p.dob);set("cvLicence",p.licence);
+  set("cvRtw",p.rtw);set("cvLink",p.link);set("cvRole",p.targetRole);set("cvExp",p.experience);
+  set("cvEdu",p.education);set("cvSkills",p.skills);set("cvCerts",p.certs);set("cvAvail",p.availability);set("cvRefs",p.references);
 }
 function saveProfile(o){
   let p={}; try{p=JSON.parse(localStorage.getItem("mj_profile")||"{}");}catch{}
@@ -800,24 +838,32 @@ function saveProfile(o){
 }
 
 /* CV Maker */
+function cvFields(){
+  const v=id=>($(id)?$(id).value:"");
+  return {name:v("cvName"),email:v("cvEmail"),phone:v("cvPhone"),address:v("cvAddress"),location:v("cvLocation"),
+    postcode:v("cvPostcode"),dob:v("cvDob"),licence:v("cvLicence"),rtw:v("cvRtw"),link:v("cvLink"),
+    targetRole:v("cvRole"),experience:v("cvExp"),education:v("cvEdu"),skills:v("cvSkills"),
+    certs:v("cvCerts"),availability:v("cvAvail"),references:v("cvRefs")};
+}
+function saveCvDetails(){ saveProfile(cvFields()); $("cvStatus").textContent="Details saved on this device — they autofill next time and feed the cover letter too."; }
 async function genCV(){
-  const btn=$("cvGenBtn");
-  const payload={name:$("cvName").value,email:$("cvEmail").value,phone:$("cvPhone").value,location:$("cvLocation").value,targetRole:$("cvRole").value,experience:$("cvExp").value,education:$("cvEdu").value,skills:$("cvSkills").value};
-  if(!payload.experience&&!payload.education&&!payload.skills){$("cvStatus").textContent="Add some experience, education or skills first.";return;}
-  saveProfile({name:payload.name,email:payload.email,phone:payload.phone,location:payload.location});
+  const btn=$("cvGenBtn"); const f=cvFields();
+  if(!f.experience&&!f.education&&!f.skills){$("cvStatus").textContent="Add some work history, education or skills first.";return;}
+  saveProfile(f);
   btn.disabled=true;btn.textContent="Generating…";$("cvStatus").innerHTML='<span class="spin"></span>Building your CV with Gemini…';
   try{
-    const res=await fetch("/api/cv",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    const res=await fetch("/api/cv",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(f)});
     const data=await res.json().catch(()=>({}));
     if(!res.ok)throw new Error(data.error||("error "+res.status));
-    window._cv={...data.cv,_contact:{email:payload.email,phone:payload.phone,location:payload.location}};
+    const addr=[f.address,f.location,f.postcode].filter(Boolean).join(", ");
+    window._cv={...data.cv,_contact:{email:f.email,phone:f.phone,location:addr||f.location,link:f.link}};
     renderCvPreview(window._cv);
     $("cvPdfBtn").disabled=false;$("cvStatus").textContent="CV ready — download the PDF, or tweak your inputs and regenerate.";
   }catch(e){$("cvStatus").textContent="Couldn't generate: "+e.message;}
   btn.disabled=false;btn.textContent="Generate CV";
 }
 function renderCvPreview(cv){
-  const contact=[cv._contact?.email,cv._contact?.phone,cv._contact?.location].filter(Boolean).map(esc).join("  ·  ");
+  const contact=[cv._contact?.email,cv._contact?.phone,cv._contact?.location,cv._contact?.link].filter(Boolean).map(esc).join("  ·  ");
   let h=`<div class="cvname">${esc(cv.name||"")}</div>`;
   if(cv.headline)h+=`<div class="cvhead">${esc(cv.headline)}</div>`;
   if(contact)h+=`<div class="cvcontact">${contact}</div>`;
@@ -834,8 +880,8 @@ function cvPDF(cv){
   const doc=new jsPDF({unit:"mm",format:"a4"});const L=18,R=192,W=R-L;let y=20;
   doc.setFont("helvetica","bold");doc.setFontSize(20);doc.setTextColor(15,41,66);doc.text(cv.name||"",L,y);y+=7;
   if(cv.headline){doc.setFont("helvetica","normal");doc.setFontSize(11);doc.setTextColor(12,61,122);for(const ln of doc.splitTextToSize(cv.headline,W)){doc.text(ln,L,y);y+=5;}}
-  const contact=[cv._contact?.email,cv._contact?.phone,cv._contact?.location].filter(Boolean).join("   |   ");
-  if(contact){doc.setFontSize(9.5);doc.setTextColor(90);doc.text(contact,L,y);y+=4;}
+  const contact=[cv._contact?.email,cv._contact?.phone,cv._contact?.location,cv._contact?.link].filter(Boolean).join("   |   ");
+  if(contact){doc.setFontSize(9.5);doc.setTextColor(90);for(const ln of doc.splitTextToSize(contact,W)){doc.text(ln,L,y);y+=4.4;}}
   doc.setDrawColor(200);doc.line(L,y,R,y);y+=7;
   const heading=(t)=>{if(y>274){doc.addPage();y=20;}doc.setFont("helvetica","bold");doc.setFontSize(11);doc.setTextColor(15,41,66);doc.text(t.toUpperCase(),L,y);y+=1.5;doc.setDrawColor(210);doc.line(L,y,R,y);y+=5;};
   const para=(t)=>{doc.setFont("helvetica","normal");doc.setFontSize(10);doc.setTextColor(45);for(const ln of doc.splitTextToSize(t,W)){if(y>284){doc.addPage();y=20;}doc.text(ln,L,y);y+=5;}};
