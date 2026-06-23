@@ -15,6 +15,7 @@ import { readFile } from "node:fs/promises";
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -738,6 +739,83 @@ function readJsonBody(req, limit = 100000) {
   });
 }
 
+// ════════════════════════════════════════════════════════════════════════
+//  ACCOUNTS + CLOUD SYNC  (Postgres if DATABASE_URL is set; else in-memory)
+// ════════════════════════════════════════════════════════════════════════
+let pool = null;
+const mem = { users: new Map(), sessions: new Map(), apps: new Map() }; // email→user, token→userId, userId→[app]
+
+async function initDB() {
+  if (!process.env.DATABASE_URL) { console.log("  • Accounts: in-memory (set DATABASE_URL for permanent accounts)"); return; }
+  try {
+    const pgmod = await import("pg");
+    pool = new pgmod.default.Pool({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false }, max: 5 });
+    await pool.query("CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY, email TEXT UNIQUE, name TEXT, hash TEXT, created BIGINT)");
+    await pool.query("CREATE TABLE IF NOT EXISTS sessions(token TEXT PRIMARY KEY, user_id TEXT, created BIGINT)");
+    await pool.query("CREATE TABLE IF NOT EXISTS apps(id TEXT, user_id TEXT, data JSONB, updated BIGINT, PRIMARY KEY(user_id, id))");
+    console.log("  ✓ Accounts: Postgres connected (permanent)");
+  } catch (e) { pool = null; console.log("  ! Postgres failed, using in-memory accounts:", e.message); }
+}
+
+const hashPw = (pw) => { const salt = randomBytes(16).toString("hex"); return salt + ":" + scryptSync(pw, salt, 64).toString("hex"); };
+const verifyPw = (pw, stored) => {
+  const [salt, h] = String(stored || "").split(":"); if (!salt || !h) return false;
+  const h2 = scryptSync(pw, salt, 64).toString("hex");
+  return h.length === h2.length && timingSafeEqual(Buffer.from(h, "hex"), Buffer.from(h2, "hex"));
+};
+
+async function getUserByEmail(email) {
+  email = (email || "").toLowerCase().trim();
+  if (pool) return (await pool.query("SELECT * FROM users WHERE email=$1", [email])).rows[0] || null;
+  return mem.users.get(email) || null;
+}
+async function getUserById(id) {
+  if (pool) return (await pool.query("SELECT * FROM users WHERE id=$1", [id])).rows[0] || null;
+  for (const u of mem.users.values()) if (u.id === id) return u;
+  return null;
+}
+async function createUser(email, name, pw) {
+  email = (email || "").toLowerCase().trim();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw Object.assign(new Error("Please enter a valid email address."), { status: 400 });
+  if (!pw || pw.length < 6) throw Object.assign(new Error("Password must be at least 6 characters."), { status: 400 });
+  if (await getUserByEmail(email)) throw Object.assign(new Error("That email is already registered — try logging in."), { status: 409 });
+  const id = "u_" + randomBytes(8).toString("hex"), hash = hashPw(pw), created = Date.now();
+  const nm = (name || "").trim() || email.split("@")[0];
+  if (pool) await pool.query("INSERT INTO users(id,email,name,hash,created) VALUES($1,$2,$3,$4,$5)", [id, email, nm, hash, created]);
+  else mem.users.set(email, { id, email, name: nm, hash, created });
+  return { id, email, name: nm };
+}
+async function createSession(userId) {
+  const token = randomBytes(24).toString("hex");
+  if (pool) await pool.query("INSERT INTO sessions(token,user_id,created) VALUES($1,$2,$3)", [token, userId, Date.now()]);
+  else mem.sessions.set(token, userId);
+  return token;
+}
+async function userForToken(token) {
+  if (!token) return null;
+  let uid;
+  if (pool) uid = (await pool.query("SELECT user_id FROM sessions WHERE token=$1", [token])).rows[0]?.user_id;
+  else uid = mem.sessions.get(token);
+  return uid ? getUserById(uid) : null;
+}
+async function deleteSession(token) { if (pool) await pool.query("DELETE FROM sessions WHERE token=$1", [token]); else mem.sessions.delete(token); }
+
+async function getApps(userId) {
+  if (pool) return (await pool.query("SELECT data FROM apps WHERE user_id=$1 ORDER BY updated DESC", [userId])).rows.map((r) => r.data);
+  return (mem.apps.get(userId) || []).slice();
+}
+async function putApp(userId, app) {
+  app.updated = Date.now();
+  if (pool) await pool.query("INSERT INTO apps(id,user_id,data,updated) VALUES($1,$2,$3,$4) ON CONFLICT(user_id,id) DO UPDATE SET data=$3, updated=$4", [app.id, userId, app, app.updated]);
+  else { const a = mem.apps.get(userId) || []; const i = a.findIndex((x) => x.id === app.id); if (i >= 0) a[i] = app; else a.unshift(app); mem.apps.set(userId, a); }
+}
+async function deleteUserApp(userId, id) {
+  if (pool) await pool.query("DELETE FROM apps WHERE user_id=$1 AND id=$2", [userId, id]);
+  else mem.apps.set(userId, (mem.apps.get(userId) || []).filter((x) => x.id !== id));
+}
+const tokenOf = (req) => { const h = req.headers["authorization"] || ""; return h.startsWith("Bearer ") ? h.slice(7) : (req.headers["x-token"] || ""); };
+const publicUser = (u) => ({ id: u.id, email: u.email, name: u.name });
+
 // ── HTTP server ───────────────────────────────────────────────────────────
 const MIME = { ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript",
   ".css": "text/css", ".json": "application/json", ".ico": "image/x-icon", ".svg": "image/svg+xml" };
@@ -823,9 +901,61 @@ const server = createServer(async (req, res) => {
     }
     return;
   }
+  // ── Accounts ──
+  if (url.pathname === "/api/auth/signup" && req.method === "POST") {
+    try {
+      const d = await readJsonBody(req);
+      const user = await createUser(d.email, d.name, d.password);
+      const token = await createSession(user.id);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ token, user }));
+    } catch (e) { res.writeHead(e.status || 500, { "Content-Type": "application/json" }); res.end(JSON.stringify({ error: String(e.message || e) })); }
+    return;
+  }
+  if (url.pathname === "/api/auth/login" && req.method === "POST") {
+    try {
+      const d = await readJsonBody(req);
+      const u = await getUserByEmail(d.email);
+      if (!u || !verifyPw(d.password || "", u.hash)) { res.writeHead(401, { "Content-Type": "application/json" }); res.end(JSON.stringify({ error: "Wrong email or password." })); return; }
+      const token = await createSession(u.id);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ token, user: publicUser(u) }));
+    } catch (e) { res.writeHead(e.status || 500, { "Content-Type": "application/json" }); res.end(JSON.stringify({ error: String(e.message || e) })); }
+    return;
+  }
+  if (url.pathname === "/api/auth/me") {
+    const u = await userForToken(tokenOf(req));
+    res.writeHead(u ? 200 : 401, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(u ? { user: publicUser(u) } : { error: "not logged in" }));
+    return;
+  }
+  if (url.pathname === "/api/auth/logout" && req.method === "POST") {
+    await deleteSession(tokenOf(req));
+    res.writeHead(200, { "Content-Type": "application/json" }); res.end("{}");
+    return;
+  }
+  if (url.pathname === "/api/apps") {
+    const u = await userForToken(tokenOf(req));
+    if (!u) { res.writeHead(401, { "Content-Type": "application/json" }); res.end(JSON.stringify({ error: "log in first" })); return; }
+    try {
+      if (req.method === "GET") {
+        res.writeHead(200, { "Content-Type": "application/json" }); res.end(JSON.stringify({ apps: await getApps(u.id) }));
+      } else if (req.method === "POST") {
+        const d = await readJsonBody(req, 200000);
+        if (Array.isArray(d.apps)) { for (const a of d.apps) if (a && a.id) await putApp(u.id, a); }   // bulk merge (guest → account)
+        else if (d.app && d.app.id) await putApp(u.id, d.app);
+        res.writeHead(200, { "Content-Type": "application/json" }); res.end(JSON.stringify({ apps: await getApps(u.id) }));
+      } else if (req.method === "DELETE") {
+        const d = await readJsonBody(req);
+        if (d.id) await deleteUserApp(u.id, d.id);
+        res.writeHead(200, { "Content-Type": "application/json" }); res.end(JSON.stringify({ apps: await getApps(u.id) }));
+      }
+    } catch (e) { res.writeHead(e.status || 500, { "Content-Type": "application/json" }); res.end(JSON.stringify({ error: String(e.message || e) })); }
+    return;
+  }
   if (url.pathname === "/api/config") {
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ ai: !!process.env.GEMINI_API_KEY, sources: activeSources() }));
+    res.end(JSON.stringify({ ai: !!process.env.GEMINI_API_KEY, accounts: !!pool, sources: activeSources() }));
     return;
   }
 
@@ -843,6 +973,7 @@ const server = createServer(async (req, res) => {
   }
 });
 
+await initDB();
 server.listen(PORT, () => {
   console.log(`\n  🛍️  Manchester Jobs Directory running`);
   console.log(`  ➜  http://localhost:${PORT}\n`);

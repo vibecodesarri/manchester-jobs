@@ -24,18 +24,44 @@
   a{color:inherit}
   .wrap{max-width:1140px;margin:0 auto;padding:18px 16px 64px}
 
-  /* Corporate header + nav */
-  .topbar{background:linear-gradient(105deg,var(--navy),var(--navy2));border-bottom:3px solid var(--accent)}
-  .bar-inner{max-width:1140px;margin:0 auto;padding:0 16px}
-  .topbar .bar-inner{display:flex;align-items:center;gap:14px;padding-top:17px;padding-bottom:17px}
-  .brandmark{width:46px;height:46px;border-radius:9px;border:1.6px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;letter-spacing:1px;color:#fff;flex-shrink:0}
-  .brandtext h1{margin:0;font-size:21px;font-weight:700;letter-spacing:.4px;color:#fff}
-  .brandtext p{margin:2px 0 0;font-size:12.5px;color:#a9bdd2}
-  .navbar{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;box-shadow:0 1px 3px rgba(16,41,66,.05)}
-  .navbar .tabs{display:flex;gap:2px;overflow-x:auto}
-  .tab{border:0;background:none;color:var(--mut);padding:15px 18px;font-size:13.5px;font-weight:650;letter-spacing:.2px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .12s,border-color .12s}
-  .tab:hover{color:var(--ink)}
-  .tab.active{color:var(--accent-dk);border-bottom-color:var(--accent)}
+  /* App shell */
+  .app{display:flex;min-height:100vh}
+  .sidebar{width:236px;flex-shrink:0;background:linear-gradient(180deg,var(--navy),#0c2236);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+  .sbrand{display:flex;align-items:center;gap:11px;padding:18px 18px 16px}
+  .brandmark{width:42px;height:42px;border-radius:9px;border:1.5px solid rgba(255,255,255,.42);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;letter-spacing:1px;color:#fff;flex-shrink:0}
+  .sbtext{display:flex;flex-direction:column;line-height:1.2}
+  .sbtext b{color:#fff;font-size:15px;font-weight:700}
+  .sbtext span{color:#8fa6bf;font-size:10.5px;margin-top:2px}
+  .snav{display:flex;flex-direction:column;gap:2px;padding:8px 10px;flex:1;overflow-y:auto}
+  .tab{display:block;text-align:left;border:0;background:none;color:#b9c7d8;padding:10px 13px;font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px;transition:background .12s,color .12s}
+  .tab:hover{background:rgba(255,255,255,.07);color:#fff}
+  .tab.active{background:var(--accent);color:#fff}
+  .sideacct{padding:12px;border-top:1px solid rgba(255,255,255,.1)}
+  .main{flex:1;min-width:0;background:var(--bg)}
+  .main .wrap{max-width:1080px}
+  .authbtn{display:block;width:100%;text-align:center;cursor:pointer;border:0;border-radius:8px;padding:9px;font-size:13px;font-weight:700;margin-bottom:6px;background:var(--accent);color:#fff}
+  .authbtn.ghost{background:transparent;border:1px solid rgba(255,255,255,.3);color:#cdd9e6}
+  .authbtn:hover{filter:brightness(1.08)}
+  .acctname{color:#fff;font-size:13px;font-weight:700;margin-bottom:2px}
+  .acctmail{color:#8fa6bf;font-size:11px;margin-bottom:8px;word-break:break-all}
+  .modal{position:fixed;inset:0;background:rgba(15,25,40,.55);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
+  .modalcard{background:#fff;border-radius:14px;padding:26px 26px 22px;width:100%;max-width:380px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .modalcard h2{margin:0 0 4px;font-size:20px;color:var(--navy)}
+  .modalsub{margin:0 0 12px;font-size:12.5px;color:var(--mut);line-height:1.5}
+  .modalcard label{display:block;font-size:11px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.4px;margin:10px 0 4px}
+  .modalcard input{width:100%}
+  .modalx{position:absolute;top:12px;right:14px;background:none;border:0;font-size:16px;color:var(--faint);cursor:pointer}
+  .autherr{color:#b91c1c;font-size:12.5px;margin-top:8px;min-height:16px}
+  .authswitch{text-align:center;margin-top:12px;font-size:12.5px;color:var(--mut)}
+  @media (max-width:760px){
+    .app{flex-direction:column}
+    .sidebar{width:auto;height:auto;position:static;flex-direction:row;flex-wrap:wrap;align-items:center}
+    .sbrand{padding:11px 14px}
+    .snav{flex-direction:row;overflow-x:auto;flex:1 1 100%;padding:0 10px 8px}
+    .tab{white-space:nowrap}
+    .sideacct{border-top:0;padding:0 12px 10px;margin-left:auto}
+    .sideacct .authbtn{display:inline-block;width:auto;margin:0 0 0 6px;padding:7px 12px}
+  }
 
   .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
   input,select{font-family:inherit;font-size:14px;color:var(--ink);background:var(--card);
@@ -213,22 +239,22 @@
 </style>
 </head>
 <body>
-<header class="topbar"><div class="bar-inner">
-  <div class="brandmark">MJ</div>
-  <div class="brandtext"><h1>Manchester Jobs</h1><p id="subtitle">Loading…</p></div>
-</div></header>
-<nav class="navbar"><div class="bar-inner tabs">
-  <button class="tab active" data-tab="directory">Store Directory</button>
-  <button class="tab" data-tab="board">Job Search</button>
-  <button class="tab" data-tab="map">Map</button>
-  <button class="tab" data-tab="all">All Jobs</button>
-  <button class="tab" data-tab="apps">My Applications</button>
-  <button class="tab" data-tab="cv">CV Maker</button>
-  <button class="tab" data-tab="cover">Cover Letter</button>
-  <button class="tab" data-tab="assistant">Assistant</button>
-</div></nav>
-
-<div class="wrap">
+<div class="app">
+  <aside class="sidebar">
+    <div class="sbrand"><div class="brandmark">MJ</div><div class="sbtext"><b>Manchester Jobs</b><span id="subtitle">Loading…</span></div></div>
+    <nav class="snav tabs">
+      <button class="tab active" data-tab="directory">Store Directory</button>
+      <button class="tab" data-tab="board">Job Search</button>
+      <button class="tab" data-tab="map">Map</button>
+      <button class="tab" data-tab="all">All Jobs</button>
+      <button class="tab" data-tab="apps">My Applications</button>
+      <button class="tab" data-tab="cv">CV Maker</button>
+      <button class="tab" data-tab="cover">Cover Letter</button>
+      <button class="tab" data-tab="assistant">Assistant</button>
+    </nav>
+    <div class="sideacct" id="authArea"></div>
+  </aside>
+  <main class="main"><div class="wrap">
 
   <!-- TAB 1: STORE DIRECTORY -->
   <section id="tab-directory">
@@ -384,6 +410,25 @@
     </div>
     <div class="empty hidden" id="allEmpty"></div>
   </section>
+  </div></main>
+</div>
+
+<!-- Auth modal -->
+<div class="modal hidden" id="authModal">
+  <div class="modalcard">
+    <button class="modalx" id="authClose">✕</button>
+    <h2 id="authTitle">Log in</h2>
+    <p class="modalsub" id="authSub">Save your applications to the cloud and access them from any device.</p>
+    <div id="authNameWrap" class="hidden"><label>Name</label><input id="authName" placeholder="Your name" /></div>
+    <label>Email</label><input id="authEmail" type="email" placeholder="you@email.com" />
+    <label>Password</label><input id="authPass" type="password" placeholder="At least 6 characters" />
+    <div class="autherr" id="authErr"></div>
+    <button class="btn" id="authSubmit" style="width:100%;margin-top:6px">Log in</button>
+    <div class="authswitch">
+      <span id="authSwitchText">No account yet?</span>
+      <button class="link" id="authSwitch">Sign up</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -437,7 +482,7 @@ async function init(){
     $("tab-assistant").classList.toggle("hidden",t!=="assistant");
     activeBoardTab = (t==="board"||t==="all"||t==="map")?({board:"jobs",all:"all",map:"map"}[t]):"other";
     if(t==="board")renderJobs(); if(t==="all")renderAll(); if(t==="map")buildMap();
-    if(t==="apps")renderApps();
+    if(t==="apps")refreshApps();
   }));
   try{ STORES=await (await fetch("/api/stores")).json(); }
   catch{ $("subtitle").textContent="⚠ Run start.bat (node server.mjs) then open http://localhost:5173"; ["scanBtn","boardBtn","allBtn"].forEach(i=>$(i).disabled=true); return; }
@@ -468,7 +513,13 @@ async function init(){
   $("cvPdfBtn").addEventListener("click",()=>cvPDF(window._cv));
   $("chatSend").addEventListener("click",sendChat);
   $("chatText").addEventListener("keydown",e=>{if(e.key==="Enter")sendChat();});
-  loadProfile(); initChat(); updateAppsBadge();
+  $("authClose").addEventListener("click",closeAuth);
+  $("authModal").addEventListener("click",e=>{if(e.target.id==="authModal")closeAuth();});
+  $("authSwitch").addEventListener("click",()=>{authMode=authMode==="signup"?"login":"signup";setAuthMode();$("authErr").textContent="";});
+  $("authSubmit").addEventListener("click",submitAuth);
+  $("authPass").addEventListener("keydown",e=>{if(e.key==="Enter")submitAuth();});
+  loadProfile(); initChat();
+  await checkAuth(); await refreshApps();
   ["boardSearch","typeSel","srcSel","sortSel"].forEach(id=>$(id).addEventListener("input",renderJobs));
   ["allSearch","allSrcSel","allSortSel"].forEach(id=>$(id).addEventListener("input",renderAll));
   $("expSeg").addEventListener("click",e=>{if(e.target.dataset.exp){expFilter=e.target.dataset.exp;[...$("expSeg").children].forEach(b=>b.classList.toggle("on",b.dataset.exp===expFilter));renderJobs();}});
@@ -783,24 +834,39 @@ function cvPDF(cv){
   $("cvStatus").textContent="CV PDF downloaded.";
 }
 
-/* Applications tracker (localStorage) */
+/* Applications tracker (cloud when logged in, local as guest) */
 const APP_STATUSES=["Saved","Applied","Interview","Offer","Rejected"];
 const APP_COLORS={Saved:"#64748b",Applied:"#0a66c2",Interview:"#b45309",Offer:"#0a7c42",Rejected:"#b91c1c"};
-const loadApps=()=>{try{return JSON.parse(localStorage.getItem("mj_apps")||"[]");}catch{return[];}};
-const saveApps=(a)=>localStorage.setItem("mj_apps",JSON.stringify(a));
-function saveAppFromJob(id){
-  const j=JOBMAP[id]; if(!j)return false; const apps=loadApps();
-  if(apps.some(a=>a.id===j.id))return false;
-  apps.unshift({id:j.id,title:j.title,company:j.company,location:j.location,url:j.url,source:j.source,status:"Saved",added:Date.now(),notes:""});
-  saveApps(apps); updateAppsBadge(); return true;
+let APPS=[];
+const localApps=()=>{try{return JSON.parse(localStorage.getItem("mj_apps")||"[]");}catch{return[];}};
+const setLocalApps=(a)=>localStorage.setItem("mj_apps",JSON.stringify(a));
+async function refreshApps(){
+  if(currentUser){ try{ const r=await fetch("/api/apps",{headers:authHeaders()}); if(r.ok)APPS=(await r.json()).apps||[]; }catch{} }
+  else APPS=localApps();
+  updateAppsBadge(); renderApps();
 }
-function updateAppsBadge(){ const n=loadApps().length; const tab=document.querySelector('.tab[data-tab="apps"]'); if(tab)tab.textContent="My Applications"+(n?` (${n})`:""); }
+async function persistApp(app){
+  if(currentUser){ try{ await fetch("/api/apps",{method:"POST",headers:authHeaders(true),body:JSON.stringify({app})}); }catch{} }
+  else { const a=localApps(); const i=a.findIndex(x=>x.id===app.id); if(i>=0)a[i]=app; else a.unshift(app); setLocalApps(a); }
+}
+async function removeAppStore(id){
+  if(currentUser){ try{ await fetch("/api/apps",{method:"DELETE",headers:authHeaders(true),body:JSON.stringify({id})}); }catch{} }
+  else setLocalApps(localApps().filter(x=>x.id!==id));
+}
+function saveAppFromJob(id){
+  const j=JOBMAP[id]; if(!j)return false;
+  if(APPS.some(a=>a.id===j.id))return false;
+  const app={id:j.id,title:j.title,company:j.company,location:j.location,url:j.url,source:j.source,status:"Saved",added:Date.now(),notes:""};
+  APPS.unshift(app); persistApp(app); updateAppsBadge(); return true;
+}
+function updateApp(id,patch){ const a=APPS.find(x=>x.id===id); if(!a)return; Object.assign(a,patch); persistApp(a); renderApps(); }
+function delApp(id){ APPS=APPS.filter(x=>x.id!==id); removeAppStore(id); renderApps(); }
+function updateAppsBadge(){ const n=APPS.length; const tab=document.querySelector('.tab[data-tab="apps"]'); if(tab)tab.textContent="My Applications"+(n?` (${n})`:""); }
 function renderApps(){
-  const apps=loadApps();
-  $("appsEmpty").classList.toggle("hidden",apps.length>0);
-  const counts={}; APP_STATUSES.forEach(s=>counts[s]=0); apps.forEach(a=>counts[a.status]=(counts[a.status]||0)+1);
-  $("appsDash").innerHTML=apps.length?[["Total",apps.length],...APP_STATUSES.map(s=>[s,counts[s]])].map(([k,v])=>`<div class="appstat"><b>${v}</b><span>${esc(k)}</span></div>`).join(""):"";
-  $("appsList").innerHTML=apps.map(appRow).join("");
+  $("appsEmpty").classList.toggle("hidden",APPS.length>0);
+  const counts={}; APP_STATUSES.forEach(s=>counts[s]=0); APPS.forEach(a=>counts[a.status]=(counts[a.status]||0)+1);
+  $("appsDash").innerHTML=APPS.length?[["Total",APPS.length],...APP_STATUSES.map(s=>[s,counts[s]])].map(([k,v])=>`<div class="appstat"><b>${v}</b><span>${esc(k)}</span></div>`).join(""):"";
+  $("appsList").innerHTML=APPS.map(appRow).join("");
   $("appsList").querySelectorAll("[data-st]").forEach(s=>s.addEventListener("change",e=>updateApp(e.target.dataset.st,{status:e.target.value})));
   $("appsList").querySelectorAll("[data-note]").forEach(t=>t.addEventListener("change",e=>updateApp(e.target.dataset.note,{notes:e.target.value})));
   $("appsList").querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",e=>delApp(e.target.closest("[data-del]").dataset.del)));
@@ -834,6 +900,47 @@ async function sendChat(){
   }catch(e){ chatMsgs.pop(); chatMsgs.push({role:"model",text:"Sorry — "+e.message}); }
   renderChat();
 }
+
+/* Accounts */
+let authToken=localStorage.getItem("mj_token")||"", currentUser=null, authMode="login";
+const authHeaders=(json)=>{ const h=authToken?{Authorization:"Bearer "+authToken}:{}; if(json)h["Content-Type"]="application/json"; return h; };
+async function checkAuth(){
+  if(authToken){ try{ const r=await fetch("/api/auth/me",{headers:{Authorization:"Bearer "+authToken}}); if(r.ok)currentUser=(await r.json()).user; else { authToken="";localStorage.removeItem("mj_token"); } }catch{} }
+  setAuthUI();
+}
+function setAuthUI(){
+  const el=$("authArea");
+  if(currentUser){ el.innerHTML=`<div class="acctname">${esc(currentUser.name)}</div><div class="acctmail">${esc(currentUser.email)}</div><button class="authbtn ghost" id="logoutBtn">Log out</button>`; $("logoutBtn").onclick=logout; }
+  else { el.innerHTML=`<button class="authbtn" data-auth="signup">Sign up</button><button class="authbtn ghost" data-auth="login">Log in</button>`; el.querySelectorAll("[data-auth]").forEach(b=>b.onclick=()=>openAuth(b.dataset.auth)); }
+}
+function setAuthMode(){
+  const s=authMode==="signup";
+  $("authTitle").textContent=s?"Create your account":"Log in";
+  $("authNameWrap").classList.toggle("hidden",!s);
+  $("authSubmit").textContent=s?"Sign up":"Log in";
+  $("authSwitchText").textContent=s?"Already have an account?":"No account yet?";
+  $("authSwitch").textContent=s?"Log in":"Sign up";
+}
+function openAuth(mode){ authMode=mode||"login"; setAuthMode(); $("authErr").textContent=""; $("authModal").classList.remove("hidden"); }
+function closeAuth(){ $("authModal").classList.add("hidden"); }
+async function submitAuth(){
+  const email=$("authEmail").value.trim(), password=$("authPass").value, name=$("authName").value.trim();
+  if(!email||!password){ $("authErr").textContent="Enter your email and password."; return; }
+  $("authSubmit").disabled=true; $("authErr").textContent="";
+  try{
+    const ep=authMode==="signup"?"/api/auth/signup":"/api/auth/login";
+    const r=await fetch(ep,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password,name})});
+    const data=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(data.error||"Something went wrong.");
+    authToken=data.token; localStorage.setItem("mj_token",authToken); currentUser=data.user;
+    const guest=localApps(); if(guest.length){ try{ await fetch("/api/apps",{method:"POST",headers:authHeaders(true),body:JSON.stringify({apps:guest})}); localStorage.removeItem("mj_apps"); }catch{} }
+    saveProfile({name:currentUser.name,email:currentUser.email}); loadProfile();
+    setAuthUI(); closeAuth(); await refreshApps();
+  }catch(e){ $("authErr").textContent=e.message; }
+  $("authSubmit").disabled=false;
+}
+async function logout(){ try{ await fetch("/api/auth/logout",{method:"POST",headers:authHeaders()}); }catch{} authToken="";localStorage.removeItem("mj_token");currentUser=null; setAuthUI(); await refreshApps(); }
+
 init();
 </script>
 </body>
