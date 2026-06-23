@@ -640,6 +640,95 @@ async function generateCoverLetter(d) {
   return text;
 }
 
+// Shared Gemini call (retries transient overload; thinking disabled for speed/reliability)
+async function callGemini(body, tries = 5) {
+  const key = process.env.GEMINI_API_KEY;
+  if (!key) { const e = new Error("AI features need a Gemini API key — set GEMINI_API_KEY (locally in .env, on Render in Environment)."); e.status = 503; throw e; }
+  body.generationConfig = { ...(body.generationConfig || {}), thinkingConfig: { thinkingBudget: 0 } };
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+  for (let i = 0; i < tries; i++) {
+    const res = await timedFetch(url, {
+      method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": key }, body: JSON.stringify(body),
+    }, 35000);
+    if (res.ok) return res.json();
+    const t = await res.text();
+    const transient = res.status === 503 || res.status === 429 || /UNAVAILABLE|overloaded|high demand/i.test(t);
+    if (transient && i < tries - 1) { await new Promise((r) => setTimeout(r, 1600 * (i + 1))); continue; }
+    const e = new Error("The AI service is busy right now — please try again in a moment." + (res.status !== 503 ? " (" + res.status + ")" : ""));
+    e.status = 502; throw e;
+  }
+}
+const geminiText = (j) => (j.candidates?.[0]?.content?.parts || []).map((p) => p.text).join("").trim();
+
+// ── CV maker (structured JSON → the client renders + PDFs it) ──────────────
+const CV_SCHEMA = {
+  type: "OBJECT",
+  properties: {
+    name: { type: "STRING" }, headline: { type: "STRING" }, summary: { type: "STRING" },
+    skills: { type: "ARRAY", items: { type: "STRING" } },
+    experience: { type: "ARRAY", items: { type: "OBJECT", properties: {
+      role: { type: "STRING" }, employer: { type: "STRING" }, dates: { type: "STRING" },
+      bullets: { type: "ARRAY", items: { type: "STRING" } } }, required: ["role", "bullets"] } },
+    education: { type: "ARRAY", items: { type: "OBJECT", properties: {
+      qualification: { type: "STRING" }, institution: { type: "STRING" }, dates: { type: "STRING" } } } },
+    additional: { type: "ARRAY", items: { type: "STRING" } },
+  },
+  required: ["name", "summary", "skills", "experience"],
+};
+function buildCvPrompt(d) {
+  const f = (v) => (v || "").toString().trim();
+  return [
+    "You are an expert UK CV writer. Produce a GOLD-STANDARD, ATS-friendly CV for an ENTRY-LEVEL job seeker",
+    "targeting roles like retail, hospitality, customer service, admin, care, warehouse and apprenticeships in Greater Manchester.",
+    "",
+    "Best-practice rules to follow:",
+    "- A punchy 2–3 sentence professional summary highlighting reliability, attitude and transferable skills.",
+    "- Experience bullets start with strong action verbs and show impact; quantify where plausible (e.g. 'served 100+ customers daily').",
+    "- Include any part-time, volunteering, school or informal experience — frame it professionally. Do NOT invent qualifications, employers or dates.",
+    "- A focused skills list mixing soft skills (teamwork, communication, time-keeping) and any practical ones.",
+    "- Concise, UK English, no clichés. Education should reflect what the applicant gives (GCSEs/college etc. are fine for entry-level).",
+    "",
+    `Applicant name: ${f(d.name) || "the applicant"}`,
+    d.targetRole ? `Target role(s): ${f(d.targetRole)}` : "Target: entry-level roles in Greater Manchester",
+    f(d.experience) ? `Experience (raw notes): ${f(d.experience)}` : "Experience: little/no formal experience — emphasise attitude and transferable skills.",
+    f(d.education) ? `Education (raw notes): ${f(d.education)}` : "",
+    f(d.skills) ? `Skills/interests they mention: ${f(d.skills)}` : "",
+    f(d.extra) ? `Extra info: ${f(d.extra)}` : "",
+    "",
+    "Return ONLY a JSON object (no markdown fences) with EXACTLY this shape:",
+    '{"name":"","headline":"","summary":"","skills":["..."],"experience":[{"role":"","employer":"","dates":"","bullets":["..."]}],"education":[{"qualification":"","institution":"","dates":""}],"additional":["..."]}',
+    "Fill every section as well as the input allows.",
+  ].filter(Boolean).join("\n");
+}
+async function generateCV(d) {
+  const j = await callGemini({
+    contents: [{ parts: [{ text: buildCvPrompt(d) }] }],
+    generationConfig: { temperature: 0.6, maxOutputTokens: 2400, responseMimeType: "application/json" },
+  });
+  const txt = geminiText(j);
+  let cv; try { cv = JSON.parse(txt); } catch { throw Object.assign(new Error("AI returned malformed CV"), { status: 502 }); }
+  return cv;
+}
+
+// ── Assistant chat ────────────────────────────────────────────────────────
+async function chatReply(messages, jobsContext) {
+  const sys = "You are a warm, practical UK careers assistant helping someone find ENTRY-LEVEL work in Greater Manchester as soon as possible. " +
+    "Help with: improving their CV and cover letters, interview prep, and finding and applying to suitable live jobs. " +
+    "Be concise (a few short paragraphs at most), encouraging and specific with concrete next steps. " +
+    "This web app already provides: a live Job Search (Workable, NHS Jobs, Adzuna, Reed, Jooble), a Map, a CV Maker, a Cover Letter generator, and an Applications tracker — point the user to these when relevant. " +
+    (jobsContext ? "\n\nLive entry-level listings the user can apply to right now (sample):\n" + jobsContext : "");
+  const contents = (messages || []).slice(-12).map((m) => ({
+    role: m.role === "model" ? "model" : "user",
+    parts: [{ text: String(m.text || "").slice(0, 4000) }],
+  }));
+  const j = await callGemini({
+    systemInstruction: { parts: [{ text: sys }] },
+    contents,
+    generationConfig: { temperature: 0.7, maxOutputTokens: 900 },
+  });
+  return geminiText(j) || "Sorry, I couldn't generate a reply just then — try rephrasing?";
+}
+
 function readJsonBody(req, limit = 100000) {
   return new Promise((resolve, reject) => {
     let body = "";
@@ -710,9 +799,33 @@ const server = createServer(async (req, res) => {
     }
     return;
   }
+  if (url.pathname === "/api/cv" && req.method === "POST") {
+    try {
+      const data = await readJsonBody(req);
+      const cv = await generateCV(data);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ cv }));
+    } catch (e) {
+      res.writeHead(e.status || 500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: String(e.message || e) }));
+    }
+    return;
+  }
+  if (url.pathname === "/api/chat" && req.method === "POST") {
+    try {
+      const data = await readJsonBody(req, 200000);
+      const reply = await chatReply(data.messages, data.jobsContext);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ reply }));
+    } catch (e) {
+      res.writeHead(e.status || 500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: String(e.message || e) }));
+    }
+    return;
+  }
   if (url.pathname === "/api/config") {
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ coverLetters: !!process.env.GEMINI_API_KEY, sources: activeSources() }));
+    res.end(JSON.stringify({ ai: !!process.env.GEMINI_API_KEY, sources: activeSources() }));
     return;
   }
 
