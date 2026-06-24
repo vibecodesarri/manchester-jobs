@@ -972,7 +972,10 @@ const server = createServer(async (req, res) => {
   const ext = pathname.slice(pathname.lastIndexOf("."));
   try {
     const data = await readFile(join(__dirname, pathname));
-    res.writeHead(200, { "Content-Type": MIME[ext] || "application/octet-stream" });
+    res.writeHead(200, {
+      "Content-Type": MIME[ext] || "application/octet-stream",
+      "Cache-Control": "no-cache, must-revalidate",
+    });
     res.end(data);
   } catch {
     res.writeHead(404, { "Content-Type": "text/plain" });
