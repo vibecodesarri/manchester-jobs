@@ -552,6 +552,12 @@ async function init(){
 
   renderDir();
   ["search","category","location"].forEach(id=>$(id).addEventListener("input",renderDir));
+  // Belt-and-braces: stop browsers autofilling a saved email into the search boxes
+  ["search","boardSearch","allSearch"].forEach(id=>{ const el=$(id); if(!el)return;
+    const clean=()=>{ if(/@/.test(el.value)){ el.value=""; if(id==="search")renderDir(); } };
+    el.addEventListener("focus",()=>setTimeout(clean,1));
+    [120,500,1200].forEach(ms=>setTimeout(clean,ms));
+  });
   $("onlyHiring").addEventListener("change",renderDir);
   $("scanBtn").addEventListener("click",runScan);
 
