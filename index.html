@@ -18,6 +18,30 @@
     --green:#0a7c42; --chip:#eef3f8; --hover:#f3f6fa;
     --shadow:0 1px 2px rgba(16,41,66,.06),0 2px 8px rgba(16,41,66,.05);
   }
+  body.dark{
+    --bg:#0e1620; --card:#18222f; --ink:#e8eef6; --mut:#9fb1c4; --faint:#73869a;
+    --line:#2b3947; --line2:#202b38; --accent:#3b82f6; --accent-dk:#9cc4ff;
+    --chip:#222f3d; --hover:#1e2935;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 2px 10px rgba(0,0,0,.4);
+  }
+  body.dark .cvname, body.dark .cvpreview h4, body.dark .appstat b, body.dark .bubble.a b, body.dark .modalcard h2{color:var(--ink)}
+  body.dark .modalcard{background:var(--card)}
+  body.dark .cvpreview, body.dark .clpreview{background:var(--card);color:var(--ink)}
+  body.dark .bubble.a{background:#243140;color:var(--ink)}
+  body.dark .infobar{background:#26301c;border-color:#3a4626;color:var(--mut)}
+  .themebtn{width:100%;margin-top:8px;border:1px solid var(--line);background:var(--card);color:var(--mut);border-radius:8px;padding:9px;font-size:13px;font-weight:650;cursor:pointer}
+  .themebtn:hover{color:var(--ink);background:var(--hover)}
+  .scard .logo{width:100%;height:52px;display:flex;align-items:center;justify-content:center;background:var(--hover);border-radius:8px;margin-bottom:2px;overflow:hidden}
+  .scard .logo img{max-width:78%;max-height:36px;object-fit:contain}
+  .scard .logo .ini{font-weight:800;font-size:19px;color:#fff;width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+  .triage{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+  .triage button{flex:1;min-width:0;font-size:10px;font-weight:700;padding:4px 2px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--mut);cursor:pointer}
+  .triage button:hover{border-color:var(--accent)}
+  .triage button.on{color:#fff;border-color:transparent}
+  .scard.st-no{opacity:.5}
+  .dirfilters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+  .dirfilters button{font-size:12px;font-weight:650;padding:6px 12px;border-radius:18px;border:1px solid var(--line);background:var(--card);color:var(--mut);cursor:pointer}
+  .dirfilters button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
   *{box-sizing:border-box}
   html,body{margin:0}
   body{font-family:-apple-system,'Segoe UI',Roboto,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.45}
@@ -284,6 +308,7 @@
       <button class="tab" data-tab="assistant">Assistant</button>
       <button class="tab" data-tab="map">Map</button>
       <button class="tab" data-tab="all">All Jobs</button>
+      <button class="themebtn" id="themeToggle">🌙 Dark mode</button>
     </nav></div>
     <div class="footlinks"><b>Manchester Jobs</b> · Live entry-level roles across Greater Manchester. Built to help you get hired.</div>
   </aside>
@@ -302,6 +327,14 @@
       <input id="search" type="search" autocomplete="off" name="brand-search" placeholder="🔍 Search brand or category…" />
       <select id="category"></select>
       <select id="location"></select>
+    </div>
+    <div class="dirfilters" id="dirFilters">
+      <button data-sf="all" class="on">All</button>
+      <button data-sf="none">To do</button>
+      <button data-sf="Applied">Applied</button>
+      <button data-sf="Check later">Check later</button>
+      <button data-sf="Not interested">Not interested</button>
+      <button data-sf="Rejected">Rejected</button>
     </div>
     <div class="count" id="count"></div>
     <div class="grid" id="grid"></div>
@@ -522,6 +555,7 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
 const safeUrl=u=>/^https?:\/\//i.test(u||"")?u:"#";
 const hashColor=s=>LOGO_COLORS[[...String(s||"?")].reduce((a,c)=>a+c.charCodeAt(0),0)%LOGO_COLORS.length];
+function applyTheme(t){document.body.classList.toggle("dark",t==="dark");const b=document.getElementById("themeToggle");if(b)b.textContent=t==="dark"?"☀️ Light mode":"🌙 Dark mode";}
 
 async function init(){
   document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
@@ -581,6 +615,9 @@ async function init(){
   $("authSubmit").addEventListener("click",submitAuth);
   $("authPass").addEventListener("keydown",e=>{if(e.key==="Enter")submitAuth();});
   loadProfile(); initChat();
+  applyTheme(localStorage.getItem("mj_theme")||"light");
+  $("themeToggle").addEventListener("click",()=>{const t=document.body.classList.contains("dark")?"light":"dark";localStorage.setItem("mj_theme",t);applyTheme(t);});
+  $("dirFilters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;storeFilter=b.dataset.sf;[...$("dirFilters").children].forEach(x=>x.classList.toggle("on",x===b));renderDir();});
   await checkAuth(); await refreshApps();
   ["boardSearch","typeSel","srcSel","sortSel"].forEach(id=>$(id).addEventListener("input",renderJobs));
   ["allSearch","allSrcSel","allSortSel"].forEach(id=>$(id).addEventListener("input",renderAll));
@@ -598,28 +635,49 @@ async function init(){
 }
 
 /* Directory */
+let storeStatus={}; try{storeStatus=JSON.parse(localStorage.getItem("mj_storeStatus")||"{}");}catch{}
+let storeFilter="all";
+const STORE_STATES=[["Applied","#0a7c42"],["Check later","#b45309"],["Not interested","#64748b"],["Rejected","#b91c1c"]];
+function setStoreStatus(name,status){ if(storeStatus[name]===status)delete storeStatus[name]; else storeStatus[name]=status; localStorage.setItem("mj_storeStatus",JSON.stringify(storeStatus)); renderDir(); }
+function logoDomain(s){
+  const slugDom=()=>{ const sl=s.name.toLowerCase().split(/[\/(]/)[0].replace(/&/g,"and").replace(/[^a-z0-9]/g,""); return sl?sl+".com":""; };
+  try{
+    const u=s.careers||"";
+    if(/google\.com\/search|indeed\.com/i.test(u))return slugDom();
+    const h=new URL(u).hostname.replace(/^www\./,"");
+    if(/workable|greenhouse|lever|smartrecruiters|myworkday|workday|icims|teamtailor|taleo|applytojob/i.test(h))return slugDom();
+    return h.replace(/^(careers|jobs|apply|jobsearch|recruitment|join|work|people|talent)\./,"");
+  }catch{ return slugDom(); }
+}
 function passesFilter(s){
   const q=$("search").value.toLowerCase(),cat=$("category").value,loc=$("location").value;
   const mq=s.name.toLowerCase().includes(q)||s.category.toLowerCase().includes(q);
   let mh=true; if($("onlyHiring").checked){const r=SCAN[s.name];mh=r&&(r.roles?.length||r.hints?.length);}
-  return mq&&(cat==="All"||s.category===cat)&&(loc==="All"||s.locations.includes(loc))&&mh;
+  let ms=true; const st=storeStatus[s.name]||"";
+  if(storeFilter==="none")ms=!st; else if(storeFilter!=="all")ms=(st===storeFilter);
+  return mq&&(cat==="All"||s.category===cat)&&(loc==="All"||s.locations.includes(loc))&&mh&&ms;
 }
 function renderDir(){
   const list=STORES.filter(passesFilter);
   $("count").innerHTML=`Showing <b>${list.length}</b> of <b>${STORES.length}</b> brands`;
   $("empty").classList.toggle("hidden",list.length>0);
   $("grid").innerHTML=list.map(scardHTML).join("");
+  $("grid").onclick=e=>{const b=e.target.closest(".triage button");if(b)setStoreStatus(b.dataset.store,b.dataset.status);};
 }
 function scardHTML(s){
   const cc=CAT_COLORS[s.category]||"#e5e7eb";
   const locs=s.locations.map(l=>`<span class="loc" style="background:${LOC_COLORS[l]||'#64748b'}">${esc(l)}</span>`).join("");
+  const dom=logoDomain(s), first=esc((s.name.trim()[0]||"?").toUpperCase());
+  const logo=`<div class="logo">${dom?`<img src="https://logo.clearbit.com/${esc(dom)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>`:""}<span class="ini" style="background:${hashColor(s.name)};${dom?'display:none':'display:flex'}">${first}</span></div>`;
+  const st=storeStatus[s.name]||"";
+  const triage=`<div class="triage">`+STORE_STATES.map(([label,col])=>`<button data-store="${esc(s.name)}" data-status="${esc(label)}" class="${st===label?'on':''}" style="${st===label?`background:${col}`:''}" title="${esc(label)}">${esc(label.split(' ')[0])}</button>`).join("")+`</div>`;
   const r=SCAN[s.name];let sb="";
   if(r){const col=STATUS_COLOR[r.status]||"#64748b";
     sb+=`<div class="status"><span class="dot" style="background:${col}"></span><span style="color:${col}">${STATUS_LABEL[r.status]||"—"}</span>${r.platform?` · ${esc(r.platform)}`:""}<span class="ms">${r.ms!=null?Math.round(r.ms)+"ms":""}</span></div>`;
     if(r.roles?.length)sb+=`<div class="roles">`+r.roles.map(j=>`<a class="role" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener">▸ ${esc(j.title)}${j.location?`<span class="lt"> — ${esc(j.location)}</span>`:""}</a>`).join("")+`</div>`;
     else if(r.hints?.length)sb+=`<div class="hintline">Mentions: ${r.hints.map(h=>`<span class="chip">${esc(h)}</span>`).join("")}</div>`;
     if(r.note)sb+=`<div class="note">${esc(r.note)}</div>`;}
-  return `<div class="scard"><div class="h"><span class="nm">${esc(s.name)}</span><span class="cat" style="background:${cc}">${esc(s.category)}</span></div><div class="locs">${locs}</div>${sb}<a class="applybtn" href="${esc(safeUrl(s.careers))}" target="_blank" rel="noopener">Apply / View Jobs →</a></div>`;
+  return `<div class="scard${st==='Not interested'?' st-no':''}">${logo}<div class="h"><span class="nm">${esc(s.name)}</span><span class="cat" style="background:${cc}">${esc(s.category)}</span></div><div class="locs">${locs}</div>${sb}<a class="applybtn" href="${esc(safeUrl(s.careers))}" target="_blank" rel="noopener">Apply / View Jobs →</a>${triage}</div>`;
 }
 async function runScan(){
   const btn=$("scanBtn");btn.disabled=true;btn.textContent="Scanning…";SCAN={};
