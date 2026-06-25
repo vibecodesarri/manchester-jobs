@@ -253,6 +253,19 @@
   .approw a.alink{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none}
   .approw .adel{background:none;border:0;color:var(--faint);cursor:pointer;font-size:16px;line-height:1}
   .stpill{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:14px;color:#fff}
+  .addapp{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .addapp input{flex:1;min-width:130px}
+  .appmeta{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:12px;color:var(--mut)}
+  .appmeta label{font-weight:700;color:var(--faint);text-transform:uppercase;font-size:10.5px;letter-spacing:.4px}
+  .appmeta input[type=date]{font-size:12px;padding:4px 8px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)}
+  .due{color:#fff;background:#b45309;font-weight:700;font-size:10.5px;padding:2px 8px;border-radius:12px}
+  .dim{color:var(--faint);font-size:11px}
+  .btn2.small{padding:6px 11px;font-size:12px}
+  .duebtn{background:#b45309;color:#fff;border-color:#b45309}
+  .fuout{margin-top:8px}
+  .fuedit{width:100%;min-height:150px;font-family:inherit;font-size:12.5px;line-height:1.5;border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--card);color:var(--ink);white-space:pre-wrap}
+  .furow{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .futo{flex:1;min-width:180px;font-size:12.5px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
 
   /* Chat */
   .chatwrap{display:flex;flex-direction:column;height:72vh;min-height:420px;overflow:hidden}
@@ -417,6 +430,12 @@
 
   <!-- TAB: MY APPLICATIONS -->
   <section id="tab-apps" class="hidden">
+    <div class="addapp panel">
+      <input id="aaTitle" placeholder="Job title / role" />
+      <input id="aaCompany" placeholder="Company / store" />
+      <input id="aaDate" type="date" title="Date applied" />
+      <button class="btn" id="aaAdd">Add application</button>
+    </div>
     <div class="appsdash" id="appsDash"></div>
     <div id="appsList"></div>
     <div class="empty" id="appsEmpty">No saved applications yet. In <b>Job Search</b>, open a job and click <b>“Save to my applications”</b> to track it here — set its status, add notes, and never lose track of where you applied.</div>
@@ -615,6 +634,7 @@ async function init(){
   $("authSubmit").addEventListener("click",submitAuth);
   $("authPass").addEventListener("keydown",e=>{if(e.key==="Enter")submitAuth();});
   loadProfile(); initChat();
+  $("aaAdd").addEventListener("click",addManualApp);
   applyTheme(localStorage.getItem("mj_theme")||"light");
   $("themeToggle").addEventListener("click",()=>{const t=document.body.classList.contains("dark")?"light":"dark";localStorage.setItem("mj_theme",t);applyTheme(t);});
   $("dirFilters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;storeFilter=b.dataset.sf;[...$("dirFilters").children].forEach(x=>x.classList.toggle("on",x===b));renderDir();});
@@ -1002,20 +1022,48 @@ function renderApps(){
   $("appsList").innerHTML=APPS.map(appRow).join("");
   $("appsList").querySelectorAll("[data-st]").forEach(s=>s.addEventListener("change",e=>updateApp(e.target.dataset.st,{status:e.target.value})));
   $("appsList").querySelectorAll("[data-note]").forEach(t=>t.addEventListener("change",e=>updateApp(e.target.dataset.note,{notes:e.target.value})));
+  $("appsList").querySelectorAll("[data-date]").forEach(t=>t.addEventListener("change",e=>updateApp(e.target.dataset.date,{appliedDate:e.target.value})));
   $("appsList").querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",e=>delApp(e.target.closest("[data-del]").dataset.del)));
+  $("appsList").querySelectorAll("[data-fu]").forEach(b=>b.addEventListener("click",e=>genFollowup(e.target.closest("[data-fu]").dataset.fu)));
 }
+const daysSince=d=>{ const t=Date.parse(d); return isNaN(t)?null:Math.floor((Date.now()-t)/864e5); };
 function appRow(a){
   const col=APP_COLORS[a.status]||"#64748b";
+  const ds=daysSince(a.appliedDate);
+  const due=ds!=null&&ds>=14;
   return `<div class="approw"><div class="ai"><div class="at">${esc(a.title)}</div>
     <div class="ac">${esc(a.company||"")}${a.location?" · "+esc(a.location):""} · <span style="color:${col};font-weight:700">${esc(a.status)}</span>${a.source?" · "+esc(a.source):""}</div>
-    <textarea class="anote" data-note="${esc(a.id)}" placeholder="Notes — e.g. applied 5 Mar, follow up next week…">${esc(a.notes||"")}</textarea></div>
+    <div class="appmeta"><label>Applied</label><input type="date" class="adate" data-date="${esc(a.id)}" value="${esc(a.appliedDate||"")}"/>${due?`<span class="due">Follow-up due (${ds}d)</span>`:(ds!=null?`<span class="dim">${ds}d ago</span>`:"")}</div>
+    <textarea class="anote" data-note="${esc(a.id)}" placeholder="Notes…">${esc(a.notes||"")}</textarea>
+    <div class="fuout" id="fu-${esc(a.id)}"></div></div>
     <div class="actrl"><select data-st="${esc(a.id)}">${APP_STATUSES.map(s=>`<option ${s===a.status?"selected":""}>${s}</option>`).join("")}</select>
     ${a.url?`<a class="alink" href="${esc(safeUrl(a.url))}" target="_blank" rel="noopener">Open</a>`:""}
+    <button class="btn2 small ${due?'duebtn':''}" data-fu="${esc(a.id)}">Follow-up email</button>
     <button class="adel" data-del="${esc(a.id)}" title="Remove">✕</button></div></div>`;
 }
-function updateApp(id,patch){ const a=loadApps();const i=a.findIndex(x=>x.id===id);if(i<0)return;Object.assign(a[i],patch);saveApps(a);renderApps(); }
-function delApp(id){ saveApps(loadApps().filter(x=>x.id!==id));renderApps(); }
-
+async function genFollowup(id){
+  const a=APPS.find(x=>x.id===id); if(!a)return;
+  const el=document.getElementById("fu-"+id); if(!el)return;
+  el.innerHTML='<span class="spin"></span>Writing your follow-up…';
+  let prof={}; try{prof=JSON.parse(localStorage.getItem("mj_profile")||"{}");}catch{}
+  const name=prof.name||(currentUser&&currentUser.name)||"";
+  try{
+    const res=await fetch("/api/followup",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,company:a.company,role:a.title,appliedDate:a.appliedDate})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok)throw new Error(data.error||"error");
+    const text=data.email||"";
+    el.innerHTML=`<textarea class="fuedit">${esc(text)}</textarea><div class="furow"><input class="futo" type="email" placeholder="recruiter@company.com — paste their email"/><button class="btn2 small fusend">Send via Gmail</button><button class="btn2 small fucopy">Copy</button></div>`;
+    el.querySelector(".fusend").onclick=()=>{const t=el.querySelector(".fuedit").value;const s=(t.match(/^subject:\s*(.+)$/im)?.[1]||("Following up — "+(a.title||"application"))).trim();const b=t.replace(/^subject:.*$/im,"").trim();window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(el.querySelector(".futo").value)}&su=${encodeURIComponent(s)}&body=${encodeURIComponent(b)}`,"_blank");};
+    el.querySelector(".fucopy").onclick=()=>{navigator.clipboard.writeText(el.querySelector(".fuedit").value);el.querySelector(".fucopy").textContent="Copied";};
+  }catch(e){ el.textContent="Couldn't generate: "+e.message; }
+}
+function addManualApp(){
+  const title=$("aaTitle").value.trim(); if(!title){ $("aaTitle").focus(); return; }
+  const app={id:"m_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),title,company:$("aaCompany").value.trim(),location:"",url:"",source:"Manual",status:"Applied",added:Date.now(),appliedDate:$("aaDate").value||"",notes:""};
+  APPS.unshift(app); persistApp(app); updateAppsBadge();
+  $("aaTitle").value="";$("aaCompany").value="";$("aaDate").value="";
+  renderApps();
+}
 /* Assistant chat */
 let chatMsgs=[];
 function initChat(){ chatMsgs=[{role:"model",text:"Hi! I'm your job-hunt assistant. I can help you find roles, sharpen your CV, draft cover letters and prep for interviews. After you run a Job Search I can even point you to specific live jobs to apply for. What are you after?"}]; renderChat(); }

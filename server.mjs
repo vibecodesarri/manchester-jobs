@@ -737,6 +737,29 @@ async function chatReply(messages, jobsContext) {
   return geminiText(j) || "Sorry, I couldn't generate a reply just then — try rephrasing?";
 }
 
+// ── Follow-up email (Gemini) ──────────────────────────────────────────────
+async function generateFollowup(d) {
+  const f = (v) => (v || "").toString().trim();
+  const prompt = [
+    "Write a short, polite, professional follow-up email for a UK job application where the applicant hasn't heard back.",
+    `Applicant: ${f(d.name) || "the applicant"}.`,
+    f(d.role) ? `Role applied for: ${f(d.role)}.` : "",
+    f(d.company) ? `Company: ${f(d.company)}.` : "",
+    f(d.appliedDate) ? `They applied around ${f(d.appliedDate)} (about two weeks ago).` : "They applied about two weeks ago.",
+    "Keep it to 4–6 sentences: warm, confident, reiterate enthusiasm and one key strength, politely ask about the status / next steps, and thank them.",
+    "Output EXACTLY in this format and nothing else:",
+    "Subject: <subject line>",
+    "",
+    "Dear Hiring Manager,",
+    "<body>",
+    "",
+    "Kind regards,",
+    f(d.name) || "<name>",
+  ].filter(Boolean).join("\n");
+  const j = await callGemini({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.7, maxOutputTokens: 600 } });
+  return geminiText(j);
+}
+
 function readJsonBody(req, limit = 100000) {
   return new Promise((resolve, reject) => {
     let body = "";
@@ -958,6 +981,18 @@ const server = createServer(async (req, res) => {
         res.writeHead(200, { "Content-Type": "application/json" }); res.end(JSON.stringify({ apps: await getApps(u.id) }));
       }
     } catch (e) { res.writeHead(e.status || 500, { "Content-Type": "application/json" }); res.end(JSON.stringify({ error: String(e.message || e) })); }
+    return;
+  }
+  if (url.pathname === "/api/followup" && req.method === "POST") {
+    try {
+      const data = await readJsonBody(req);
+      const email = await generateFollowup(data);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ email }));
+    } catch (e) {
+      res.writeHead(e.status || 500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: String(e.message || e) }));
+    }
     return;
   }
   if (url.pathname === "/api/config") {
