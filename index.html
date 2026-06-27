@@ -10,6 +10,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
   :root{
     --bg:#eef1f5; --card:#fff; --ink:#16202c; --mut:#566472;
@@ -85,6 +86,10 @@
   .modal{position:fixed;inset:0;background:rgba(8,15,28,.6);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
   .modalcard{background:var(--card);border-radius:14px;padding:26px 26px 22px;width:100%;max-width:380px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.3)}
   .modalcard h2{margin:0 0 4px;font-size:20px;color:var(--ink)}
+  .gbtnwrap{display:flex;justify-content:center;margin:8px 0 4px;min-height:0}
+  .ordiv{display:flex;align-items:center;text-align:center;color:var(--faint);font-size:11.5px;margin:10px 0 2px}
+  .ordiv:before,.ordiv:after{content:"";flex:1;height:1px;background:var(--line)}
+  .ordiv span{padding:0 10px}
   .modalsub{margin:0 0 12px;font-size:12.5px;color:#62696f;line-height:1.5}
   .modalcard label{display:block;font-size:11px;font-weight:700;color:#8a8d91;text-transform:uppercase;letter-spacing:.4px;margin:10px 0 4px}
   .modalcard input{width:100%}
@@ -538,6 +543,8 @@
     <button class="modalx" id="authClose">✕</button>
     <h2 id="authTitle">Log in</h2>
     <p class="modalsub" id="authSub">Save your applications to the cloud and access them from any device.</p>
+    <div id="googleBtnWrap" class="gbtnwrap"></div>
+    <div id="authOr" class="ordiv hidden"><span>or use email</span></div>
     <div id="authNameWrap" class="hidden"><label>Name</label><input id="authName" placeholder="Your name" /></div>
     <label>Email</label><input id="authEmail" type="email" placeholder="you@email.com" />
     <label>Password</label><input id="authPass" type="password" placeholder="At least 6 characters" />
@@ -651,6 +658,7 @@ async function init(){
   applyTheme(localStorage.getItem("mj_theme")||"light");
   $("themeToggle").addEventListener("click",()=>{const t=document.body.classList.contains("dark")?"light":"dark";localStorage.setItem("mj_theme",t);applyTheme(t);});
   $("dirFilters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;storeFilter=b.dataset.sf;[...$("dirFilters").children].forEach(x=>x.classList.toggle("on",x===b));renderDir();});
+  try{const cfg=await (await fetch("/api/config")).json(); GCID=cfg.googleClientId||"";}catch{}
   await checkAuth(); await refreshApps(); renderDir();
   ["boardSearch","typeSel","srcSel","sortSel"].forEach(id=>$(id).addEventListener("input",renderJobs));
   ["allSearch","allSrcSel","allSortSel"].forEach(id=>$(id).addEventListener("input",renderAll));
@@ -1156,7 +1164,28 @@ function setAuthMode(){
   $("authSwitchText").textContent=s?"Already have an account?":"No account yet?";
   $("authSwitch").textContent=s?"Log in":"Sign up";
 }
-function openAuth(mode){ authMode=mode||"login"; setAuthMode(); $("authErr").textContent=""; $("authModal").classList.remove("hidden"); }
+let GCID="";
+function renderGoogleBtn(){
+  const wrap=$("googleBtnWrap"); if(!wrap)return;
+  if(!GCID||!(window.google&&google.accounts&&google.accounts.id)){ wrap.innerHTML=""; $("authOr").classList.add("hidden"); return; }
+  try{
+    google.accounts.id.initialize({client_id:GCID,callback:onGoogleCred});
+    wrap.innerHTML="";
+    google.accounts.id.renderButton(wrap,{theme:document.body.classList.contains("dark")?"filled_blue":"outline",size:"large",width:328,text:"continue_with",shape:"pill"});
+    $("authOr").classList.remove("hidden");
+  }catch(e){ wrap.innerHTML=""; }
+}
+async function onGoogleCred(resp){
+  try{
+    const r=await fetch("/api/auth/google",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({credential:resp.credential})});
+    const data=await r.json().catch(()=>({})); if(!r.ok)throw new Error(data.error||"Google sign-in failed");
+    authToken=data.token; localStorage.setItem("mj_token",authToken); currentUser=data.user;
+    const guest=localApps(); if(guest.length){try{await fetch("/api/apps",{method:"POST",headers:authHeaders(true),body:JSON.stringify({apps:guest})});localStorage.removeItem("mj_apps");}catch{}}
+    saveProfile({name:currentUser.name,email:currentUser.email}); loadProfile();
+    setAuthUI(); closeAuth(); await refreshApps(); renderDir();
+  }catch(e){ $("authErr").textContent=e.message; }
+}
+function openAuth(mode){ authMode=mode||"login"; setAuthMode(); $("authErr").textContent=""; $("authModal").classList.remove("hidden"); renderGoogleBtn(); }
 function closeAuth(){ $("authModal").classList.add("hidden"); }
 async function submitAuth(){
   const email=$("authEmail").value.trim(), password=$("authPass").value, name=$("authName").value.trim();

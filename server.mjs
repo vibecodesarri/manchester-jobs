@@ -970,6 +970,28 @@ const server = createServer(async (req, res) => {
     } catch (e) { res.writeHead(e.status || 500, { "Content-Type": "application/json" }); res.end(JSON.stringify({ error: String(e.message || e) })); }
     return;
   }
+  if (url.pathname === "/api/auth/google" && req.method === "POST") {
+    try {
+      const cid = process.env.GOOGLE_CLIENT_ID;
+      if (!cid) throw Object.assign(new Error("Google sign-in isn't configured (set GOOGLE_CLIENT_ID)."), { status: 503 });
+      const d = await readJsonBody(req);
+      const r = await timedFetch("https://oauth2.googleapis.com/tokeninfo?id_token=" + encodeURIComponent(d.credential || ""), {}, 10000);
+      const p = r.ok ? await r.json() : {};
+      if (!r.ok || p.aud !== cid || !(p.email_verified === true || p.email_verified === "true")) throw Object.assign(new Error("Google sign-in failed."), { status: 401 });
+      const email = (p.email || "").toLowerCase();
+      let u = await getUserByEmail(email);
+      if (!u) {
+        const id = "u_" + randomBytes(8).toString("hex"), name = p.name || p.given_name || email.split("@")[0], created = Date.now();
+        if (pool) await pool.query("INSERT INTO users(id,email,name,hash,created) VALUES($1,$2,$3,$4,$5)", [id, email, name, "google", created]);
+        else mem.users.set(email, { id, email, name, hash: "google", created });
+        u = { id, email, name };
+      }
+      const token = await createSession(u.id);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ token, user: publicUser(u) }));
+    } catch (e) { res.writeHead(e.status || 500, { "Content-Type": "application/json" }); res.end(JSON.stringify({ error: String(e.message || e) })); }
+    return;
+  }
   if (url.pathname === "/api/auth/me") {
     const u = await userForToken(tokenOf(req));
     res.writeHead(u ? 200 : 401, { "Content-Type": "application/json" });
@@ -1026,7 +1048,7 @@ const server = createServer(async (req, res) => {
   }
   if (url.pathname === "/api/config") {
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ ai: !!process.env.GEMINI_API_KEY, accounts: !!pool, sources: activeSources() }));
+    res.end(JSON.stringify({ ai: !!process.env.GEMINI_API_KEY, accounts: !!pool, googleClientId: process.env.GOOGLE_CLIENT_ID || "", sources: activeSources() }));
     return;
   }
 
