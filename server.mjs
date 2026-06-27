@@ -760,6 +760,23 @@ async function generateFollowup(d) {
   return geminiText(j);
 }
 
+// ── Organise pasted applications into structured entries (Gemini) ──────────
+async function parseApplications(text) {
+  const prompt = [
+    "You organise a job-seeker's messy notes about jobs they've applied to into structured data.",
+    "Return ONLY a JSON array (no markdown). Each item:",
+    '{"title":"the role","company":"the company/store","appliedDate":"YYYY-MM-DD or empty string","status":"one of: Saved, Check later, Applied, Interview, Offer, Not interested, Rejected","notes":"any extra detail"}',
+    "Default status to \"Applied\" unless the notes clearly say otherwise. Convert any dates to YYYY-MM-DD; if no date, use empty string. One item per application. Keep titles/companies concise.",
+    "",
+    "Notes to organise:",
+    String(text || "").slice(0, 12000),
+  ].join("\n");
+  const j = await callGemini({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.2, maxOutputTokens: 2500, responseMimeType: "application/json" } });
+  let arr; try { arr = JSON.parse(geminiText(j)); } catch { arr = []; }
+  if (!Array.isArray(arr)) arr = arr.applications || arr.items || [];
+  return Array.isArray(arr) ? arr : [];
+}
+
 function readJsonBody(req, limit = 100000) {
   return new Promise((resolve, reject) => {
     let body = "";
@@ -981,6 +998,18 @@ const server = createServer(async (req, res) => {
         res.writeHead(200, { "Content-Type": "application/json" }); res.end(JSON.stringify({ apps: await getApps(u.id) }));
       }
     } catch (e) { res.writeHead(e.status || 500, { "Content-Type": "application/json" }); res.end(JSON.stringify({ error: String(e.message || e) })); }
+    return;
+  }
+  if (url.pathname === "/api/parse-applications" && req.method === "POST") {
+    try {
+      const data = await readJsonBody(req, 200000);
+      const applications = await parseApplications(data.text);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ applications }));
+    } catch (e) {
+      res.writeHead(e.status || 500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: String(e.message || e) }));
+    }
     return;
   }
   if (url.pathname === "/api/followup" && req.method === "POST") {

@@ -253,8 +253,15 @@
   .approw a.alink{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none}
   .approw .adel{background:none;border:0;color:var(--faint);cursor:pointer;font-size:16px;line-height:1}
   .stpill{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:14px;color:#fff}
+  .atitle{font-weight:700;font-size:14px;color:var(--accent-dk);border:1px solid transparent;border-radius:6px;padding:3px 6px;width:100%;background:transparent}
+  .atitle:hover{border-color:var(--line)}
+  .atitle:focus{border-color:var(--accent);background:var(--card)}
   .addapp{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   .addapp input{flex:1;min-width:130px}
+  .orgbox{display:flex;flex-direction:column;gap:9px}
+  .orgbox .orgtitle{font-weight:700;font-size:13.5px}
+  .orgbox textarea{width:100%;min-height:72px;font-family:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--card);color:var(--ink);resize:vertical}
+  .orgrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   .appmeta{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:12px;color:var(--mut)}
   .appmeta label{font-weight:700;color:var(--faint);text-transform:uppercase;font-size:10.5px;letter-spacing:.4px}
   .appmeta input[type=date]{font-size:12px;padding:4px 8px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)}
@@ -435,6 +442,11 @@
       <input id="aaCompany" placeholder="Company / store" />
       <input id="aaDate" type="date" title="Date applied" />
       <button class="btn" id="aaAdd">Add application</button>
+    </div>
+    <div class="orgbox panel">
+      <div class="orgtitle">🤖 AI organiser — paste all your applications and I'll sort them</div>
+      <textarea id="orgText" placeholder="Paste anything, however messy — e.g. 'Applied to Greggs sales assistant 3 March, Nando's team member last week got an interview, Boots waiting to hear, said no to the JD warehouse one…'"></textarea>
+      <div class="orgrow"><button class="btn" id="orgBtn">Organise into my applications</button><span class="clstatus" id="orgStatus"></span></div>
     </div>
     <div class="appsdash" id="appsDash"></div>
     <div id="appsList"></div>
@@ -635,10 +647,11 @@ async function init(){
   $("authPass").addEventListener("keydown",e=>{if(e.key==="Enter")submitAuth();});
   loadProfile(); initChat();
   $("aaAdd").addEventListener("click",addManualApp);
+  $("orgBtn").addEventListener("click",organiseApplications);
   applyTheme(localStorage.getItem("mj_theme")||"light");
   $("themeToggle").addEventListener("click",()=>{const t=document.body.classList.contains("dark")?"light":"dark";localStorage.setItem("mj_theme",t);applyTheme(t);});
   $("dirFilters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;storeFilter=b.dataset.sf;[...$("dirFilters").children].forEach(x=>x.classList.toggle("on",x===b));renderDir();});
-  await checkAuth(); await refreshApps();
+  await checkAuth(); await refreshApps(); renderDir();
   ["boardSearch","typeSel","srcSel","sortSel"].forEach(id=>$(id).addEventListener("input",renderJobs));
   ["allSearch","allSrcSel","allSortSel"].forEach(id=>$(id).addEventListener("input",renderAll));
   $("expSeg").addEventListener("click",e=>{if(e.target.dataset.exp){expFilter=e.target.dataset.exp;[...$("expSeg").children].forEach(b=>b.classList.toggle("on",b.dataset.exp===expFilter));renderJobs();}});
@@ -655,10 +668,16 @@ async function init(){
 }
 
 /* Directory */
-let storeStatus={}; try{storeStatus=JSON.parse(localStorage.getItem("mj_storeStatus")||"{}");}catch{}
 let storeFilter="all";
 const STORE_STATES=[["Applied","#0a7c42"],["Check later","#b45309"],["Not interested","#64748b"],["Rejected","#b91c1c"]];
-function setStoreStatus(name,status){ if(storeStatus[name]===status)delete storeStatus[name]; else storeStatus[name]=status; localStorage.setItem("mj_storeStatus",JSON.stringify(storeStatus)); renderDir(); }
+const appStatus=name=>{const a=APPS.find(x=>x.id==="store:"+name);return a?a.status:"";};
+function setStoreStatus(name,status){
+  const id="store:"+name, ex=APPS.find(a=>a.id===id);
+  if(ex&&ex.status===status){ APPS=APPS.filter(a=>a.id!==id); removeAppStore(id); }   // toggle off → remove from tracker
+  else if(ex){ ex.status=status; persistApp(ex); }
+  else { const st=STORES.find(s=>s.name===name)||{}; APPS.unshift({id,title:"",company:name,location:(st.locations||[]).join(", "),url:st.careers||"",source:"Store",status,added:Date.now(),appliedDate:(status==="Applied"?new Date().toISOString().slice(0,10):""),notes:""}); persistApp(APPS[0]); }
+  updateAppsBadge(); renderDir(); renderApps();
+}
 function logoDomain(s){
   const slugDom=()=>{ const sl=s.name.toLowerCase().split(/[\/(]/)[0].replace(/&/g,"and").replace(/[^a-z0-9]/g,""); return sl?sl+".com":""; };
   try{
@@ -673,7 +692,7 @@ function passesFilter(s){
   const q=$("search").value.toLowerCase(),cat=$("category").value,loc=$("location").value;
   const mq=s.name.toLowerCase().includes(q)||s.category.toLowerCase().includes(q);
   let mh=true; if($("onlyHiring").checked){const r=SCAN[s.name];mh=r&&(r.roles?.length||r.hints?.length);}
-  let ms=true; const st=storeStatus[s.name]||"";
+  let ms=true; const st=appStatus(s.name);
   if(storeFilter==="none")ms=!st; else if(storeFilter!=="all")ms=(st===storeFilter);
   return mq&&(cat==="All"||s.category===cat)&&(loc==="All"||s.locations.includes(loc))&&mh&&ms;
 }
@@ -689,7 +708,7 @@ function scardHTML(s){
   const locs=s.locations.map(l=>`<span class="loc" style="background:${LOC_COLORS[l]||'#64748b'}">${esc(l)}</span>`).join("");
   const dom=logoDomain(s), first=esc((s.name.trim()[0]||"?").toUpperCase());
   const logo=`<div class="logo">${dom?`<img src="https://logo.clearbit.com/${esc(dom)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>`:""}<span class="ini" style="background:${hashColor(s.name)};${dom?'display:none':'display:flex'}">${first}</span></div>`;
-  const st=storeStatus[s.name]||"";
+  const st=appStatus(s.name);
   const triage=`<div class="triage">`+STORE_STATES.map(([label,col])=>`<button data-store="${esc(s.name)}" data-status="${esc(label)}" class="${st===label?'on':''}" style="${st===label?`background:${col}`:''}" title="${esc(label)}">${esc(label.split(' ')[0])}</button>`).join("")+`</div>`;
   const r=SCAN[s.name];let sb="";
   if(r){const col=STATUS_COLOR[r.status]||"#64748b";
@@ -988,8 +1007,8 @@ function cvPDF(cv){
 }
 
 /* Applications tracker (cloud when logged in, local as guest) */
-const APP_STATUSES=["Saved","Applied","Interview","Offer","Rejected"];
-const APP_COLORS={Saved:"#64748b",Applied:"#0a66c2",Interview:"#b45309",Offer:"#0a7c42",Rejected:"#b91c1c"};
+const APP_STATUSES=["Saved","Check later","Applied","Interview","Offer","Not interested","Rejected"];
+const APP_COLORS={Saved:"#64748b","Check later":"#b45309",Applied:"#0a66c2",Interview:"#7c3aed",Offer:"#0a7c42","Not interested":"#94a3b8",Rejected:"#b91c1c"};
 let APPS=[];
 const localApps=()=>{try{return JSON.parse(localStorage.getItem("mj_apps")||"[]");}catch{return[];}};
 const setLocalApps=(a)=>localStorage.setItem("mj_apps",JSON.stringify(a));
@@ -1021,6 +1040,7 @@ function renderApps(){
   $("appsDash").innerHTML=APPS.length?[["Total",APPS.length],...APP_STATUSES.map(s=>[s,counts[s]])].map(([k,v])=>`<div class="appstat"><b>${v}</b><span>${esc(k)}</span></div>`).join(""):"";
   $("appsList").innerHTML=APPS.map(appRow).join("");
   $("appsList").querySelectorAll("[data-st]").forEach(s=>s.addEventListener("change",e=>updateApp(e.target.dataset.st,{status:e.target.value})));
+  $("appsList").querySelectorAll("[data-title]").forEach(t=>t.addEventListener("change",e=>updateApp(e.target.dataset.title,{title:e.target.value})));
   $("appsList").querySelectorAll("[data-note]").forEach(t=>t.addEventListener("change",e=>updateApp(e.target.dataset.note,{notes:e.target.value})));
   $("appsList").querySelectorAll("[data-date]").forEach(t=>t.addEventListener("change",e=>updateApp(e.target.dataset.date,{appliedDate:e.target.value})));
   $("appsList").querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",e=>delApp(e.target.closest("[data-del]").dataset.del)));
@@ -1031,7 +1051,7 @@ function appRow(a){
   const col=APP_COLORS[a.status]||"#64748b";
   const ds=daysSince(a.appliedDate);
   const due=ds!=null&&ds>=14;
-  return `<div class="approw"><div class="ai"><div class="at">${esc(a.title)}</div>
+  return `<div class="approw"><div class="ai"><input class="atitle" data-title="${esc(a.id)}" value="${esc(a.title||"")}" placeholder="${a.company?('Add the role at '+esc(a.company)+'…'):'Job title / role…'}"/>
     <div class="ac">${esc(a.company||"")}${a.location?" · "+esc(a.location):""} · <span style="color:${col};font-weight:700">${esc(a.status)}</span>${a.source?" · "+esc(a.source):""}</div>
     <div class="appmeta"><label>Applied</label><input type="date" class="adate" data-date="${esc(a.id)}" value="${esc(a.appliedDate||"")}"/>${due?`<span class="due">Follow-up due (${ds}d)</span>`:(ds!=null?`<span class="dim">${ds}d ago</span>`:"")}</div>
     <textarea class="anote" data-note="${esc(a.id)}" placeholder="Notes…">${esc(a.notes||"")}</textarea>
@@ -1056,6 +1076,26 @@ async function genFollowup(id){
     el.querySelector(".fusend").onclick=()=>{const t=el.querySelector(".fuedit").value;const s=(t.match(/^subject:\s*(.+)$/im)?.[1]||("Following up — "+(a.title||"application"))).trim();const b=t.replace(/^subject:.*$/im,"").trim();window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(el.querySelector(".futo").value)}&su=${encodeURIComponent(s)}&body=${encodeURIComponent(b)}`,"_blank");};
     el.querySelector(".fucopy").onclick=()=>{navigator.clipboard.writeText(el.querySelector(".fuedit").value);el.querySelector(".fucopy").textContent="Copied";};
   }catch(e){ el.textContent="Couldn't generate: "+e.message; }
+}
+async function organiseApplications(){
+  const text=$("orgText").value.trim(); if(!text){$("orgStatus").textContent="Paste your applications first.";return;}
+  const btn=$("orgBtn"); btn.disabled=true; btn.textContent="Organising…"; $("orgStatus").innerHTML='<span class="spin"></span>Reading your applications…';
+  try{
+    const res=await fetch("/api/parse-applications",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text})});
+    const data=await res.json().catch(()=>({})); if(!res.ok)throw new Error(data.error||"error");
+    const list=data.applications||[]; let added=0;
+    const seen=new Set(APPS.map(a=>((a.title||"")+"|"+(a.company||"")).toLowerCase()));
+    for(const p of list){
+      const title=(p.title||"").trim(), company=(p.company||"").trim(); if(!title&&!company)continue;
+      const key=(title+"|"+company).toLowerCase(); if(seen.has(key))continue; seen.add(key);
+      const status=APP_STATUSES.includes(p.status)?p.status:"Applied";
+      const app={id:"p_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),title,company,location:"",url:"",source:"Imported",status,added:Date.now(),appliedDate:(p.appliedDate||""),notes:(p.notes||"")};
+      APPS.unshift(app); persistApp(app); added++;
+    }
+    updateAppsBadge(); renderApps();
+    $("orgText").value=""; $("orgStatus").textContent=`Added ${added} application${added===1?"":"s"} — review and tweak below.`;
+  }catch(e){ $("orgStatus").textContent="Couldn't organise: "+e.message; }
+  btn.disabled=false; btn.textContent="Organise into my applications";
 }
 function addManualApp(){
   const title=$("aaTitle").value.trim(); if(!title){ $("aaTitle").focus(); return; }
