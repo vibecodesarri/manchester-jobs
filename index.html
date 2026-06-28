@@ -114,6 +114,39 @@
     padding:10px 20px;font-size:14px;transition:background .12s}
   .btn:hover{background:var(--accent-dk)}
   .btn:disabled{background:#9db8d6;cursor:wait}
+  .btn.ghost{background:var(--card);color:var(--accent);border:1px solid var(--line)}
+  .btn.ghost:hover{background:var(--hover);border-color:var(--accent)}
+  .btn.sm{padding:7px 14px;font-size:12.5px;border-radius:18px;white-space:nowrap}
+
+  /* Email Companies */
+  .emlocs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .emlocs .fchip b{font-weight:800;opacity:.65;margin-left:2px}
+  .emlocs .fchip.dim{opacity:.5}
+  .emcompose{padding:16px 18px;margin-bottom:16px}
+  .emcomposehd{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+  .emcomposehd b{font-size:15px;color:var(--ink)}
+  .emsub{font-size:12px;color:var(--mut);margin-top:2px}
+  .emactions{display:flex;gap:8px;flex-wrap:wrap}
+  .emlbl{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);margin:8px 0 4px}
+  .eminput,.emtextarea{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:9px;padding:10px 12px;font-size:13.5px;font-family:inherit;box-sizing:border-box}
+  .emtextarea{line-height:1.55;resize:vertical}
+  .eminput:focus,.emtextarea:focus{outline:none;border-color:var(--accent)}
+  .emlist{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  .emrow{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:10px 13px;box-shadow:var(--shadow)}
+  .emrow .logo{width:38px;height:38px;flex:0 0 38px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg);border:1px solid var(--line2)}
+  .emrow .logo img{width:100%;height:100%;object-fit:contain}
+  .emrow .logo .ini{width:100%;height:100%;color:#fff;font-weight:800;font-size:16px;align-items:center;justify-content:center}
+  .eminfo{flex:1;min-width:0}
+  .emname{font-weight:700;color:var(--ink);font-size:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .emaddrrow{display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap}
+  .emaddr{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--accent-dk);text-decoration:none;word-break:break-all}
+  .emaddr:hover{text-decoration:underline}
+  .emsrc{font-size:11px;color:var(--faint);text-decoration:none}
+  .emsrc:hover{color:var(--accent);text-decoration:underline}
+  .embadge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:11px;background:var(--chip,#eef1f4);color:var(--mut);text-transform:uppercase;letter-spacing:.03em}
+  .embadge-recruitment,.embadge-hr,.embadge-careers{background:rgba(10,124,66,.13);color:#0a7c42}
+  body.dark .embadge{background:rgba(255,255,255,.09)}
+  body.dark .embadge-recruitment,body.dark .embadge-hr,body.dark .embadge-careers{background:rgba(52,211,153,.16);color:#5bd6a0}
 
   /* Directory */
   .dir-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
@@ -332,6 +365,7 @@
       <button class="tab active" data-tab="directory">Store Directory</button>
       <button class="tab" data-tab="board">Job Search</button>
       <button class="tab" data-tab="apps">Job tracker</button>
+      <button class="tab" data-tab="emails">Email Companies</button>
       <button class="tab" data-tab="cv">CV Maker</button>
       <button class="tab" data-tab="cover">Cover Letter</button>
       <button class="tab" data-tab="assistant">Assistant</button>
@@ -538,6 +572,27 @@
     </div>
     <div class="empty hidden" id="allEmpty"></div>
   </section>
+
+  <!-- TAB: EMAIL COMPANIES -->
+  <section id="tab-emails" class="hidden">
+    <div class="infobar"><b>Email companies directly</b> — real job/HR or official contact emails, each shown with its <b>source</b>. Pick a location, tweak the message, then copy the addresses or open Gmail. Only emails actually published on a company's own site or official channels are listed — many big chains hire <i>only</i> through online portals and have no public jobs inbox, so they aren't here; use their <b>Apply</b> link in the Store Directory instead.</div>
+    <div class="emlocs" id="emLocs"></div>
+    <div class="emcompose card">
+      <div class="emcomposehd">
+        <div><b>Speculative application email</b><div class="emsub">Edit freely — the location fills in automatically, your name comes from your profile.</div></div>
+        <div class="emactions">
+          <button class="btn ghost" id="emCopyAll">Copy all addresses</button>
+          <button class="btn" id="emSendAll">Open Gmail to all (BCC)</button>
+        </div>
+      </div>
+      <label class="emlbl">Subject</label>
+      <input id="emSubject" class="eminput" />
+      <label class="emlbl">Message</label>
+      <textarea id="emBody" class="emtextarea" rows="11"></textarea>
+    </div>
+    <div class="count" id="emCount"></div>
+    <div class="emlist" id="emList"></div>
+  </section>
   </div></main>
 </div>
 
@@ -608,12 +663,14 @@ async function init(){
     $("tab-map").classList.toggle("hidden",t!=="map");
     $("tab-all").classList.toggle("hidden",t!=="all");
     $("tab-apps").classList.toggle("hidden",t!=="apps");
+    $("tab-emails").classList.toggle("hidden",t!=="emails");
     $("tab-cv").classList.toggle("hidden",t!=="cv");
     $("tab-cover").classList.toggle("hidden",t!=="cover");
     $("tab-assistant").classList.toggle("hidden",t!=="assistant");
     activeBoardTab = (t==="board"||t==="all"||t==="map")?({board:"jobs",all:"all",map:"map"}[t]):"other";
     if(t==="board")renderJobs(); if(t==="all")renderAll(); if(t==="map")buildMap();
     if(t==="apps")refreshApps();
+    if(t==="emails")renderEmails();
   }));
   try{ STORES=await (await fetch("/api/stores")).json(); }
   catch{ $("subtitle").textContent="⚠ Run start.bat (node server.mjs) then open http://localhost:5173"; ["scanBtn","boardBtn","allBtn"].forEach(i=>$(i).disabled=true); return; }
@@ -656,7 +713,7 @@ async function init(){
   $("authSwitch").addEventListener("click",()=>{authMode=authMode==="signup"?"login":"signup";setAuthMode();$("authErr").textContent="";});
   $("authSubmit").addEventListener("click",submitAuth);
   $("authPass").addEventListener("keydown",e=>{if(e.key==="Enter")submitAuth();});
-  loadProfile(); initChat();
+  loadProfile(); initChat(); initEmails();
   $("aaAdd").addEventListener("click",addManualApp);
   $("orgBtn").addEventListener("click",organiseApplications);
   applyTheme(localStorage.getItem("mj_theme")||"light");
@@ -958,6 +1015,65 @@ function saveProfile(o){
   let p={}; try{p=JSON.parse(localStorage.getItem("mj_profile")||"{}");}catch{}
   for(const k in o) if(o[k]) p[k]=o[k];
   localStorage.setItem("mj_profile",JSON.stringify(p));
+}
+
+/* Email Companies */
+const EM_LOCS=["Trafford Centre","Arndale","Market Street","Piccadilly","Altrincham","Manchester Airport"];
+const EM_TYPE={recruitment:"Recruitment",hr:"HR / People",careers:"Careers",general:"General enquiries",customer:"Customer service",store:"Store"};
+let emLoc="Trafford Centre";
+function emProfileName(){let p={};try{p=JSON.parse(localStorage.getItem("mj_profile")||"{}");}catch{} return p.name||(window.currentUser&&currentUser.name)||"";}
+function emTemplate(loc){
+  const name=emProfileName();
+  return {
+    subject:`Application enquiry — entry-level / part-time role at your ${loc} store`,
+    body:`Dear Hiring Team,\n\nI'm writing to ask about any current or upcoming entry-level, part-time or weekend opportunities at your ${loc} location. I live locally in Greater Manchester, I'm reliable and a quick learner, and I'm available to start immediately and to work flexible shifts including evenings and weekends.\n\nMy CV is attached. I'd be grateful for the chance to discuss any openings, or to be kept in mind for future vacancies.\n\nThank you for your time.\n\nKind regards,\n${name||"[Your name]"}`
+  };
+}
+function emStoresFor(loc){
+  return STORES.filter(s=>s.email && Array.isArray(s.locations) && s.locations.includes(loc))
+               .sort((a,b)=>a.name.localeCompare(b.name));
+}
+function renderEmails(){
+  $("emLocs").innerHTML=EM_LOCS.map(l=>{
+    const n=emStoresFor(l).length;
+    return `<span class="fchip ${l===emLoc?'on':''} ${n?'':'dim'}" data-emloc="${esc(l)}">${esc(l)} <b>${n}</b></span>`;
+  }).join("");
+  $("emLocs").querySelectorAll("[data-emloc]").forEach(c=>c.onclick=()=>{emLoc=c.dataset.emloc;renderEmails();});
+  const t=emTemplate(emLoc);
+  if($("emSubject").dataset.edited!=="1") $("emSubject").value=t.subject;
+  if($("emBody").dataset.edited!=="1") $("emBody").value=t.body;
+  const list=emStoresFor(emLoc);
+  $("emCount").innerHTML=list.length
+    ? `<b>${list.length}</b> compan${list.length===1?'y':'ies'} with a contact email at <b>${esc(emLoc)}</b>`
+    : `No verified emails for ${esc(emLoc)} yet — being added as research completes.`;
+  $("emList").innerHTML=list.map(s=>{
+    const dom=logoDomain(s),first=esc((s.name.trim()[0]||"?").toUpperCase());
+    const logo=`<div class="logo">${dom?`<img src="https://logo.clearbit.com/${esc(dom)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>`:""}<span class="ini" style="background:${hashColor(s.name)};${dom?'display:none':'display:flex'}">${first}</span></div>`;
+    const tp=EM_TYPE[s.emailType]||"Contact";
+    const src=s.emailSource?`<a class="emsrc" href="${safeUrl(s.emailSource)}" target="_blank" rel="noopener" title="Where this email is published">source ↗</a>`:"";
+    return `<div class="emrow">${logo}
+      <div class="eminfo"><div class="emname">${esc(s.name)} <span class="embadge embadge-${esc(s.emailType||'general')}">${esc(tp)}</span></div>
+      <div class="emaddrrow"><a class="emaddr" href="mailto:${esc(s.email)}">${esc(s.email)}</a>${src}</div></div>
+      <button class="btn sm" data-emsend="${esc(s.email)}">Gmail ↗</button></div>`;
+  }).join("");
+  $("emList").querySelectorAll("[data-emsend]").forEach(b=>b.onclick=()=>{
+    const su=encodeURIComponent($("emSubject").value),bo=encodeURIComponent($("emBody").value);
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(b.dataset.emsend)}&su=${su}&body=${bo}`,"_blank");
+  });
+}
+function initEmails(){
+  ["emSubject","emBody"].forEach(id=>$(id).addEventListener("input",()=>{$(id).dataset.edited="1";}));
+  $("emCopyAll").onclick=()=>{
+    const ems=emStoresFor(emLoc).map(s=>s.email).join(", ");
+    if(!ems)return;
+    navigator.clipboard.writeText(ems).then(()=>{const b=$("emCopyAll");b.textContent="Copied ✓";setTimeout(()=>b.textContent="Copy all addresses",1500);});
+  };
+  $("emSendAll").onclick=()=>{
+    const ems=emStoresFor(emLoc).map(s=>s.email).join(",");
+    if(!ems)return;
+    const su=encodeURIComponent($("emSubject").value),bo=encodeURIComponent($("emBody").value);
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&bcc=${encodeURIComponent(ems)}&su=${su}&body=${bo}`,"_blank");
+  };
 }
 
 /* CV Maker */
