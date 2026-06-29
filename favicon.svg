@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bgg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a66c2"/>
+      <stop offset="1" stop-color="#0a3d7a"/>
+    </linearGradient>
+    <clipPath id="bclip"><ellipse cx="32" cy="33" rx="12.5" ry="13.5"/></clipPath>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bgg)"/>
+  <!-- antennae -->
+  <g stroke="#ffd34d" stroke-width="2" stroke-linecap="round" fill="none">
+    <path d="M28 18 C25 12 23 10 21.5 9.5"/>
+    <path d="M36 18 C39 12 41 10 42.5 9.5"/>
+  </g>
+  <circle cx="21" cy="9" r="2.3" fill="#ffd34d"/>
+  <circle cx="43" cy="9" r="2.3" fill="#ffd34d"/>
+  <!-- wings -->
+  <ellipse cx="17" cy="27" rx="10" ry="6.4" fill="#dcebff" opacity=".82" transform="rotate(-26 17 27)"/>
+  <ellipse cx="47" cy="27" rx="10" ry="6.4" fill="#dcebff" opacity=".82" transform="rotate(26 47 27)"/>
+  <!-- bee body -->
+  <ellipse cx="32" cy="33" rx="12.5" ry="13.5" fill="#ffce3a"/>
+  <g clip-path="url(#bclip)">
+    <!-- upper stripe -->
+    <rect x="18" y="26.5" width="28" height="4" fill="#16243a"/>
+    <!-- suit jacket (lower) -->
+    <path d="M19 41 L32 38 L45 41 L45 47 L19 47 Z" fill="#16243a"/>
+    <path d="M24.5 39 L32 54 L39.5 39 Z" fill="#16243a"/>
+    <!-- white shirt -->
+    <path d="M28.6 39 L32 48 L35.4 39 Z" fill="#ffffff"/>
+    <!-- tie -->
+    <path d="M32 40 L30.3 42 L31.4 50 L32.6 50 L33.7 42 Z" fill="#0a66c2"/>
+  </g>
+  <!-- eyes -->
+  <circle cx="27.6" cy="28.5" r="1.9" fill="#16243a"/>
+  <circle cx="36.4" cy="28.5" r="1.9" fill="#16243a"/>
+</svg>
